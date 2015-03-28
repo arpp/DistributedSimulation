@@ -4,7 +4,10 @@
 class NodeAbstract
 {
 public:
-    NodeAbstract();
+    NodeAbstract(unsigned long vid);
+
+private:
+    unsigned long vertexId;
 };
 
 #endif // NODEABSTRACT_H

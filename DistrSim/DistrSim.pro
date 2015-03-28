@@ -22,7 +22,8 @@ SOURCES += main.cpp \
     eventabstract.cpp \
     mnode.cpp \
     node.cpp \
-    edge.cpp
+    edge.cpp \
+    eventA.cpp
 
 HEADERS += \
     nodeabstract.h \
@@ -30,4 +31,5 @@ HEADERS += \
     eventabstract.h \
     mnode.h \
     node.h \
-    edge.h
+    edge.h \
+    eventA.h
