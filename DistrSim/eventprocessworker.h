@@ -9,7 +9,7 @@ class EventProcessWorker : public QObject
 {
     Q_OBJECT
 public:
-    explicit EventProcessWorker(QObject *parent = 0);
+    explicit EventProcessWorker(EventQueues *q, QObject *parent = 0);
 
 signals:
 

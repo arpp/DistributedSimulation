@@ -9,7 +9,7 @@ class RecvQueueWorker : public QObject
 {
     Q_OBJECT
 public:
-    explicit RecvQueueWorker(QObject *parent = 0);
+    explicit RecvQueueWorker(EventQueues *q, QObject *parent = 0);
 
 signals:
 

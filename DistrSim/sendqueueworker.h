@@ -9,7 +9,7 @@ class SendQueueWorker : public QObject
 {
     Q_OBJECT
 public:
-    explicit SendQueueWorker(QObject *parent = 0);
+    explicit SendQueueWorker(EventQueues *q, QObject *parent = 0);
 
 signals:
 
