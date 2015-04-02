@@ -22,6 +22,7 @@ public:
     void addNode(NodeAbstract* node);
     void addEdge(NodeAbstract* edge, int sysId);
     void beginSimulation();
+    unsigned long TIME;
 
 private:
     QList<NodeAbstract*> nodeList;
@@ -32,13 +33,10 @@ private:
     void initRecvThread();
     void initSendThread();
 
-    void updateTime(unsigned long toadd);
 
     EventProcessWorker *evWork;
     RecvQueueWorker *recWork;
     SendQueueWorker *senWork;
-
-    unsigned long TIME;
 
 };
 

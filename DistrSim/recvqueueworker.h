@@ -9,7 +9,7 @@ class RecvQueueWorker : public QObject
 {
     Q_OBJECT
 public:
-    explicit RecvQueueWorker(EventQueues *q, QObject *parent = 0);
+    explicit RecvQueueWorker(EventQueues *q, unsigned long *t, QObject *parent = 0);
 
 signals:
 
@@ -20,6 +20,7 @@ private slots:
 
 private:
     EventQueues *q;
+    unsigned long *time;
 };
 
 #endif // RECVQUEUEWORKER_H

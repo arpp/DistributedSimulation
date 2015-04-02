@@ -9,7 +9,7 @@ class EventProcessWorker : public QObject
 {
     Q_OBJECT
 public:
-    explicit EventProcessWorker(EventQueues *q, QObject *parent = 0);
+    explicit EventProcessWorker(EventQueues *q, unsigned long *t, QObject *parent = 0);
 
 signals:
 
@@ -20,6 +20,7 @@ private slots:
 
 private:
     EventQueues *q;
+    unsigned long *time;
 };
 
 #endif // EVENTPROCESSWORKER_H

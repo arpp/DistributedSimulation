@@ -9,7 +9,7 @@ class SendQueueWorker : public QObject
 {
     Q_OBJECT
 public:
-    explicit SendQueueWorker(EventQueues *q, QObject *parent = 0);
+    explicit SendQueueWorker(EventQueues *q, unsigned long *t, QObject *parent = 0);
 
 signals:
 
@@ -20,6 +20,7 @@ private slots:
 
 private:
     EventQueues *q;
+    unsigned long *time;
 };
 
 #endif // SENDQUEUEWORKER_H
