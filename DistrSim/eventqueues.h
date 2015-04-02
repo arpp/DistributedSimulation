@@ -2,6 +2,7 @@
 #define EVENTQUEUES_H
 
 #include <QList>
+#include <QPair>
 #include <QQueue>
 #include "eventabstract.h"
 
@@ -18,6 +19,8 @@ private:
     QList<QQueue<EventAbstract*> > evQueue;
     QQueue<EventAbstract*> localQueue;
     QQueue<EventAbstract*> sendQueue;
+    QList<NodeAbstract*> nodeList;
+    QList<QList<QPair<EdgeAbstract*,int> > > edgeList;
 };
 
 #endif // EVENTQUEUES_H

@@ -15,6 +15,9 @@ signals:
 
 public slots:
 
+private slots:
+    void process();
+
 private:
     EventQueues *q;
 };
