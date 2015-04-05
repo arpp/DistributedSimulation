@@ -4,12 +4,13 @@
 #include "eventqueues.h"
 
 #include <QObject>
+#include <QTcpSocket>
 
 class RecvQueueWorker : public QObject
 {
     Q_OBJECT
 public:
-    explicit RecvQueueWorker(EventQueues *q, unsigned long *t, QObject *parent = 0);
+    explicit RecvQueueWorker(EventQueues *q, unsigned long *t, QList<QTcpSocket*> incSoc, QObject *parent = 0);
 
 signals:
 
@@ -20,6 +21,7 @@ private slots:
 
 private:
     EventQueues *q;
+    QList<QTcpSocket*> incSoc;
     unsigned long *time;
 };
 

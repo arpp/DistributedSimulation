@@ -56,7 +56,7 @@ void MNode::initProcessQueueThread(){
 }
 
 void MNode::initRecvThread(){
-    this->recWork = new RecvQueueWorker(this->events,&(this->TIME));
+    this->recWork = new RecvQueueWorker(this->events,&(this->TIME),this->incomingConnection);
     this->recWorkThread = new QThread();
 
     QObject::connect(recWorkThread,SIGNAL(started()),recWork,SLOT(process()));
@@ -65,7 +65,7 @@ void MNode::initRecvThread(){
 }
 
 void MNode::initSendThread(){
-    this->senWork = new SendQueueWorker(this->events,&(this->TIME));
+    this->senWork = new SendQueueWorker(this->events,&(this->TIME),this->outgoingConnection);
     this->senWorkThread = new QThread();
 
     QObject::connect(senWorkThread,SIGNAL(started()),senWork,SLOT(process()));
