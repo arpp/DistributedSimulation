@@ -1,5 +1,8 @@
 #include "recvqueueworker.h"
 
+#include <QDebug>
+#include <QThread>
+
 RecvQueueWorker::RecvQueueWorker(EventQueues *q, unsigned long *t, QObject *parent) :
     QObject(parent)
 {
@@ -8,5 +11,6 @@ RecvQueueWorker::RecvQueueWorker(EventQueues *q, unsigned long *t, QObject *pare
 }
 
 void RecvQueueWorker::process(){
-
+    (*(this->time))++;
+    qDebug()<<"recv process thread: "<<QThread::currentThreadId()<<"\n"<<*(this->time)<<"\n";
 }

@@ -7,6 +7,8 @@ class EdgeAbstract
 {
 public:
     EdgeAbstract(NodeAbstract* srcNode, NodeAbstract *destNode);
+    NodeAbstract* getSrc();
+    NodeAbstract* getDst();
 
 private:
     NodeAbstract *srcNode, *destNode;

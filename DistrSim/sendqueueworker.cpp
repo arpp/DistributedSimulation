@@ -1,5 +1,8 @@
 #include "sendqueueworker.h"
 
+#include <QThread>
+#include <QDebug>
+
 SendQueueWorker::SendQueueWorker(EventQueues *q, unsigned long *t, QObject *parent) :
     QObject(parent)
 {
@@ -8,5 +11,5 @@ SendQueueWorker::SendQueueWorker(EventQueues *q, unsigned long *t, QObject *pare
 }
 
 void SendQueueWorker::process(){
-
+    qDebug()<<"Send process thread: "<<QThread::currentThreadId()<<"\n";
 }

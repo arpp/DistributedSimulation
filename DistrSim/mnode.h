@@ -4,6 +4,7 @@
 #include <QQueue>
 #include <QList>
 #include <QPair>
+#include <QThread>
 #include "edgeabstract.h"
 #include "nodeabstract.h"
 #include "eventqueues.h"
@@ -20,7 +21,7 @@ class MNode
 public:
     MNode();
     void addNode(NodeAbstract* node);
-    void addEdge(NodeAbstract* edge, int sysId);
+    void addEdge(EdgeAbstract* edge, int sysId);
     void beginSimulation();
     unsigned long TIME;
 
@@ -37,6 +38,8 @@ private:
     EventProcessWorker *evWork;
     RecvQueueWorker *recWork;
     SendQueueWorker *senWork;
+
+    QThread *evWorkThread, *recWorkThread, *senWorkThread;
 
 };
 

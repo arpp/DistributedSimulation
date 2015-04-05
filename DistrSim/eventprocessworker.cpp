@@ -1,5 +1,8 @@
 #include "eventprocessworker.h"
 
+#include<QThread>
+#include<QDebug>
+
 EventProcessWorker::EventProcessWorker(EventQueues *q, unsigned long *t, QObject *parent) :
     QObject(parent)
 {
@@ -8,5 +11,6 @@ EventProcessWorker::EventProcessWorker(EventQueues *q, unsigned long *t, QObject
 }
 
 void EventProcessWorker::process(){
-
+    (*(this->time))++;
+    qDebug()<<"Event process thread: "<<QThread::currentThreadId()<<"\n"<<*(this->time)<<"\n";
 }
