@@ -24,13 +24,13 @@ int main(int argc, char* argv[])
   }
 
 
-  ConnectToAll *cta = new ConnectToAll();
+  ConnectToAll *cta = new ConnectToAll(c, ownIP);
   emit cta->createConnections();
 
-  QTextStream(stdout) << "IP of this system is " << ownIP;
+//  QTextStream(stdout) << "IP of this system is " << ownIP;
 
-  Server *server = new Server(0, 3355);
-  emit server->startServer();
+//  Server *server = new Server(0, 3355);
+//  emit server->startServer();
 
 //  QThread *cthread = new QThread();
 //  cta->moveToThread(cthread);
