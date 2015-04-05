@@ -14,7 +14,7 @@ int main(int argc, char* argv[])
 {
   QCoreApplication app(argc, argv);
 
-  Connections *c = new Connections("connections.config");
+  Connections *c = new Connections("../connections.config");
   c->printConnections();
 
   QString ownIP;
