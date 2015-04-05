@@ -1,5 +1,7 @@
 #include "mnode.h"
 #include <QPair>
+#include <QDebug>
+#include <QString>
 
 MNode::MNode()
 {
@@ -8,7 +10,7 @@ MNode::MNode()
 
 void MNode::addNode(NodeAbstract* node){
     this->nodeList.append(node);
-    this->nodeToIndex[node] = this->nodeToIndex.count();
+    this->nodeToIndex[node] = this->nodeList.count()-1;
 
     QList<QPair<NodeAbstract*,int> > temp;
     this->edgeList.append(temp);
@@ -22,6 +24,20 @@ void MNode::addEdge(EdgeAbstract* edge, unsigned long sysId){
     nodeSysPair.second = sysId;
 
     (this->edgeList[index]).append(nodeSysPair);
+}
+
+void MNode::print(){
+    //printf adjacency list
+
+    for(int i=0; i<this->edgeList.count(); i++)
+    {
+        QDebug debug = qDebug();
+        debug<<i<<":";
+        for(int j=0; j<this->edgeList[i].count(); j++)
+        {
+            debug<<" "<<this->edgeList[i][j].first->getNodeId();
+        }
+    }
 }
 
 void MNode::beginSimulation(){
@@ -40,7 +56,7 @@ void MNode::initProcessQueueThread(){
 }
 
 void MNode::initRecvThread(){
-    this->recWork = new RecvQueueWorker(this->events,&(this->TIME));
+    this->recWork = new RecvQueueWorker(this->events,&(this->TIME),this->incomingConnection);
     this->recWorkThread = new QThread();
 
     QObject::connect(recWorkThread,SIGNAL(started()),recWork,SLOT(process()));
@@ -49,7 +65,7 @@ void MNode::initRecvThread(){
 }
 
 void MNode::initSendThread(){
-    this->senWork = new SendQueueWorker(this->events,&(this->TIME));
+    this->senWork = new SendQueueWorker(this->events,&(this->TIME),this->outgoingConnection);
     this->senWorkThread = new QThread();
 
     QObject::connect(senWorkThread,SIGNAL(started()),senWork,SLOT(process()));

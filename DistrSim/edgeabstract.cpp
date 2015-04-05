@@ -2,6 +2,8 @@
 
 EdgeAbstract::EdgeAbstract(NodeAbstract* srcNode, NodeAbstract *destNode)
 {
+    this->srcNode = srcNode;
+    this->destNode = destNode;
 }
 
 NodeAbstract* EdgeAbstract::getSrc(){

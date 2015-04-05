@@ -6,6 +6,7 @@
 #include <QPair>
 #include <QMap>
 #include <QThread>
+#include <QTcpSocket>
 #include "edgeabstract.h"
 #include "nodeabstract.h"
 #include "eventqueues.h"
@@ -23,6 +24,7 @@ public:
     MNode();
     void addNode(NodeAbstract* node);
     void addEdge(EdgeAbstract* edge, unsigned long sysId);
+    void print();
     void beginSimulation();
     unsigned long TIME;
 
@@ -43,6 +45,8 @@ private:
 
     QThread *evWorkThread, *recWorkThread, *senWorkThread;
 
+    QList<QTcpSocket*> incomingConnection;
+    QList<QTcpSocket*> outgoingConnection;
 };
 
 #endif // MNODE_H

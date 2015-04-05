@@ -3,11 +3,12 @@
 #include <QDebug>
 #include <QThread>
 
-RecvQueueWorker::RecvQueueWorker(EventQueues *q, unsigned long *t, QObject *parent) :
+RecvQueueWorker::RecvQueueWorker(EventQueues *q, unsigned long *t, QList<QTcpSocket*> incSoc, QObject *parent) :
     QObject(parent)
 {
     this->q = q;
     this->time=t;
+    this->incSoc=incSoc;
 }
 
 void RecvQueueWorker::process(){
