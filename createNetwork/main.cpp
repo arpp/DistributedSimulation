@@ -29,8 +29,8 @@ int main(int argc, char* argv[])
 
 //  QTextStream(stdout) << "IP of this system is " << ownIP;
 
-//  Server *server = new Server(0, 3355);
-//  emit server->startServer();
+  Server *server = new Server(0, 3355);
+  emit server->startServer();
 
 //  QThread *cthread = new QThread();
 //  cta->moveToThread(cthread);
