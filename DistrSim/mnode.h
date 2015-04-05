@@ -4,6 +4,7 @@
 #include <QQueue>
 #include <QList>
 #include <QPair>
+#include <QMap>
 #include <QThread>
 #include "edgeabstract.h"
 #include "nodeabstract.h"
@@ -21,13 +22,14 @@ class MNode
 public:
     MNode();
     void addNode(NodeAbstract* node);
-    void addEdge(EdgeAbstract* edge, int sysId);
+    void addEdge(EdgeAbstract* edge, unsigned long sysId);
     void beginSimulation();
     unsigned long TIME;
 
 private:
     QList<NodeAbstract*> nodeList;
-    QList<QList<QPair<EdgeAbstract*,int> > > edgeList;
+    QList<QList<QPair<NodeAbstract*,int> > > edgeList;
+    QMap<NodeAbstract*, unsigned long> nodeToIndex;
     EventQueues *events;
 
     void initProcessQueueThread();

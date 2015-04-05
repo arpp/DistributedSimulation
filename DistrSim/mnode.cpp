@@ -1,4 +1,5 @@
 #include "mnode.h"
+#include <QPair>
 
 MNode::MNode()
 {
@@ -7,11 +8,20 @@ MNode::MNode()
 
 void MNode::addNode(NodeAbstract* node){
     this->nodeList.append(node);
+    this->nodeToIndex[node] = this->nodeToIndex.count();
+
+    QList<QPair<NodeAbstract*,int> > temp;
+    this->edgeList.append(temp);
 }
 
-void MNode::addEdge(EdgeAbstract* edge, int sysId){
+void MNode::addEdge(EdgeAbstract* edge, unsigned long sysId){
     NodeAbstract *src = edge->getSrc();
-    QList<QPair<EdgeAbstract*,int> > temp;
+    unsigned long index = this->nodeToIndex[src];
+    QPair<NodeAbstract*, unsigned long> nodeSysPair;
+    nodeSysPair.first = edge->getDst();
+    nodeSysPair.second = sysId;
+
+    (this->edgeList[index]).append(nodeSysPair);
 }
 
 void MNode::beginSimulation(){
