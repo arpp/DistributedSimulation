@@ -15,8 +15,10 @@ public:
   Server(QObject * parent, int);
   Server(QObject * parent, Connections *c, QString ownIP);
   ~Server();
+  std::vector<QTcpSocket*> getSockets();
 signals:
   void startServer();
+  void allClientsConnected(std::vector<QTcpSocket*>);
 public slots:
   void acceptConnection();
   void startListening();

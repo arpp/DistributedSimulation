@@ -1,6 +1,7 @@
 #include "server.h"
 #include <iostream>
 #include <QTextStream>
+#include <QThread>
 
 Server::Server(QObject* parent, int port): QObject(parent)
 {
@@ -39,7 +40,10 @@ void Server::acceptConnection()
   QTextStream(stdout) << (cl->peerAddress()).toString() <<" has connected\n";
   if(client.size()+1 == c->length()) {
       QTextStream(stdout) << "All connections have been made\n";
-     server.pauseAccepting();
+      server.pauseAccepting();
+      //exit thread
+      QThread::currentThread()->exit();
+
   }
   connect(cl, SIGNAL(readyRead()), this, SLOT(startRead()));
 }
@@ -51,4 +55,8 @@ void Server::startRead()
 //  cl->read(buffer, cl->bytesAvailable());
 //  std::cout << buffer << std::endl;
 //  cl->close();
+}
+
+std::vector<QTcpSocket*> Server::getSockets() {
+    return client;
 }
