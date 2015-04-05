@@ -12,7 +12,9 @@ Server::Server(QObject* parent, int port): QObject(parent)
 Server::Server(QObject* parent, Connections *c, QString ownIP):QObject(parent)
 {
   this->c = new Connections(*c);
-  this->port = this->c->getPort(ownIP);
+  this->port = (this->c)->getPort(ownIP);
+  this->c->printConnections();
+  connect(this, SIGNAL(startServer()), this, SLOT(startListening()));
 }
 
 Server::~Server()
@@ -35,9 +37,10 @@ void Server::acceptConnection()
   QTcpSocket* cl = server.nextPendingConnection();
   client.push_back(cl);
   QTextStream(stdout) << (cl->peerAddress()).toString() <<" has connected\n";
-//  if(client.size()+1 == c->length()) {
-//     server.pauseAccepting();
-//  }
+  if(client.size()+1 == c->length()) {
+      QTextStream(stdout) << "All connections have been made\n";
+     server.pauseAccepting();
+  }
   connect(cl, SIGNAL(readyRead()), this, SLOT(startRead()));
 }
 

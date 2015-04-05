@@ -27,9 +27,9 @@ int main(int argc, char* argv[])
   ConnectToAll *cta = new ConnectToAll(c, ownIP);
   emit cta->createConnections();
 
-//  QTextStream(stdout) << "IP of this system is " << ownIP;
+  QTextStream(stdout) << "IP of this system is " << ownIP << " " << c->getPort(ownIP);
 
-  Server *server = new Server(0, 3355);
+  Server *server = new Server(0, c, ownIP);
   emit server->startServer();
 
 //  QThread *cthread = new QThread();

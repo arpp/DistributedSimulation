@@ -11,7 +11,7 @@ Connections::Connections(QObject* parent=0): QObject(parent) {
 Connections::Connections(Connections &c): QObject(0){
     this->ip_adds = c.ip_adds;
     this->ports = c.ports;
-    this->m = m;
+    this->m = c.m;
     this->connected = c.connected;
 }
 
