@@ -9,7 +9,7 @@
 class EventQueues
 {
 public:
-    EventQueues();
+    EventQueues(QList<QQueue<EventAbstract*> > evQueue, QQueue<EventAbstract*> localQueue, QQueue<EventAbstract*> sendQueue, QList<NodeAbstract*> nodeList, QList<QList<QPair<EdgeAbstract*,int> > > edgeList);
     void addToEventQueue(EventAbstract* e);
     void addToSendQueue(EventAbstract* e);
     EventAbstract* getNextEvent();

@@ -10,7 +10,7 @@ class EventAbstract
 public:
     EventAbstract(NodeAbstract *n, unsigned long ts);
     virtual QList<EventAbstract*> runEvent()=0;
-    long int getNodeID();
+    unsigned long getNodeID();
 //    void updateTimestamp(unsigned long ts);
     unsigned long getTimestamp();
 
