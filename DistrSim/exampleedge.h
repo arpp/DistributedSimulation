@@ -1,10 +1,13 @@
 #ifndef EXAMPLEEDGE_H
 #define EXAMPLEEDGE_H
 
-class exampleedge
+#include "edgeabstract.h"
+#include "nodeabstract.h"
+
+class exampleEdge:public EdgeAbstract
 {
 public:
-    exampleedge();
+    exampleEdge(NodeAbstract* srcNode, NodeAbstract *destNode);
 };
 
 #endif // EXAMPLEEDGE_H

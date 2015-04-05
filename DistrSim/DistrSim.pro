@@ -24,7 +24,9 @@ SOURCES += main.cpp \
     eventqueues.cpp \
     eventprocessworker.cpp \
     sendqueueworker.cpp \
-    recvqueueworker.cpp
+    recvqueueworker.cpp \
+    examplenode.cpp \
+    exampleedge.cpp
 
 HEADERS += \
     edgeabstract.h \
@@ -34,4 +36,6 @@ HEADERS += \
     eventqueues.h \
     eventprocessworker.h \
     sendqueueworker.h \
-    recvqueueworker.h
+    recvqueueworker.h \
+    examplenode.h \
+    exampleedge.h

@@ -23,6 +23,7 @@ public:
     MNode();
     void addNode(NodeAbstract* node);
     void addEdge(EdgeAbstract* edge, unsigned long sysId);
+    void print();
     void beginSimulation();
     unsigned long TIME;
 

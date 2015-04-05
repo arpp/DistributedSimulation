@@ -1,10 +1,12 @@
 #ifndef EXAMPLENODE_H
 #define EXAMPLENODE_H
 
-class exampleNode
+#include "nodeabstract.h"
+
+class exampleNode:public NodeAbstract
 {
 public:
-    exampleNode();
+    exampleNode(unsigned long vid);
 };
 
 #endif // EXAMPLENODE_H
