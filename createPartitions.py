@@ -107,9 +107,8 @@ def main():
 		with open(partitionEdgeFileNames[partitionX], "a") as fout:
 			fout.write(str(x) + " " + str(y) + " " + str(partitionY) + "\n")
 
-		if partitionX != partitionY:
-			with open(partitionEdgeFileNames[partitionY], "a") as fout:
-				fout.write(str(y) + " " + str(x) + " " + str(partitionX) + "\n")
+		with open(partitionEdgeFileNames[partitionY], "a") as fout:
+			fout.write(str(y) + " " + str(x) + " " + str(partitionX) + "\n")
 
 	fin.close()
 
