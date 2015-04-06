@@ -19,7 +19,7 @@ signals:
 public slots:
 
 private slots:
-    void process();
+    void process();                 // This will have an infinite loop and will read from the sockets and write to the event
 
 private:
     EventQueues *q;
