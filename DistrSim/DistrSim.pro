@@ -26,7 +26,8 @@ SOURCES += main.cpp \
     sendqueueworker.cpp \
     recvqueueworker.cpp \
     examplenode.cpp \
-    exampleedge.cpp
+    exampleedge.cpp \
+    recvqsocketworker.cpp
 
 HEADERS += \
     edgeabstract.h \
@@ -38,4 +39,5 @@ HEADERS += \
     sendqueueworker.h \
     recvqueueworker.h \
     examplenode.h \
-    exampleedge.h
+    exampleedge.h \
+    recvqsocketworker.h

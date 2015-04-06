@@ -9,6 +9,7 @@ RecvQueueWorker::RecvQueueWorker(EventQueues *q, unsigned long *t, QList<QTcpSoc
     this->q = q;
     this->time=t;
     this->incSoc=incSoc;
+
 }
 
 void RecvQueueWorker::process(){

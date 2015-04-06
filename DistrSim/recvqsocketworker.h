@@ -1,0 +1,27 @@
+#ifndef RECVQSOCKETWORKER_H
+#define RECVQSOCKETWORKER_H
+
+#include <QObject>
+#include <QTcpSocket>
+#include "eventqueues.h"
+
+class RecvQSocketWorker : public QObject
+{
+    Q_OBJECT
+public:
+    explicit RecvQSocketWorker(EventQueues *q, unsigned long *t, QTcpSocket* incSoc, QObject *parent = 0);
+
+signals:
+
+public slots:
+
+private slots:
+    void process();
+
+private:
+    QTcpSocket *socket;
+    EventQueues *q;
+    unsigned long *time;
+};
+
+#endif // RECVQSOCKETWORKER_H
