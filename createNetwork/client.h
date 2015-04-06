@@ -14,6 +14,7 @@ public:
   ~Client();
   void start();
   QTcpSocket* getClientHandle();
+  int getID();
 public slots:
   void reconnect();
   void startTransfer();

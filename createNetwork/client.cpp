@@ -40,7 +40,8 @@ void Client::reconnect() {
   }
   else {
       QTextStream(stdout) << "Reconnecting to " << hostname << " on " << port << "\n";
-      waitingTime = 2*waitingTime;
+      if(waitingTime < 32000)
+        waitingTime = 2*waitingTime;
   }
 
   client.connectToHost(hostname, port);
@@ -62,5 +63,9 @@ void Client::startTransfer()
 {
     QTextStream(stdout) << "connected yay\n";
     client.write("Hello, world", 13);
+}
+
+int Client::getID() {
+    return id;
 }
 

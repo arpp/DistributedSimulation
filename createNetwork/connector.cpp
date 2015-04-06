@@ -1,9 +1,12 @@
 #include "connector.h"
 #include "connecttoall.h"
+#include "client.h"
 #include "server.h"
 #include <QThread>
 #include <QString>
 #include <QTextStream>
+#include <vector>
+#include <QPair>
 
 
 connector::connector(QString filename)
@@ -38,5 +41,25 @@ void connector::begin() {
     cthread->wait();
     sthread->wait();
 
+    std::vector<Client*> clients = cta->getClients();
+    std::vector<QTcpSocket*> sockets = server->getSockets();
+
+    for(int i=0; i<clients.size(); i++) {
+        Client* x = clients[i];
+        QPair<int, QTcpSocket*> p(x->getID(), x->getClientHandle());
+        senders.push_back(p);
+        QTcpSocket* qts = sockets[i];
+        QPair<int, QTcpSocket*> p2 = qMakePair(c->getID((qts->peerAddress()).toString()), qts);
+        receivers.push_back(p2);
+    }
     QTextStream(stdout) << "Done dona done\n";
 }
+
+std::vector<QPair<int , QTcpSocket*> > connector::getSenders() {
+    return senders;
+}
+
+std::vector<QPair<int , QTcpSocket*> > connector::getReceivers() {
+    return receivers;
+}
+

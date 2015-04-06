@@ -45,10 +45,15 @@ void ConnectToAll::startConnecting() {
 
 void ConnectToAll::clientConnectedPeace() {
     count++;
-    if(count == c->length()) {
+    if(count == c->length()-1) {
         QThread::currentThread()->exit();
         //exit thread
+        QTextStream(stdout) << "This thread was supposed to exit\n";
     }
+}
+
+std::vector<Client*> ConnectToAll::getClients() {
+    return clients;
 }
 
 ConnectToAll::~ConnectToAll() {

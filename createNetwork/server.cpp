@@ -43,6 +43,7 @@ void Server::acceptConnection()
       server.pauseAccepting();
       //exit thread
       QThread::currentThread()->exit();
+      QTextStream(stdout) << "Server hasn't exited\n";
 
   }
   connect(cl, SIGNAL(readyRead()), this, SLOT(startRead()));

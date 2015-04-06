@@ -14,6 +14,7 @@ public:
     ConnectToAll(QObject* parent=0);
     ConnectToAll(Connections *c, QString ownIP, QObject* parent=0);
     ~ConnectToAll();
+    std::vector<Client*> getClients();
 public slots:
     void startConnecting();
     void clientConnectedPeace();
