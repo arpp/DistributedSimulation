@@ -16,7 +16,7 @@ signals:
 public slots:
 
 private slots:
-    void process();
+    void process();             // This will take elements from the evQueue and put elements in send queue need to use QWaitCondition
 
 private:
     EventQueues *q;

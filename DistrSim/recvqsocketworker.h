@@ -16,7 +16,7 @@ signals:
 public slots:
 
 private slots:
-    void process();
+    void process();         //This process does nothing but it just creates the other threads for listening to the given sockets and  updating the evQueues
 
 private:
     QTcpSocket *socket;

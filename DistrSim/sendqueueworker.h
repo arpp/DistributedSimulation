@@ -17,7 +17,7 @@ signals:
 public slots:
 
 private slots:
-    void process();
+    void process();                 //This will simply use the sendQueue and send the msgs from queue need to use qwait condition
 
 private:
     EventQueues *q;
