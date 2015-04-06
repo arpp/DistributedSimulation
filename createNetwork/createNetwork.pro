@@ -20,10 +20,12 @@ SOURCES += main.cpp \
     server.cpp \
     client.cpp \
     connections.cpp \
-    connecttoall.cpp
+    connecttoall.cpp \
+    connector.cpp
 
 HEADERS += \
     server.h \
     client.h \
     connections.h \
-    connecttoall.h
+    connecttoall.h \
+    connector.h

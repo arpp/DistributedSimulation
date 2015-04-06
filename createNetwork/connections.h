@@ -15,6 +15,8 @@ public:
     QString getIP(int l);
     int getPort(int l);
     int getPort(QString ip);
+    int getID(int l);
+    int getID(QString ip);
     bool isConnected(int l);
     unsigned int length();
     void printConnections();
@@ -24,6 +26,7 @@ private:
     std::vector<int> ports;
     std::vector<bool> connected;
     std::map<QString, int> m;
+    std::map<QString, int> ip2id;
 
 };
 

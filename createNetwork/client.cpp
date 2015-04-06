@@ -3,11 +3,12 @@
 #include <QTextStream>
 #include <QMetaObject>
 
-Client::Client(QString hostname, quint16 port, QObject* parent): QObject(parent)
+Client::Client(QString hostname, quint16 port, int id, QObject* parent): QObject(parent)
 {
     this->hostname = hostname;
     this->port = port;
     this->waitingTime = 0;
+    this->id = id;
     connect(&client, SIGNAL(connected()), this, SLOT(startTransfer()));
     connect(this, SIGNAL(attemptConnection()), this, SLOT(reconnect()));
     connect(&client, SIGNAL(disconnected()), this, SLOT(reconnect()));
@@ -17,7 +18,6 @@ Client::Client(QString hostname, quint16 port, QObject* parent): QObject(parent)
 Client::~Client()
 {
   qDebug("Bye bye!");
-  client.close();
 }
 
 void Client::start()
@@ -50,6 +50,7 @@ void Client::reconnect() {
   }
   else {
       waitingTime = -1;
+      emit clientConnectedOK();
   }
 }
 
