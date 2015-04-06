@@ -25,17 +25,22 @@ int main(int argc, char* argv[])
 
 
   ConnectToAll *cta = new ConnectToAll(c, ownIP);
-  emit cta->createConnections();
+//  emit cta->createConnections();
+  QThread *cthread = new QThread();
+  cta->moveToThread(cthread);
+  QObject::connect(cthread, SIGNAL(started()), cta, SLOT(startConnecting()));
+  cthread->start();
 
   QTextStream(stdout) << "IP of this system is " << ownIP << " " << c->getPort(ownIP);
 
   Server *server = new Server(0, c, ownIP);
-  emit server->startServer();
+//  emit server->startServer();
+  QThread *sthread = new QThread();
+  server->moveToThread(sthread);
+  QObject::connect(sthread, SIGNAL(started()), server, SLOT(startListening()));
+  sthread->start();
 
-//  QThread *cthread = new QThread();
-//  cta->moveToThread(cthread);
-//  QObject::connect(cthread, SIGNAL(started()), cta, SLOT(startConnecting()));
-//  cthread->start();
+
 
 //  Client *cl2 = new Client("10.140.237.99", 3456);
 //  QThread *cthread2 = new QThread();
@@ -45,11 +50,7 @@ int main(int argc, char* argv[])
 
 
 
-//  QThread *sthread = new QThread();
-//  Server *server= new Server(0,c,ownIP);
-//  server->moveToThread(sthread);
-//  QObject::connect(sthread, SIGNAL(started()), server, SLOT(startListening()));
-//  sthread->start();
+
 
   return app.exec();
 }
