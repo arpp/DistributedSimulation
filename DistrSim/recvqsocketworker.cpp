@@ -1,4 +1,6 @@
 #include "recvqsocketworker.h"
+#include <QDebug>
+#include <QThread>
 
 RecvQSocketWorker::RecvQSocketWorker(EventQueues *q, unsigned long *t, QTcpSocket* incSoc, QObject *parent) :
     QObject(parent)
@@ -9,5 +11,6 @@ RecvQSocketWorker::RecvQSocketWorker(EventQueues *q, unsigned long *t, QTcpSocke
 }
 
 void RecvQSocketWorker::process(){
-
+//The code to listen and add to the queues go here
+    qDebug()<<"recv process thread worker: "<<QThread::currentThreadId()<<"\n";
 }

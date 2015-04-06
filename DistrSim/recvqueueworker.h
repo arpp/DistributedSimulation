@@ -26,8 +26,8 @@ private:
     QList<QTcpSocket*> incSoc;
     unsigned long *time;
 
-    QList<QThread*> th;
-    QList<RecvQSocketWorker*> workers;
+    QThread** th;
+    RecvQSocketWorker** workers;
 };
 
 #endif // RECVQUEUEWORKER_H
