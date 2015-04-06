@@ -5,6 +5,8 @@
 
 #include <QObject>
 #include <QTcpSocket>
+#include <QThread>
+#include "recvqsocketworker.h"
 
 class RecvQueueWorker : public QObject
 {
@@ -23,6 +25,9 @@ private:
     EventQueues *q;
     QList<QTcpSocket*> incSoc;
     unsigned long *time;
+
+    QList<QThread*> th;
+    QList<RecvQSocketWorker*> workers;
 };
 
 #endif // RECVQUEUEWORKER_H

@@ -17,6 +17,7 @@ public:
 private:
     unsigned long timestamp;
     NodeAbstract *node;
+    int msgType;
 };
 
 #endif // EVENTABSTRACT_H
