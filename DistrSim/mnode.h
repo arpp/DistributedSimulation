@@ -7,6 +7,8 @@
 #include <QMap>
 #include <QThread>
 #include <QTcpSocket>
+#include <QWaitCondition>
+#include <QMutex>
 #include "edgeabstract.h"
 #include "nodeabstract.h"
 #include "eventqueues.h"
@@ -47,6 +49,11 @@ private:
 
     QList<QTcpSocket*> incomingConnection;
     QList<QTcpSocket*> outgoingConnection;
+
+    QWaitCondition *evQueueNotEmpty;
+    QWaitCondition *sendQueueNotEmpty;
+    QMutex *evQueueMutex;
+    QMutex *sendQueueMutex;
 };
 
 #endif // MNODE_H

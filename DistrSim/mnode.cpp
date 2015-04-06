@@ -41,6 +41,11 @@ void MNode::print(){
 }
 
 void MNode::beginSimulation(){
+    this->evQueueMutex = new QMutex();
+    this->sendQueueMutex = new QMutex();
+    this->evQueueNotEmpty = new QWaitCondition();
+    this->sendQueueNotEmpty = new QWaitCondition();
+
     initProcessQueueThread();
     initRecvThread();
     initSendThread();
