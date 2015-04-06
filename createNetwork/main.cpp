@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QPair>
 #include <vector>
+#include <QTcpSocket>
 
 int main(int argc, char* argv[])
 {
@@ -13,8 +14,9 @@ int main(int argc, char* argv[])
   c.begin();
   QTextStream(stdout) << "Connections established\n";
   std::vector<QPair<int, QTcpSocket*> > senders = c.getSenders();
-  QTextStream(stdout) << "length of " << senders.size();
+  std::vector<QPair<int, QTcpSocket*> > receivers = c.getReceivers();
 
+  QTextStream(stdout) << "sdfds " << senders[1].second.write("Hello World", 13);
 
 
 
