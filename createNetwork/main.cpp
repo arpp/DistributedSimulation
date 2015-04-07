@@ -59,6 +59,7 @@ int main(int argc, char* argv[])
 ////        instream >> buffer;
 //        QTextStream(stdout) << "File size is: " << buffer << "\n";
 //       }
+
 //  int stat = senders[1]->write("Hellokdsbgkjbsdbvkbfkhgbkjsdnvkjbsfkjgndsjlnvkjsdfgjndskjbgdskj Wosjfhjavsfjavsjasvfjasagshvfrld", 200);
 //  bool xx = senders[1]->waitForBytesWritten(-1);
 //  QTextStream(stdout) << "sdfds " << senders[1]->peerAddress().toString() << "  " << stat << senders[1]->state() << xx;

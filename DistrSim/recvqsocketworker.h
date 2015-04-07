@@ -9,7 +9,7 @@ class RecvQSocketWorker : public QObject
 {
     Q_OBJECT
 public:
-    explicit RecvQSocketWorker(EventQueues *q, unsigned long *t, QTcpSocket* incSoc, QObject *parent = 0);
+    explicit RecvQSocketWorker(EventQueues *q, unsigned long *t, QTcpSocket* incSoc, int m_id, QObject *parent = 0);
 
 signals:
 
@@ -22,6 +22,7 @@ private:
     QTcpSocket *socket;
     EventQueues *q;
     unsigned long *time;
+    int m_id;
 };
 
 #endif // RECVQSOCKETWORKER_H

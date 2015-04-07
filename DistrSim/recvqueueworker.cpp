@@ -3,13 +3,13 @@
 #include <QDebug>
 #include <QThread>
 
-RecvQueueWorker::RecvQueueWorker(EventQueues *q, unsigned long *t, QList<QTcpSocket*> incSoc, QObject *parent) :
+RecvQueueWorker::RecvQueueWorker(EventQueues *q, unsigned long *t, QMap<int,QTcpSocket*> incSoc, int m_id, QObject *parent) :
     QObject(parent)
 {
     this->q = q;
     this->time=t;
     this->incSoc=incSoc;
-
+    this->m_id=m_id;
 }
 
 void RecvQueueWorker::process(){
@@ -22,7 +22,7 @@ void RecvQueueWorker::process(){
     this->workers = new RecvQSocketWorker*[size];
     for(int i=0;i<size;i++){
         th[i] = new QThread();
-        workers[i] = new RecvQSocketWorker(q,time,0);      //new RecvQSocketWorker(q,t,incSoc.at(i));
+        workers[i] = new RecvQSocketWorker(q,time,0,0);      //new RecvQSocketWorker(q,t,incSoc.at(i));
         QObject::connect(th[i],SIGNAL(started()),workers[i],SLOT(process()));
         workers[i]->moveToThread(th[i]);
         th[i]->start();

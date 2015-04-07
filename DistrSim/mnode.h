@@ -31,6 +31,8 @@ public:
     unsigned long TIME;
 
 private:
+    int m_id;
+
     QList<NodeAbstract*> nodeList;
     QList<QList<QPair<NodeAbstract*,int> > > edgeList;
     QMap<NodeAbstract*, unsigned long> nodeToIndex;
@@ -47,13 +49,14 @@ private:
 
     QThread *evWorkThread, *recWorkThread, *senWorkThread;
 
-    QList<QTcpSocket*> incomingConnection;
-    QList<QTcpSocket*> outgoingConnection;
+    QMap<int,QTcpSocket*> incomingConnection;
+    QMap<int,QTcpSocket*> outgoingConnection;
 
     QWaitCondition *evQueueNotEmpty;
     QWaitCondition *sendQueueNotEmpty;
     QMutex *evQueueMutex;
     QMutex *sendQueueMutex;
+    QMutex *timeStampMutex;
 };
 
 #endif // MNODE_H
