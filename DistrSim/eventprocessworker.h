@@ -2,6 +2,7 @@
 #define EVENTPROCESSWORKER_H
 
 #include "eventqueues.h"
+#include "eventdata.h"
 
 #include <QObject>
 #include <QMutex>
