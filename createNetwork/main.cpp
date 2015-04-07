@@ -1,4 +1,5 @@
 #include "connector.h"
+#include "fileshare.h"
 #include <QCoreApplication>
 #include <QTextStream>
 #include <QObject>
@@ -22,7 +23,8 @@ int main(int argc, char* argv[])
     QMap<int, QTcpSocket*> senders = c.getSenders();
     QMap<int, QTcpSocket*> receivers = c.getReceivers();
 
-
+//    FileShare fs;
+//    fs.sync("../recvfile.txt", 0, 1, receivers, senders);
 
 
 //    QFile inputFile("../requirements.txt");
