@@ -20,20 +20,26 @@ void RecvQueueWorker::process(){
     int size = 3;   //incSoc.size();
     this->th = new QThread*[size];
     this->workers = new RecvQSocketWorker*[size];
+
     for(int i=0;i<size;i++){
         th[i] = new QThread();
-        workers[i] = new RecvQSocketWorker(q,time,0,0);      //new RecvQSocketWorker(q,t,incSoc.at(i));
+        workers[i] = new RecvQSocketWorker(q,time,0,0);      //new RecvQSocketWorker(q,t,incSoc.at(i),);
         QObject::connect(th[i],SIGNAL(started()),workers[i],SLOT(process()));
         workers[i]->moveToThread(th[i]);
         th[i]->start();
     }
+
+    int i=0;
+    QMapIterator<int,QTcpSocket*>  j(this->incSoc);
+    while(j.hasNext()){
+        j.next();
+        th[i] = new QThread();
+        workers[i] = new RecvQSocketWorker(q,time,j.value(),j.key());      //new RecvQSocketWorker(q,t,incSoc.at(i),);
+        QObject::connect(th[i],SIGNAL(started()),workers[i],SLOT(process()));
+        workers[i]->moveToThread(th[i]);
+        th[i]->start();
+        i++;
+    }
 }
 
 
-
-/*this->evWork = new EventProcessWorker(this->events,&(this->TIME));
-this->evWorkThread = new QThread();
-
-QObject::connect(evWorkThread,SIGNAL(started()),evWork,SLOT(process()));
-evWork->moveToThread(evWorkThread);
-evWorkThread->start();*/
