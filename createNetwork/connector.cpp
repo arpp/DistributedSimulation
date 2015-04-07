@@ -61,3 +61,11 @@ QMap<int, QTcpSocket*> connector::getReceivers() {
     return receivers;
 }
 
+int connector::getOwnID() {
+    QString ownIP;
+    foreach (const QHostAddress &address, QNetworkInterface::allAddresses()) {
+        if (address.protocol() == QAbstractSocket::IPv4Protocol && address != QHostAddress(QHostAddress::LocalHost))
+             ownIP = address.toString();
+    }
+    return c->getID(ownIP);
+}

@@ -13,6 +13,7 @@ public:
     void begin();
     QMap<int, QTcpSocket*> getReceivers();
     QMap<int, QTcpSocket*> getSenders();
+    int getOwnID();
 private:
     Connections *c;
     QMap<int, QTcpSocket*> receivers;

@@ -21,11 +21,13 @@ SOURCES += main.cpp \
     client.cpp \
     connections.cpp \
     connecttoall.cpp \
-    connector.cpp
+    connector.cpp \
+    fileshare.cpp
 
 HEADERS += \
     server.h \
     client.h \
     connections.h \
     connecttoall.h \
-    connector.h
+    connector.h \
+    fileshare.h
