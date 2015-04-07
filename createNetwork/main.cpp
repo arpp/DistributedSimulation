@@ -23,6 +23,8 @@ int main(int argc, char* argv[])
     QMap<int, QTcpSocket*> receivers = c.getReceivers();
 
 
+
+
 //    QFile inputFile("../requirements.txt");
 
 //    if(inputFile.open(QIODevice::ReadOnly)) {
