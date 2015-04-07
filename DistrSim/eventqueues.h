@@ -5,21 +5,21 @@
 #include <QPair>
 #include <QMap>
 #include <QQueue>
-#include "eventabstract.h"
+#include "event.h"
 
 class EventQueues
 {
 public:
-    EventQueues(QMap<int,QQueue<EventAbstract*> > evQueue, QQueue<EventAbstract*> sendQueue, QList<NodeAbstract*> nodeList, QList<QList<QPair<NodeAbstract*,int> > > edgeList);
-    void addToEventQueue(EventAbstract* e);
-    void addToSendQueue(EventAbstract* e);
-    EventAbstract* getNextEvent();
-    EventAbstract* removeSendQueue();
+    EventQueues(QMap<int,QQueue<Event*> > evQueue, QQueue<Event*> sendQueue, QList<NodeAbstract*> nodeList, QList<QList<QPair<NodeAbstract*,int> > > edgeList);
+    void addToEventQueue(Event* e);
+    void addToSendQueue(Event* e);
+    Event* getNextEvent();
+    Event* removeSendQueue();
 
 private:
-    QMap<int, QQueue<EventAbstract*> > evQueue;
+    QMap<int, QQueue<Event*> > evQueue;
 
-    QQueue<EventAbstract*> sendQueue;
+    QQueue<Event*> sendQueue;
     QList<NodeAbstract*> nodeList;
     QList<QList<QPair<NodeAbstract*,int> > > edgeList;
 };

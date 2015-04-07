@@ -19,7 +19,6 @@ TEMPLATE = app
 SOURCES += main.cpp \
     edgeabstract.cpp \
     nodeabstract.cpp \
-    eventabstract.cpp \
     mnode.cpp \
     eventqueues.cpp \
     eventprocessworker.cpp \
@@ -27,12 +26,13 @@ SOURCES += main.cpp \
     recvqueueworker.cpp \
     examplenode.cpp \
     exampleedge.cpp \
-    recvqsocketworker.cpp
+    recvqsocketworker.cpp \
+    eventdata.cpp \
+    event.cpp
 
 HEADERS += \
     edgeabstract.h \
     nodeabstract.h \
-    eventabstract.h \
     mnode.h \
     eventqueues.h \
     eventprocessworker.h \
@@ -40,4 +40,6 @@ HEADERS += \
     recvqueueworker.h \
     examplenode.h \
     exampleedge.h \
-    recvqsocketworker.h
+    recvqsocketworker.h \
+    eventdata.h \
+    event.h
