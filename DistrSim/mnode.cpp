@@ -53,7 +53,7 @@ void MNode::beginSimulation(){
 }
 
 void MNode::initProcessQueueThread(){
-    this->evWork = new EventProcessWorker(this->events,&(this->TIME),this->m_id);
+    this->evWork = new EventProcessWorker(this->events,&(this->TIME),this->m_id,this->evQueueMutex,this->sendQueueMutex,this->timeStampMutex,this->evQueueNotEmpty,this->sendQueueNotEmpty);
     this->evWorkThread = new QThread();
 
     QObject::connect(evWorkThread,SIGNAL(started()),evWork,SLOT(process()));
@@ -62,7 +62,7 @@ void MNode::initProcessQueueThread(){
 }
 
 void MNode::initRecvThread(){
-    this->recWork = new RecvQueueWorker(this->events,&(this->TIME),this->incomingConnection, this->m_id);
+    this->recWork = new RecvQueueWorker(this->events,&(this->TIME),this->incomingConnection, this->m_id,this->evQueueMutex,this->timeStampMutex,this->evQueueNotEmpty);
     this->recWorkThread = new QThread();
 
     QObject::connect(recWorkThread,SIGNAL(started()),recWork,SLOT(process()));
@@ -71,7 +71,7 @@ void MNode::initRecvThread(){
 }
 
 void MNode::initSendThread(){
-    this->senWork = new SendQueueWorker(this->events,&(this->TIME),this->outgoingConnection, this->m_id);
+    this->senWork = new SendQueueWorker(this->events,&(this->TIME),this->outgoingConnection, this->m_id,this->sendQueueMutex, this->timeStampMutex, this->sendQueueNotEmpty);
     this->senWorkThread = new QThread();
 
     QObject::connect(senWorkThread,SIGNAL(started()),senWork,SLOT(process()));

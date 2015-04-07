@@ -2,13 +2,17 @@
 #include <QDebug>
 #include <QThread>
 
-RecvQSocketWorker::RecvQSocketWorker(EventQueues *q, unsigned long *t, QTcpSocket* incSoc, int m_id, QObject *parent) :
+RecvQSocketWorker::RecvQSocketWorker(EventQueues *q, unsigned long *t, QTcpSocket* incSoc, int m_id,
+                                     QMutex *evQueueMutex, QMutex *timeStampMutex, QWaitCondition *evQueueNotEmpty, QObject *parent) :
     QObject(parent)
 {
     this->q = q;
     this->time = t;
     this->socket = incSoc;
     this->m_id = m_id;
+    this->evQueueMutex=evQueueMutex;
+    this->timeStampMutex=timeStampMutex;
+    this->evQueueNotEmpty=evQueueNotEmpty;
 }
 
 void RecvQSocketWorker::process(){

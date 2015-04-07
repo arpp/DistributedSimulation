@@ -5,12 +5,15 @@
 
 #include <QObject>
 #include <QTcpSocket>
+#include <QMutex>
+#include <QWaitCondition>
 
 class SendQueueWorker : public QObject
 {
     Q_OBJECT
 public:
-    explicit SendQueueWorker(EventQueues *q, unsigned long *t, QMap<int,QTcpSocket*> outSoc, int m_id, QObject *parent = 0);
+    explicit SendQueueWorker(EventQueues *q, unsigned long *t, QMap<int,QTcpSocket*> outSoc, int m_id,
+                             QMutex *sendQueueMutex, QMutex *timeStampMutex, QWaitCondition *sendQueueNotEmpty, QObject *parent = 0);
 
 signals:
 
@@ -24,6 +27,10 @@ private:
     unsigned long *time;
     QMap<int,QTcpSocket*> outSoc;
     int m_id;
+
+    QWaitCondition *sendQueueNotEmpty;
+    QMutex *sendQueueMutex;
+    QMutex *timeStampMutex;
 };
 
 #endif // SENDQUEUEWORKER_H

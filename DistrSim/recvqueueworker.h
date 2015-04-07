@@ -6,13 +6,16 @@
 #include <QObject>
 #include <QTcpSocket>
 #include <QThread>
+#include <QMutex>
+#include <QWaitCondition>
 #include "recvqsocketworker.h"
 
 class RecvQueueWorker : public QObject
 {
     Q_OBJECT
 public:
-    explicit RecvQueueWorker(EventQueues *q, unsigned long *t, QMap<int,QTcpSocket*> incSoc, int m_id, QObject *parent = 0);
+    explicit RecvQueueWorker(EventQueues *q, unsigned long *t, QMap<int,QTcpSocket*> incSoc, int m_id,
+    QMutex *evQueueMutex, QMutex *timeStampMutex, QWaitCondition *evQueueNotEmpty, QObject *parent = 0);
 
 signals:
 
@@ -28,6 +31,10 @@ private:
 
     QThread** th;
     RecvQSocketWorker** workers;
+
+    QWaitCondition *evQueueNotEmpty;
+    QMutex *evQueueMutex;
+    QMutex *timeStampMutex;
 
     int m_id;
 };
