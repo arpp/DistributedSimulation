@@ -22,7 +22,7 @@ signals:
 public slots:
   void acceptConnection();
   void startListening();
-  void startRead();
+  void startRead(QTcpSocket*);
 private:
     QTcpServer server;
     std::vector<QTcpSocket*> client;

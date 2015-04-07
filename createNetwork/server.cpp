@@ -46,14 +46,22 @@ void Server::acceptConnection()
       QTextStream(stdout) << "Server hasn't exited\n";
 
   }
-  connect(cl, SIGNAL(readyRead()), this, SLOT(startRead()));
+
 }
 
-void Server::startRead()
+void Server::startRead(QTcpSocket* cl)
 {
-    QTextStream(stdout) << "Hello world\n";
-//  char buffer[1024] = {0};
-//  cl->read(buffer, cl->bytesAvailable());
+    QTextStream(stdout) << "waiting for write by " << cl->peerAddress().toString()<<  "\n";
+    bool x = cl->waitForReadyRead();
+    if(x) {
+
+    char buffer[1024] = {0};
+    cl->read(buffer, cl->bytesAvailable());
+    QTextStream(stdout) << buffer << "sdfds\n";
+    }
+    else {
+        QTextStream(stdout) << "holy fuck\n";
+    }
 //  std::cout << buffer << std::endl;
 //  cl->close();
 }

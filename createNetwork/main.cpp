@@ -5,6 +5,7 @@
 #include <QPair>
 #include <vector>
 #include <QTcpSocket>
+#include <QHostAddress>
 
 int main(int argc, char* argv[])
 {
@@ -16,8 +17,9 @@ int main(int argc, char* argv[])
   std::vector<QPair<int, QTcpSocket*> > senders = c.getSenders();
   std::vector<QPair<int, QTcpSocket*> > receivers = c.getReceivers();
 
-  QTextStream(stdout) << "sdfds " << senders[1].second.write("Hello World", 13);
 
+  int stat = senders[0].second->write("Hello World", 13);
+  QTextStream(stdout) << "sdfds " << (senders[0].second)->peerAddress().toString() << "  " << stat;
 
 
 //  Client *cl2 = new Client("10.140.237.99", 3456);
