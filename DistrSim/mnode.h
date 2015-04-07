@@ -43,9 +43,9 @@ private:
     void initSendThread();
 
 
-    EventProcessWorker *evWork;
-    RecvQueueWorker *recWork;
-    SendQueueWorker *senWork;
+    EventProcessWorker *evWork;             //send all mutex and waitcond
+    RecvQueueWorker *recWork;               //send eventqueue
+    SendQueueWorker *senWork;               //send sendqueue
 
     QThread *evWorkThread, *recWorkThread, *senWorkThread;
 
