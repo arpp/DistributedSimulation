@@ -8,31 +8,32 @@ FileShare::FileShare()
 
 void FileShare::sync(QString filename, int ownID, int masterID, QMap<int, QTcpSocket*> senders, QMap<int, QTcpSocket*> receivers) {
     if(masterID == ownID) {
-        QFile inputFile(filename);
+        QMap<int, QTcpSocket*>::iterator siter;
+        for(siter = senders.begin(); siter != senders.end(); siter++) {
+            QFile inputFile(filename);
+            if(inputFile.open(QIODevice::ReadOnly)) {
 
-        if(inputFile.open(QIODevice::ReadOnly)) {
+                QFileInfo fileinfo(inputFile.fileName());
+                QByteArray filesize;
+                filesize.append(QByteArray::number((qint32)fileinfo.size()));
+                QTextStream(stdout) << filesize;
 
-            QFileInfo fileinfo(inputFile.fileName());
-            int sizeofFile = fileinfo.size();
-            QByteArray filesize;
-            filesize.append(QByteArray::number((qint32)fileinfo.size()));
-            QTextStream(stdout) << filesize;
+                int tt = (siter.value())->write(filesize);
+                (siter.value())->waitForBytesWritten();
+                QTextStream(stdout) << "Size sent: " << tt << "\n";
+                int s=0;
+                while (!inputFile.atEnd())
+                {
+                    QByteArray rawFile;
+                    rawFile = inputFile.read(32768);
+                    tt = (siter.value())->write(rawFile);
+                    (siter.value())->waitForBytesWritten();
+                    qDebug() << "ToSend"<<rawFile.size();
+                    s+=rawFile.size();
+                }
 
-            int tt = senders[0]->write(filesize);
-            senders[0]->waitForBytesWritten();
-            QTextStream(stdout) << "Size sent: " << tt << "\n";
-            int s=0;
-            while (!inputFile.atEnd())
-            {
-                QByteArray rawFile;
-                rawFile = inputFile.read(32768);
-                tt = senders[0]->write(rawFile);
-                senders[0]->waitForBytesWritten();
-                qDebug() << "ToSend"<<rawFile.size();
-                s+=rawFile.size();
+                QTextStream(stdout) << "File has been sent\n";
             }
-
-            QTextStream(stdout) << "File has been sent\n";
         }
 
     }
@@ -55,7 +56,7 @@ void FileShare::sync(QString filename, int ownID, int masterID, QMap<int, QTcpSo
                         newFile.write(buffer);
                     }
                 }
-                QTextStream(stdout) << "File has been read. Size is: " << s << "\n";
+                QTextStream(stdout) << "File has been received. Size is: " << s << "\n";
                 newFile.close();
             }
         }
