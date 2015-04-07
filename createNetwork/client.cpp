@@ -9,7 +9,7 @@ Client::Client(QString hostname, quint16 port, int id, QObject* parent): QObject
     this->port = port;
     this->waitingTime = 0;
     this->id = id;
-    connect(&client, SIGNAL(connected()), this, SLOT(startTransfer()));
+//    connect(&client, SIGNAL(connected()), this, SLOT(startTransfer()));
     connect(this, SIGNAL(attemptConnection()), this, SLOT(reconnect()));
     connect(&client, SIGNAL(disconnected()), this, SLOT(reconnect()));
     QTextStream(stdout) << "the client is running\n";
