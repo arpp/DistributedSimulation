@@ -18,9 +18,15 @@ int main(int argc, char* argv[])
   QMap<int, QTcpSocket*> receivers = c.getReceivers();
 
 
-  int stat = senders[1]->write("Hellokdsbgkjbsdbvkbfkhgbkjsdnvkjbsfkjgndsjlnvkjsdfgjndskjbgdskj Wosjfhjavsfjavsjasvfjasagshvfrld", 200);
-  bool xx = senders[1]->waitForBytesWritten(-1);
-  QTextStream(stdout) << "sdfds " << senders[1]->peerAddress().toString() << "  " << stat << senders[1]->state() << xx;
+
+  (receivers[0])->waitForReadyRead();
+    char buffer[1024] = {0};
+    (receivers[0])->read(buffer, (receivers[0])->bytesAvailable());
+    QTextStream(stdout) << buffer << "sdfds\n";
+
+//  int stat = senders[1]->write("Hellokdsbgkjbsdbvkbfkhgbkjsdnvkjbsfkjgndsjlnvkjsdfgjndskjbgdskj Wosjfhjavsfjavsjasvfjasagshvfrld", 200);
+//  bool xx = senders[1]->waitForBytesWritten(-1);
+//  QTextStream(stdout) << "sdfds " << senders[1]->peerAddress().toString() << "  " << stat << senders[1]->state() << xx;
 
 
 //  Client *cl2 = new Client("10.140.237.99", 3456);

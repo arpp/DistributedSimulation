@@ -12,7 +12,7 @@ class RecvQueueWorker : public QObject
 {
     Q_OBJECT
 public:
-    explicit RecvQueueWorker(EventQueues *q, unsigned long *t, QList<QTcpSocket*> incSoc, QObject *parent = 0);
+    explicit RecvQueueWorker(EventQueues *q, unsigned long *t, QMap<int,QTcpSocket*> incSoc, int m_id, QObject *parent = 0);
 
 signals:
 
@@ -23,11 +23,13 @@ private slots:
 
 private:
     EventQueues *q;
-    QList<QTcpSocket*> incSoc;
+    QMap<int, QTcpSocket*> incSoc;
     unsigned long *time;
 
     QThread** th;
     RecvQSocketWorker** workers;
+
+    int m_id;
 };
 
 #endif // RECVQUEUEWORKER_H

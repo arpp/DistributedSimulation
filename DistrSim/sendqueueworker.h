@@ -10,7 +10,7 @@ class SendQueueWorker : public QObject
 {
     Q_OBJECT
 public:
-    explicit SendQueueWorker(EventQueues *q, unsigned long *t, QList<QTcpSocket*> outSoc, QObject *parent = 0);
+    explicit SendQueueWorker(EventQueues *q, unsigned long *t, QMap<int,QTcpSocket*> outSoc, int m_id, QObject *parent = 0);
 
 signals:
 
@@ -22,7 +22,8 @@ private slots:
 private:
     EventQueues *q;
     unsigned long *time;
-    QList<QTcpSocket*> outSoc;
+    QMap<int,QTcpSocket*> outSoc;
+    int m_id;
 };
 
 #endif // SENDQUEUEWORKER_H
