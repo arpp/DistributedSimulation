@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
 {
   QCoreApplication app(argc, argv);
 
-    connector c("../connections.config");
+    connector c("../DistributedSimulation/connections.config");
     c.begin();
     QTextStream(stdout) << "Connections established\n";
     QMap<int, QTcpSocket*> senders = c.getSenders();
