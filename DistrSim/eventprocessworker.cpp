@@ -17,7 +17,7 @@ EventProcessWorker::EventProcessWorker(EventQueues *q, unsigned long *t, int m_i
 }
 
 void EventProcessWorker::process(){
-    (*(this->time))++;
+//    (*(this->time))++;
     qDebug()<<"Event process thread: "<<QThread::currentThreadId()<<"\n"<<*(this->time)<<"\n";
 
 

@@ -13,11 +13,11 @@ class EventQueues
 public:
     EventQueues(QMap<int,QQueue<Event*> > evQueue, QQueue<EventData*> sendQueue, QList<NodeAbstract*> nodeList, QList<QList<QPair<NodeAbstract*,int> > > edgeList);
     void addToEventQueue(Event* e);
-    void addToSendQueue(Event* e);
-    Event* getNextEvent();
-    Event* removeSendQueue();
+    void addToSendQueue(EventData* e);
 
-private:
+    Event* getNextEvent();
+    EventData* removeSendQueue();
+
     QMap<int, QQueue<Event*> > evQueue;
     QQueue<EventData*> sendQueue;
 

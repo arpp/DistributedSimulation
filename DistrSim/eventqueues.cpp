@@ -7,3 +7,20 @@ EventQueues::EventQueues(QMap<int,QQueue<Event*> > evQueue, QQueue<EventData*> s
     this->nodeList = nodeList;
     this->edgeList = edgeList;
 }
+
+
+void EventQueues::addToEventQueue(Event* e){
+
+}
+
+void EventQueues::addToSendQueue(EventData* e){
+    this->sendQueue.enqueue(e);
+}
+
+Event* EventQueues::getNextEvent(){
+
+}
+
+EventData* EventQueues::removeSendQueue(){
+
+}
