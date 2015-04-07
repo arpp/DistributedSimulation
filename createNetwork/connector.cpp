@@ -11,7 +11,7 @@
 
 connector::connector(QString filename)
 {
-    c = new Connections("../connections.config");
+    c = new Connections(filename);
 //    c->printConnections();
 }
 

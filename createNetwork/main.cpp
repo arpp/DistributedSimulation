@@ -1,4 +1,5 @@
 #include "connector.h"
+#include "fileshare.h"
 #include <QCoreApplication>
 #include <QTextStream>
 #include <QObject>
@@ -16,11 +17,14 @@ int main(int argc, char* argv[])
 {
   QCoreApplication app(argc, argv);
 
-    connector c("../connections.config");
+    connector c("../DistributedSimulation/connections.config");
     c.begin();
     QTextStream(stdout) << "Connections established\n";
     QMap<int, QTcpSocket*> senders = c.getSenders();
     QMap<int, QTcpSocket*> receivers = c.getReceivers();
+
+//    FileShare fs;
+//    fs.sync("../recvfile.txt", 0, 1, receivers, senders);
 
 
 //    QFile inputFile("../requirements.txt");
