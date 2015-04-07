@@ -25,7 +25,7 @@ void EventProcessWorker::process(){
     while(true){
         //search whether any queue is empty then we will
        QMap<int,QQueue<Event*> >::iterator it;
-       QEvent *event;
+       Event *event;
        QList<int> l;
        int flag=0;
        this->evQueueMutex->lock();
@@ -40,7 +40,7 @@ void EventProcessWorker::process(){
        if(flag==1){
             foreach(int i,l){
                 //create a DEMAND msg for each i-th mnode and enqueue it in sendQueue
-                EventData *demand = new EventData(this->time,i,i,1);
+                EventData *demand = new EventData(*(this->time),i,i,1);
                 this->q->sendQueue.enqueue(demand);
                 this->sendQueueMutex->lock();
                 this->sendQueueNotEmpty->wakeAll();
@@ -59,10 +59,11 @@ void EventProcessWorker::process(){
                     }
                  }
            }
-           event=this->q->evQueue.value(k).dequeue();
+           event=this->q->evQueue.find(k).value().dequeue();
        }
        this->evQueueMutex->unlock();
 
+       QList<EventData> genEvents = event->runEvent();
     }
 
 }
