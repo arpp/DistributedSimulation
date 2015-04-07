@@ -3,7 +3,7 @@
 #include <QTextStream>
 #include <QObject>
 #include <QPair>
-#include <vector>
+#include <QMap>
 #include <QTcpSocket>
 #include <QHostAddress>
 
@@ -14,12 +14,13 @@ int main(int argc, char* argv[])
   connector c("../connections.config");
   c.begin();
   QTextStream(stdout) << "Connections established\n";
-  std::vector<QPair<int, QTcpSocket*> > senders = c.getSenders();
-  std::vector<QPair<int, QTcpSocket*> > receivers = c.getReceivers();
+  QMap<int, QTcpSocket*> senders = c.getSenders();
+  QMap<int, QTcpSocket*> receivers = c.getReceivers();
 
 
-  int stat = senders[0].second->write("Hello World", 13);
-  QTextStream(stdout) << "sdfds " << (senders[0].second)->peerAddress().toString() << "  " << stat;
+  int stat = senders[1]->write("Hellokdsbgkjbsdbvkbfkhgbkjsdnvkjbsfkjgndsjlnvkjsdfgjndskjbgdskj Wosjfhjavsfjavsjasvfjasagshvfrld", 200);
+  bool xx = senders[1]->waitForBytesWritten(-1);
+  QTextStream(stdout) << "sdfds " << senders[1]->peerAddress().toString() << "  " << stat << senders[1]->state() << xx;
 
 
 //  Client *cl2 = new Client("10.140.237.99", 3456);

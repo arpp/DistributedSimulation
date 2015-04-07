@@ -3,6 +3,7 @@
 #include "connections.h"
 #include <QString>
 #include <QTcpSocket>
+#include <QMap>
 #include <vector>
 
 class connector
@@ -10,12 +11,14 @@ class connector
 public:
     connector(QString filename);
     void begin();
-    std::vector<QPair<int, QTcpSocket*> > getReceivers();
-    std::vector<QPair<int, QTcpSocket*> > getSenders();
+    QMap<int, QTcpSocket*> getReceivers();
+    QMap<int, QTcpSocket*> getSenders();
 private:
     Connections *c;
-    std::vector<QPair<int, QTcpSocket*> > receivers;
-    std::vector<QPair<int, QTcpSocket*> > senders;
+    QMap<int, QTcpSocket*> receivers;
+    QMap<int, QTcpSocket*> senders;
+//    std::vector<QPair<int, QTcpSocket*> > receivers;
+//    std::vector<QPair<int, QTcpSocket*> > senders;
 
 };
 

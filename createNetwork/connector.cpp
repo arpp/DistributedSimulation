@@ -46,20 +46,18 @@ void connector::begin() {
 
     for(int i=0; i<clients.size(); i++) {
         Client* x = clients[i];
-        QPair<int, QTcpSocket*> p(x->getID(), x->getClientHandle());
-        senders.push_back(p);
+        senders[x->getID()] = x->getClientHandle();
         QTcpSocket* qts = sockets[i];
-        QPair<int, QTcpSocket*> p2 = qMakePair(c->getID((qts->peerAddress()).toString()), qts);
-        receivers.push_back(p2);
+        receivers[c->getID((qts->peerAddress()).toString())] = qts;
     }
     QTextStream(stdout) << "Done dona done\n";
 }
 
-std::vector<QPair<int , QTcpSocket*> > connector::getSenders() {
+QMap<int, QTcpSocket*> connector::getSenders() {
     return senders;
 }
 
-std::vector<QPair<int , QTcpSocket*> > connector::getReceivers() {
+QMap<int, QTcpSocket*> connector::getReceivers() {
     return receivers;
 }
 
