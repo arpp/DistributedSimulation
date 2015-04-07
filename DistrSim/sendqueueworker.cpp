@@ -45,8 +45,10 @@ void SendQueueWorker::process(){
         sendQueueMutex->lock();
         if ((q->sendQueue).size() == 0)
             sendQueueNotEmpty->wait(sendQueueMutex);
+        sendQueueMutex->unlock();
 
-        EventData* currentEvent = (q->sendQueue).dequeue();
+        sendQueueMutex->lock();
+        EventData* currentEvent = (q->sendQueue).dequeue();//Consume event
         sendQueueMutex->unlock();
 
         QTcpSocket* socket;
