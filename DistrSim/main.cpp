@@ -2,13 +2,17 @@
 #include "mnode.h"
 #include "examplenode.h"
 #include "exampleedge.h"
+#include "readgraph.h"
 
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
     //TODO:Path from build
     MNode *n = new MNode("connections.config");
-    n->beginSimulation();
+    n->initTransfer();
+    readGraph rg(n);
+    n->print();
+    //n->beginSimulation();
 
     /*exampleNode* n1 = new exampleNode(10);
     exampleNode* n2 = new exampleNode(12);

@@ -34,7 +34,8 @@ SOURCES += main.cpp \
     createNetwork/connector.cpp \
     createNetwork/connecttoall.cpp \
     createNetwork/fileshare.cpp \
-    createNetwork/server.cpp
+    createNetwork/server.cpp \
+    readgraph.cpp
 
 HEADERS += \
     edgeabstract.h \
@@ -54,4 +55,5 @@ HEADERS += \
     createNetwork/connector.h \
     createNetwork/connecttoall.h \
     createNetwork/fileshare.h \
-    createNetwork/server.h
+    createNetwork/server.h \
+    readgraph.h

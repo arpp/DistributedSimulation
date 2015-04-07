@@ -13,7 +13,7 @@ MNode::MNode(QString configFile)
 
 void MNode::addNode(NodeAbstract* node){
     this->nodeList.append(node);
-    this->nodeToIndex[node] = this->nodeList.count()-1;
+    this->nodeIdToIndex[node->getNodeId()] = this->nodeList.count()-1;
 
     QList<QPair<NodeAbstract*,int> > temp;
     this->edgeList.append(temp);
@@ -21,7 +21,7 @@ void MNode::addNode(NodeAbstract* node){
 
 void MNode::addEdge(EdgeAbstract* edge, unsigned long sysId){
     NodeAbstract *src = edge->getSrc();
-    unsigned long index = this->nodeToIndex[src];
+    unsigned long index = this->nodeIdToIndex[src->getNodeId()];
     QPair<NodeAbstract*, unsigned long> nodeSysPair;
     nodeSysPair.first = edge->getDst();
     nodeSysPair.second = sysId;

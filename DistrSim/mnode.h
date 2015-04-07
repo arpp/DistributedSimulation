@@ -40,7 +40,7 @@ private:
 
     QList<NodeAbstract*> nodeList;
     QList<QList<QPair<NodeAbstract*,int> > > edgeList;
-    QMap<NodeAbstract*, unsigned long> nodeToIndex;
+    QMap<unsigned long, unsigned long> nodeIdToIndex;
     EventQueues *events;
 
     void initProcessQueueThread();
