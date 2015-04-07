@@ -27,6 +27,7 @@ class MNode
 {
 public:
     MNode(QString configFile);
+    int getMId();
     void addNode(NodeAbstract* node);
     void addEdge(EdgeAbstract* edge, unsigned long sysId);
     void print();

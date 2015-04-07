@@ -11,6 +11,10 @@ MNode::MNode(QString configFile)
     this-> edgeList = QList<QList<QPair<NodeAbstract*,int> > >();
 }
 
+void MNode::getMId(){
+    return this->m_id;
+}
+
 void MNode::addNode(NodeAbstract* node){
     this->nodeList.append(node);
     this->nodeIdToIndex[node->getNodeId()] = this->nodeList.count()-1;
