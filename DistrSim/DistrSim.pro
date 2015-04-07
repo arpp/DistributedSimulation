@@ -28,7 +28,13 @@ SOURCES += main.cpp \
     exampleedge.cpp \
     recvqsocketworker.cpp \
     eventdata.cpp \
-    event.cpp
+    event.cpp \
+    createnetwork/client.cpp \
+    createnetwork/connections.cpp \
+    createnetwork/connector.cpp \
+    createnetwork/connecttoall.cpp \
+    createnetwork/fileshare.cpp \
+    createnetwork/server.cpp
 
 HEADERS += \
     edgeabstract.h \
@@ -42,4 +48,10 @@ HEADERS += \
     exampleedge.h \
     recvqsocketworker.h \
     eventdata.h \
-    event.h
+    event.h \
+    createnetwork/client.h \
+    createnetwork/connections.h \
+    createnetwork/connector.h \
+    createnetwork/connecttoall.h \
+    createnetwork/fileshare.h \
+    createnetwork/server.h
