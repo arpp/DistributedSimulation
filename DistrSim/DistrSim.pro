@@ -29,12 +29,12 @@ SOURCES += main.cpp \
     recvqsocketworker.cpp \
     eventdata.cpp \
     event.cpp \
-    createnetwork/client.cpp \
-    createnetwork/connections.cpp \
-    createnetwork/connector.cpp \
-    createnetwork/connecttoall.cpp \
-    createnetwork/fileshare.cpp \
-    createnetwork/server.cpp
+    createNetwork/client.cpp \
+    createNetwork/connections.cpp \
+    createNetwork/connector.cpp \
+    createNetwork/connecttoall.cpp \
+    createNetwork/fileshare.cpp \
+    createNetwork/server.cpp
 
 HEADERS += \
     edgeabstract.h \
@@ -49,9 +49,9 @@ HEADERS += \
     recvqsocketworker.h \
     eventdata.h \
     event.h \
-    createnetwork/client.h \
-    createnetwork/connections.h \
-    createnetwork/connector.h \
-    createnetwork/connecttoall.h \
-    createnetwork/fileshare.h \
-    createnetwork/server.h
+    createNetwork/client.h \
+    createNetwork/connections.h \
+    createNetwork/connector.h \
+    createNetwork/connecttoall.h \
+    createNetwork/fileshare.h \
+    createNetwork/server.h
