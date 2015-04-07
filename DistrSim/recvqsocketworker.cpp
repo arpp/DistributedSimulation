@@ -23,7 +23,7 @@ void RecvQSocketWorker::process(){
     while(true){
         this->socket->waitForReadyRead(-1);
         int type;
-        EventData *ev = new EventData(0,0,0);
+        EventData *ev = new EventData(0,0,0,0);
         QDataStream st(this->socket);
         st>>(*ev);
         if(type==0){

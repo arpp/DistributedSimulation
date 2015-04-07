@@ -31,6 +31,8 @@ private:
     QWaitCondition *sendQueueNotEmpty;
     QMutex *sendQueueMutex;
     QMutex *timeStampMutex;
+
+    int findDestMId(unsigned long srcNodeId, unsigned long destNodeId);
 };
 
 #endif // SENDQUEUEWORKER_H
