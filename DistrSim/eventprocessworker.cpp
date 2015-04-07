@@ -1,6 +1,7 @@
 #include "eventprocessworker.h"
 
 #include<QThread>
+#include<QTime>
 #include<QDebug>
 
 EventProcessWorker::EventProcessWorker(EventQueues *q, unsigned long *t, int m_id, QMutex *evQueueMutex, QMutex *sendQueueMutex, QMutex *timeStampMutex, QWaitCondition *evQueueNotEmpty, QWaitCondition *sendQueueNotEmpty, QObject *parent) :
@@ -18,7 +19,19 @@ EventProcessWorker::EventProcessWorker(EventQueues *q, unsigned long *t, int m_i
 
 void EventProcessWorker::process(){
 //    (*(this->time))++;
-    qDebug()<<"Event process thread: "<<QThread::currentThreadId()<<"\n"<<*(this->time)<<"\n";
+    qDebug()<< QTime::currentTime().toString()<<" EVENT_PROCESS_WORKER: Event process thread: "<<QThread::currentThreadId()<<"\n";
 
+    while(true){
+        //search whether any queue is empty then we will
+       QMap<int,QQueue<Event*> >::iterator it;
+       QList<int> l;
+       this->evQueueMutex->lock();
+       for(it=this->q->evQueue.begin();it!=this->q->evQueue.end();it++){
+           if(it.value().isEmpty()){
+
+           }
+       }
+       this->evQueueMutex->unlock();
+    }
 
 }
