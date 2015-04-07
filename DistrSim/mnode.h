@@ -15,6 +15,9 @@
 #include "eventprocessworker.h"
 #include "recvqueueworker.h"
 #include "sendqueueworker.h"
+#include "createNetwork/connector.h"
+#include "createNetwork/fileshare.h"
+
 
 
 //Multiple consecutive nulls and null on the top of a queue are useless do not add
@@ -23,15 +26,17 @@
 class MNode
 {
 public:
-    MNode();
+    MNode(QString configFile);
     void addNode(NodeAbstract* node);
     void addEdge(EdgeAbstract* edge, unsigned long sysId);
     void print();
+    void initTransfer();
     void beginSimulation();
     unsigned long TIME;
 
 private:
     int m_id;
+    QString configFile;
 
     QList<NodeAbstract*> nodeList;
     QList<QList<QPair<NodeAbstract*,int> > > edgeList;
@@ -41,6 +46,8 @@ private:
     void initProcessQueueThread();
     void initRecvThread();
     void initSendThread();
+    void initConnection();
+    void transferFiles();
 
 
     EventProcessWorker *evWork;             //send all mutex and waitcond

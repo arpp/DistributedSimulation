@@ -13,7 +13,7 @@ void FileShare::sync(QString filename, int ownID, int masterID, QMap<int, QTcpSo
             QFile inputFile(filename);
             if(inputFile.open(QIODevice::ReadOnly)) {
 
-                QFileInfo fileinfo(inputFile.fileName());
+                QFileInfo fileinfo(inputFile.fileName() + QString::number(siter.key()));
                 QByteArray filesize;
                 filesize.append(QByteArray::number((qint32)fileinfo.size()));
                 QTextStream(stdout) << filesize;

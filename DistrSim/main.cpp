@@ -6,7 +6,8 @@
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
-    MNode *n = new MNode();
+    //TODO:Path from build
+    MNode *n = new MNode("connections.config");
     n->beginSimulation();
 
     /*exampleNode* n1 = new exampleNode(10);

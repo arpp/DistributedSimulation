@@ -3,9 +3,12 @@
 #include <QDebug>
 #include <QString>
 
-MNode::MNode()
+MNode::MNode(QString configFile)
 {
     this->TIME=0;
+    this->configFile = configFile;
+    this->nodeList = QList<NodeAbstract*>();
+    this-> edgeList = QList<QList<QPair<NodeAbstract*,int> > >();
 }
 
 void MNode::addNode(NodeAbstract* node){
@@ -40,7 +43,33 @@ void MNode::print(){
     }
 }
 
+void MNode::initConnection()
+{
+    connector c(this->configFile);
+    c.begin();
+    this->incomingConnection = c.getReceivers();
+    this->outgoingConnection = c.getSenders();
+    this->m_id = c.getOwnID();
+}
+
+void MNode::transferFiles()
+{
+    FileShare fs;
+    fs.sync("nodepartition", this->m_id, 0, this->incomingConnection, this->outgoingConnection);
+    fs.sync("edgepartition", this->m_id, 0, this->incomingConnection, this->outgoingConnection);
+}
+
+void MNode::initTransfer()
+{
+    initConnection();
+    transferFiles();
+}
+
 void MNode::beginSimulation(){
+    QMap<int,QQueue<Event*> > evQueue = QMap<int,QQueue<Event*> >();
+    QQueue<EventData*> sendQueue = QQueue<EventData*>();
+    this->events = new EventQueues(evQueue, sendQueue, this->nodeList, this->edgeList);
+
     this->evQueueMutex = new QMutex();
     this->sendQueueMutex = new QMutex();
     this->timeStampMutex = new QMutex();
