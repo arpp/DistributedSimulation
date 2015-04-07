@@ -14,3 +14,7 @@ QList<EventData> Event::runEvent()
 {
 
 }
+
+unsigned long Event::getTimestamp(){
+    return this->eventData->getTimestamp();
+}

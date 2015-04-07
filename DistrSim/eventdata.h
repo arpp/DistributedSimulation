@@ -6,9 +6,10 @@
 class EventData
 {
 public:
-    EventData(unsigned long ts, unsigned long nodeId);
+    EventData(unsigned long ts, unsigned long nodeId, int type);
     unsigned long getTimestamp();
     unsigned long getNodeId();
+    int getType();
 
     friend QDataStream& operator<<(QDataStream& out, EventData &eventData);
     friend QDataStream& operator>>(QDataStream& in, EventData & eventData);
@@ -16,6 +17,7 @@ public:
 private:
     unsigned long timestamp;
     unsigned long nodeId;
+    int type;
 };
 
 #endif // EVENTDATA_H

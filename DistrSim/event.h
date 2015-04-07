@@ -12,6 +12,7 @@ public:
     Event(NodeAbstract *n, EventData *ev);
     QList<EventData> runEvent();
     unsigned long getNodeID();
+    unsigned long getTimestamp();
 
 private:
     NodeAbstract *node;
