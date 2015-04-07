@@ -15,4 +15,11 @@ void RecvQSocketWorker::process(){
 //The code to listen and add to the queues go here
     qDebug()<<"recv process thread worker: "<<QThread::currentThreadId()<<"\n";
 
+   /* while(true){
+        this->socket->waitForReadyRead(-1);
+        QByteArray buffer;
+        QDataStream st(this->socket);
+        st>>buffer;
+        //Write code to create EventData and Event and add Event to eventQueue at value m_id
+    }*/
 }

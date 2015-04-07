@@ -21,6 +21,7 @@ void RecvQueueWorker::process(){
     this->th = new QThread*[size];
     this->workers = new RecvQSocketWorker*[size];
 
+
     for(int i=0;i<size;i++){
         th[i] = new QThread();
         workers[i] = new RecvQSocketWorker(q,time,0,0);      //new RecvQSocketWorker(q,t,incSoc.at(i),);
@@ -29,7 +30,7 @@ void RecvQueueWorker::process(){
         th[i]->start();
     }
 
-    int i=0;
+    /*int i=0;
     QMapIterator<int,QTcpSocket*>  j(this->incSoc);
     while(j.hasNext()){
         j.next();
@@ -39,7 +40,7 @@ void RecvQueueWorker::process(){
         workers[i]->moveToThread(th[i]);
         th[i]->start();
         i++;
-    }
+    }*/
 }
 
 
