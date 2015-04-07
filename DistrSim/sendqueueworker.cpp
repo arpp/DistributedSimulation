@@ -37,11 +37,33 @@ int SendQueueWorker::findDestMId(unsigned long srcNodeId, unsigned long destNode
 }
 
 void SendQueueWorker::process(){
-    qDebug() << QTime::currentTime().toString() << "SendQueueWorker Send process thread: "<<QThread::currentThreadId()<<"\n";
 
-    EventData* currentEvent = (q->sendQueue).dequeue();
-    unsigned long srcNodeId = currentEvent->getSrcNodeId();
-    unsigned long destNodeId = currentEvent->getDestNodeId();
-    int destMId = findDestMId(srcNodeId, destNodeId);
+    while(true){
+        qDebug() << QTime::currentTime().toString() << "SendQueueWorker: Send process thread: "<<QThread::currentThreadId()<<"\n";
 
+        //Dequeue an event if sendQueue is not empty
+        sendQueueMutex->lock();
+        if ((q->sendQueue).size() == 0)
+            sendQueueNotEmpty->wait(sendQueueMutex);
+
+        EventData* currentEvent = (q->sendQueue).dequeue();
+        sendQueueMutex->unlock();
+
+        QTcpSocket* socket;
+        if(currentEvent->getType() == 0 || currentEvent->getType() == 1)//NULL or DEMAND Message
+        {
+            //Here destNodeId is the destMId
+            socket = outSoc[currentEvent->getDestNodeId()];
+        }
+        else//General Message
+        {
+            unsigned long srcNodeId = currentEvent->getSrcNodeId();
+            unsigned long destNodeId = currentEvent->getDestNodeId();
+            int destMId = findDestMId(srcNodeId, destNodeId);
+            socket = outSoc[destMId];
+        }
+
+        QDataStream st(socket);
+        st<<(*currentEvent);
+    }
 }
