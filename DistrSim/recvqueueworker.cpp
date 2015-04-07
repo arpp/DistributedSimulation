@@ -22,7 +22,7 @@ void RecvQueueWorker::process(){
     this->workers = new RecvQSocketWorker*[size];
     for(int i=0;i<size;i++){
         th[i] = new QThread();
-        workers[i] = new RecvQSocketWorker(q,time,0);      //new RecvQSocketWorker(q,t,incSoc.at(i));
+        workers[i] = new RecvQSocketWorker(q,time,0,0);      //new RecvQSocketWorker(q,t,incSoc.at(i));
         QObject::connect(th[i],SIGNAL(started()),workers[i],SLOT(process()));
         workers[i]->moveToThread(th[i]);
         th[i]->start();
