@@ -23,41 +23,33 @@ int main(int argc, char* argv[])
     QMap<int, QTcpSocket*> receivers = c.getReceivers();
 
 
-    QFile inputFile("../requirements.txt");
+//    QFile inputFile("../requirements.txt");
 
-    if(inputFile.open(QIODevice::ReadOnly)) {
+//    if(inputFile.open(QIODevice::ReadOnly)) {
 
-        QFileInfo fileinfo(inputFile.fileName());
-        int sizeofFile = fileinfo.size();
-        QByteArray filesize;
-        filesize.append(QByteArray::number((qint32)fileinfo.size()));
-        QTextStream(stdout) << filesize;
+//        QFileInfo fileinfo(inputFile.fileName());
+//        int sizeofFile = fileinfo.size();
+//        QByteArray filesize;
+//        filesize.append(QByteArray::number((qint32)fileinfo.size()));
+//        QTextStream(stdout) << filesize;
 
-        int tt = senders[0]->write(filesize);
-        senders[0]->waitForBytesWritten();
-        QTextStream(stdout) << "Size sent: " << t << "\n";
-//        while (!toSend.atEnd())
-//        {
-//            QByteArray rawFile;
-//            rawFile = toSend.read(50000);
-//            out << rawFile;
-//            qDebug() << "ToSend"<<rawFile.size();
-//            s+=rawFile.size();
-//        }
+//        int tt = senders[0]->write(filesize);
+//        senders[0]->waitForBytesWritten();
+//        QTextStream(stdout) << "Size sent: " << t << "\n";
+////        while (!toSend.atEnd())
+////        {
+////            QByteArray rawFile;
+////            rawFile = toSend.read(50000);
+////            out << rawFile;
+////            qDebug() << "ToSend"<<rawFile.size();
+////            s+=rawFile.size();
+////        }
 
-//        qDebug() << "Total:" << s;
+////        qDebug() << "Total:" << s;
 
-    }
+//    }
 
 //    QTextStream(stdout) << receivers[1]->peerAddress().toString();
-//    bool xx =  receivers[1]->waitForReadyRead();
-//       QByteArray buffer;
-//        receivers[1]->read(buffer, receivers[1]->bytesAvailable());
-//        QString x(buffer);
-////       if(receivers[1]->bytesAvailable()){
-////        QDataStream instream(receivers[1]);
-////        instream >> buffer;
-//        QTextStream(stdout) << "File size is: " << buffer << "\n";
 //       }
 
 //  int stat = senders[1]->write("Hellokdsbgkjbsdbvkbfkhgbkjsdnvkjbsfkjgndsjlnvkjsdfgjndskjbgdskj Wosjfhjavsfjavsjasvfjasagshvfrld", 200);
