@@ -42,7 +42,6 @@ void SendQueueWorker::process(){
     qDebug() << QTime::currentTime().toString() << "SendQueueWorker: Send process thread: "<<QThread::currentThreadId()<<"\n";
 
     while(true){
-        qDebug() << QTime::currentTime().toString() << "SendQueueWorker: Send process thread: "<<QThread::currentThreadId()<<"\n";
 
         //Dequeue an event if sendQueue is not empty
         sendQueueMutex->lock();
@@ -54,6 +53,7 @@ void SendQueueWorker::process(){
         EventData* currentEvent = (q->sendQueue).dequeue();//Consume event
         sendQueueMutex->unlock();
 
+        qDebug() << QTime::currentTime().toString() << "SendQueueWorker: Send process thread: "<<QThread::currentThreadId()<<" Type: "<<currentEvent->getType()<<"\n";
         QTcpSocket* socket;
         if(currentEvent->getType() == 0 || currentEvent->getType() == 1)//NULL or DEMAND Message
         {
