@@ -29,7 +29,7 @@ void EventProcessWorker::process(){
        QList<int> l;
        int flag=0;
        int count=0;
-       unsigned long minTS=ULONG_MAX;
+       unsigned long minTS=(*time);//ULONG_MAX;
        this->evQueueMutex->lock();
        for(it=this->q->evQueue.begin();it!=this->q->evQueue.end();it++){
            if(!it.value().isEmpty()){

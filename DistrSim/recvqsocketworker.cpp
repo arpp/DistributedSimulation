@@ -45,8 +45,12 @@ void RecvQSocketWorker::process(){
 
             QMap<int,QQueue<Event*> >::iterator it;
             int flag=0;
-            unsigned long minTS=ULONG_MAX;
+            unsigned long minTS=(*time);//ULONG_MAX
+//            qDebug() << "num 0: " << q->evQueue[0].size();
+//            qDebug() << "num 1: " << q->evQueue[1].size();
+
             this->evQueueMutex->lock();
+
             for(it=this->q->evQueue.begin();it!=this->q->evQueue.end();it++){
                 if(!it.value().isEmpty()){
                      if(minTS>it.value().head()->getTimestamp()){
@@ -54,20 +58,26 @@ void RecvQSocketWorker::process(){
                      }
                 }
                 else if(it.key()!=this->m_id){
+//                     qDebug()<<"itkey"<<it.key();
                      if(minTS>this->q->safeTime.value(it.key())){
+                         qDebug()<<minTS<<" "<<this->q->safeTime.value(it.key());
                          minTS=this->q->safeTime.value(it.key());
                          flag=1;
                      }
                 }
             }
             this->evQueueMutex->unlock();
-
+            qDebug()<<flag;
             if(flag==0)
                 this->evQueueNotEmpty->wakeAll();
             qDebug()<<"RecvProcessSocketWorker: "<<QThread::currentThreadId()<<" nulmsg, tmeup: "<<timeStampOtherMachine<<"";
         }
         else if(type==1){
             //Demand message
+            timeStampMutex->lock();
+            (*time)++;
+            *time = (*time)>(ev->getTimestamp() + 1)?(*time):(ev->getTimestamp() + 1);
+            timeStampMutex->unlock();
             //Create NULL Message. Add to send queue.
             EventData *nullMessage = new EventData(*time+5, m_id, ev->getSrcNodeId(), 0);
             timeStampMutex->lock();
@@ -105,7 +115,7 @@ void RecvQSocketWorker::process(){
 //            qDebug() << "1";
             QMap<int,QQueue<Event*> >::iterator it;
             int flag=0;
-            unsigned long minTS=ULONG_MAX;
+            unsigned long minTS=(*time);//ULONG_MAX;
             for(it=this->q->evQueue.begin();it!=this->q->evQueue.end();it++){
                 if(!it.value().isEmpty()){
                      if(minTS>it.value().head()->getTimestamp()){
