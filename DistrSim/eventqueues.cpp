@@ -6,6 +6,12 @@ EventQueues::EventQueues(QMap<int,QQueue<Event*> > evQueue, QQueue<EventData*> s
     this->sendQueue = sendQueue;
     this->nodeList = nodeList;
     this->edgeList = edgeList;
+
+    QMap<int,QQueue<Event*> >::iterator iter;
+    for(iter=evQueue.begin();iter!=evQueue.end();++iter)
+    {
+        safeTime[iter.key()] = 0;
+    }
 }
 
 
