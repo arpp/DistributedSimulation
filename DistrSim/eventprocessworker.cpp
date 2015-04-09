@@ -41,8 +41,9 @@ void EventProcessWorker::process(){
             foreach(int i,l){
                 //create a DEMAND msg for each i-th mnode and enqueue it in sendQueue
                 EventData *demand = new EventData(*(this->time),i,i,1);
-                this->q->sendQueue.enqueue(demand);
+
                 this->sendQueueMutex->lock();
+                this->q->sendQueue.enqueue(demand);
                 this->sendQueueNotEmpty->wakeAll();
                 this->sendQueueMutex->unlock();
             }
@@ -64,6 +65,35 @@ void EventProcessWorker::process(){
        this->evQueueMutex->unlock();
 
        QList<EventData> genEvents = event->runEvent();
+       for(int i=0;i<genEvents.size();i++){
+           int lfl=0;
+           NodeAbstract *nabs;
+           EventData d = genEvents[i];
+           for(int j=0;j<this->q->nodeList.size();j++){
+               if(this->q->nodeList[j]->getNodeId()==d.getDestNodeId()){
+                   nabs=this->q->nodeList[j];
+                   lfl=1;
+                   break;
+               }
+           }
+           if(lfl==1){
+               //add locally
+               Event *ev = new Event(nabs,&d);
+               this->evQueueMutex->lock();
+               this->timeStampMutex->lock();
+               (*(this->time))++;
+               this->timeStampMutex->unlock();
+               this->q->evQueue.find(this->m_id).value().enqueue(ev);
+               this->evQueueMutex->unlock();
+           }
+           else{
+               //add to send queue
+               this->sendQueueMutex->lock();
+               this->q->sendQueue.enqueue(&d);
+               this->sendQueueNotEmpty->wakeAll();
+               this->sendQueueMutex->unlock();
+           }
+       }
     }
 
 }
