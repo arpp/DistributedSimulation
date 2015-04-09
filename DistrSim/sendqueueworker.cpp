@@ -3,6 +3,7 @@
 #include <QThread>
 #include <QDebug>
 #include <QTime>
+#include "createNetwork/blockwriter.h"
 
 SendQueueWorker::SendQueueWorker(EventQueues *q, unsigned long *t, QMap<int,QTcpSocket*> outSoc, int m_id,
                                  QMutex *sendQueueMutex, QMutex *timeStampMutex, QWaitCondition *sendQueueNotEmpty, QObject *parent) :
@@ -72,7 +73,9 @@ void SendQueueWorker::process(){
             timeStampMutex->unlock();
         }
 
-        QDataStream st(socket);
-        st<<(*currentEvent);
+        BlockWriter(socket).stream()<<(*currentEvent);
+        socket->waitForBytesWritten(-1);
+//        QDataStream st(socket);
+//        st<<(*currentEvent);
     }
 }

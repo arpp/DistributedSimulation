@@ -3,6 +3,7 @@
 #include "eventdata.h"
 #include <QThread>
 #include <QTime>
+#include "createNetwork/blockreader.h"
 
 RecvQSocketWorker::RecvQSocketWorker(EventQueues *q, unsigned long *t, QTcpSocket* incSoc, int m_id,
                                      QMutex *evQueueMutex, QMutex *timeStampMutex, QWaitCondition *evQueueNotEmpty, QMutex *sendQueueMutex, QWaitCondition *sendQueueNotEmpty, QObject *parent) :
@@ -24,12 +25,14 @@ void RecvQSocketWorker::process(){
     qDebug()<< QTime::currentTime().toString()<<" RecvQSocketWorker: Receive process thread: "<<QThread::currentThreadId();
 
     while(true){
-        this->socket->waitForReadyRead(-1);
+
+//        this->socket->waitForReadyRead(-1);
         //New event received
 
         EventData *ev = new EventData(0,0,0,0);
-        QDataStream st(this->socket);
-        st>>(*ev);
+//        QDataStream st(this->socket);
+
+        BlockReader(this->socket).stream()>>(*ev);
 
         timeStampMutex->lock();
         (*time)++;
