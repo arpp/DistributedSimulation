@@ -69,10 +69,14 @@ void MNode::initTransfer()
     transferFiles();
 }
 
-void MNode::beginSimulation(){
+void MNode::initQueues()
+{
     QMap<int,QQueue<Event*> > evQueue = QMap<int,QQueue<Event*> >();
     QQueue<EventData*> sendQueue = QQueue<EventData*>();
     this->events = new EventQueues(evQueue, sendQueue, this->nodeList, this->edgeList);
+}
+
+void MNode::beginSimulation(){
 
     this->evQueueMutex = new QMutex();
     this->sendQueueMutex = new QMutex();

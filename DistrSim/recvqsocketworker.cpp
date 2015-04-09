@@ -2,6 +2,7 @@
 #include <QDebug>
 #include "eventdata.h"
 #include <QThread>
+#include <QTime>
 
 RecvQSocketWorker::RecvQSocketWorker(EventQueues *q, unsigned long *t, QTcpSocket* incSoc, int m_id,
                                      QMutex *evQueueMutex, QMutex *timeStampMutex, QWaitCondition *evQueueNotEmpty, QMutex *sendQueueMutex, QWaitCondition *sendQueueNotEmpty, QObject *parent) :
@@ -20,6 +21,7 @@ RecvQSocketWorker::RecvQSocketWorker(EventQueues *q, unsigned long *t, QTcpSocke
 
 void RecvQSocketWorker::process(){
 //The code to listen and add to the queues go here
+    qDebug()<< QTime::currentTime().toString()<<" RecvQSocketWorker: Receive process thread: "<<QThread::currentThreadId();
 
     while(true){
         this->socket->waitForReadyRead(-1);

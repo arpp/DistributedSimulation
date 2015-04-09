@@ -38,6 +38,7 @@ int SendQueueWorker::findDestMId(unsigned long srcNodeId, unsigned long nodeId)
 }
 
 void SendQueueWorker::process(){
+    qDebug() << QTime::currentTime().toString() << "SendQueueWorker: Send process thread: "<<QThread::currentThreadId()<<"\n";
 
     while(true){
         qDebug() << QTime::currentTime().toString() << "SendQueueWorker: Send process thread: "<<QThread::currentThreadId()<<"\n";

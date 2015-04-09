@@ -20,6 +20,7 @@ EventProcessWorker::EventProcessWorker(EventQueues *q, unsigned long *t, int m_i
 
 void EventProcessWorker::process(){
 //    (*(this->time))++;
+    qDebug()<< QTime::currentTime().toString()<<" EVENT_PROCESS_WORKER: Event process thread: "<<QThread::currentThreadId();
 
     while(true){
        //search whether any queue is empty then we will

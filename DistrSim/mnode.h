@@ -32,17 +32,20 @@ public:
     void addEdge(EdgeAbstract* edge, unsigned long sysId);
     void print();
     void initTransfer();
+    void initQueues();
     void beginSimulation();
     unsigned long TIME;
+    EventQueues *events;
+
+    QList<NodeAbstract*> nodeList;
+    QList<QList<QPair<NodeAbstract*,int> > > edgeList;
+
 
 private:
     int m_id;
     QString configFile;
 
-    QList<NodeAbstract*> nodeList;
-    QList<QList<QPair<NodeAbstract*,int> > > edgeList;
     QMap<unsigned long, unsigned long> nodeIdToIndex;
-    EventQueues *events;
 
     void initProcessQueueThread();
     void initRecvThread();

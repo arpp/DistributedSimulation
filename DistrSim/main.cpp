@@ -11,9 +11,19 @@ int main(int argc, char *argv[])
     MNode *n = new MNode("../DistributedSimulation/connections.config");
     n->initTransfer();
     readGraph rg(n);
+    n->initQueues();
     qDebug() << "hello\n";
     n->print();
-    //n->beginSimulation();
+
+
+    unsigned long startNode = 10;
+    NodeAbstract * node = new NodeAbstract(startNode);
+    EventData * evData = new EventData(0,startNode,5,2);
+    Event * seedEvent = new Event(node, evData, n->nodeList, n->edgeList);
+    n->events->evQueue.find(1).value().enqueue(seedEvent);
+
+    qDebug() << "started\n";
+    n->beginSimulation();
 
     /*exampleNode* n1 = new exampleNode(10);
     exampleNode* n2 = new exampleNode(12);
