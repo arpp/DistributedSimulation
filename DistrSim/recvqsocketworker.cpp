@@ -36,21 +36,38 @@ void RecvQSocketWorker::process(){
         int type = ev->getType();
 //        qDebug()<<"RecvProcessSocketWorker: "<<QThread::currentThreadId()<<" tom: "<<type<<"";
 
+
         if(type==0){
             //Null message
-            timeStampMutex->lock();
-            (*time)++;
-            *time = (*time)>(ev->getTimestamp() + 1)?(*time):(ev->getTimestamp() + 1);
-            qDebug()<<"RecvProcessSocketWorker: "<<QThread::currentThreadId()<<" tstamp updated: "<<*time<<"";
-            timeStampMutex->unlock();
             unsigned long timeStampOtherMachine = ev->getTimestamp();
             q->safeTime[ev->getSrcNodeId()]=timeStampOtherMachine;
+
+            int flag=0;
+            unsigned long minTS=ULONG_MAX;
+            this->evQueueMutex->lock();
+            for(it=this->q->evQueue.begin();it!=this->q->evQueue.end();it++){
+                if(!it.value().isEmpty()){
+                     if(minTS>it.value().head()->getTimestamp()){
+                         minTS=it.value().head()->getTimestamp();
+                     }
+                }
+                else if(it.key()!=this->m_id){
+                     if(minTS>this->q->safeTime.value(it.key())){
+                         minTS=this->q->safeTime.value(it.key());
+                         flag=1;
+                     }
+                }
+            }
+            this->evQueueMutex->unlock();
+
+            if(flag==0)
+                this->evQueueNotEmpty->wakeAll();
             qDebug()<<"RecvProcessSocketWorker: "<<QThread::currentThreadId()<<" nulmsg, tmeup: "<<timeStampOtherMachine<<"";
         }
         else if(type==1){
             //Demand message
             //Create NULL Message. Add to send queue.
-            EventData *nullMessage = new EventData(*time, m_id, ev->getSrcNodeId(), 0);
+            EventData *nullMessage = new EventData(*time+10, m_id, ev->getSrcNodeId(), 0);
             qDebug()<<"RecvProcessSocketWorker: "<<QThread::currentThreadId()<<" dmdmsg, tmeup: "<<*time<<"";
             sendQueueMutex->lock();
             q->sendQueue.enqueue(nullMessage);

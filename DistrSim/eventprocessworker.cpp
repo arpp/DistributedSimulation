@@ -51,7 +51,8 @@ void EventProcessWorker::process(){
            }
        }
        if(count==this->q->evQueue.size()){
-            this->evQueueNotEmpty->wait(this->evQueueMutex);
+//            this->evQueueNotEmpty->wait(this->evQueueMutex);
+           continue;
        }
        else if(flag==1){
             foreach(int i,l){
