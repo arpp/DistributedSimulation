@@ -11,7 +11,7 @@ public:
     BlockReader(QIODevice *io)
     {
         buffer.open(QIODevice::ReadWrite);
-        _stream.setVersion(QDataStream::Qt_4_8);
+        _stream.setVersion(QDataStream::Qt_5_2);
         _stream.setDevice(&buffer);
 
         quint64 blockSize;
