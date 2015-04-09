@@ -28,7 +28,7 @@ int SendQueueWorker::findDestMId(unsigned long srcNodeId, unsigned long nodeId)
         //Find srcNode in nodeList
         if(nodeList.at(i)->getNodeId() == srcNodeId)
         {
-            qDebug() << "node is : " << srcNodeId << "\n";
+            qDebug() << "node is : " << srcNodeId << "";
             QList<QPair<NodeAbstract*,int> > edges = (q->edgeList).at(i);
             for(int j = 0; j < edges.size(); ++j)
             {
@@ -42,10 +42,9 @@ int SendQueueWorker::findDestMId(unsigned long srcNodeId, unsigned long nodeId)
 }
 
 void SendQueueWorker::process(){
-    qDebug() << QTime::currentTime().toString() << "SendQueueWorker: Send process thread: "<<QThread::currentThreadId()<<"\n";
+    qDebug() << QTime::currentTime().toString() << "SendQueueWorker: Send process thread: "<<QThread::currentThreadId();
 
     while(true){
-        qDebug() << QTime::currentTime().toString() << "SendQueueWorker: Send process thread: "<<QThread::currentThreadId()<<"\n";
 
         //Dequeue an event if sendQueue is not empty
         sendQueueMutex->lock();
@@ -75,8 +74,8 @@ void SendQueueWorker::process(){
             currentEvent->setTimestamp(*time);
             timeStampMutex->unlock();
         }
-
-        qDebug() << "socket peer : " << socket->peerAddress().toString()<<"\n";
+        qDebug() << QTime::currentTime().toString() << "SendQueueWorker: Send process thread: "<<QThread::currentThreadId()<<" type = "<<currentEvent->getType();
+        qDebug() << "socket peer : " << socket->peerAddress().toString();
         BlockWriter(socket).stream()<<(*currentEvent);
         socket->waitForBytesWritten(-1);
 //        QDataStream st(socket);

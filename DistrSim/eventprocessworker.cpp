@@ -82,7 +82,7 @@ void EventProcessWorker::process(){
        event = q->evQueue[k].dequeue();
        this->evQueueMutex->unlock();
 
-       qDebug()<< QTime::currentTime().toString()<<" EVENT_PROCESS_WORKER: Event process thread: "<<QThread::currentThreadId()<<"Processed event timestamp: "<<event->getTimestamp()<<"\n";
+       qDebug()<< QTime::currentTime().toString()<<" EVENT_PROCESS_WORKER: Event process thread: "<<QThread::currentThreadId()<<"Processed event timestamp: "<<event->getTimestamp()<<"";
        QList<EventData> genEvents = event->runEvent();
        for(int i=0;i<genEvents.size();i++){
            int lfl=0;

@@ -50,7 +50,7 @@ void connector::begin() {
         QTcpSocket* qts = sockets[i];
         receivers[c->getID((qts->peerAddress()).toString())] = qts;
     }
-    QTextStream(stdout) << "Done dona done\n";
+    QTextStream(stdout) << "Done dona done";
 }
 
 QMap<int, QTcpSocket*> connector::getSenders() {

@@ -12,23 +12,23 @@ int main(int argc, char *argv[])
     n->initTransfer();
     readGraph rg(n);
     n->initQueues();
-    qDebug() << "hello\n";
+    qDebug() << "hello";
     n->print();
 
 
     unsigned long startNode = 10;
-    qDebug() << "1\n";
+    qDebug() << "1";
     NodeAbstract * node = new NodeAbstract(startNode);
-    qDebug() << "2\n";
+    qDebug() << "2";
     EventData * evData = new EventData(0,startNode,startNode,2);
-    qDebug() << "3\n";
+    qDebug() << "3";
     Event * seedEvent = new Event(node, evData, n->nodeList, n->edgeList);
-    qDebug() << "4\n";
-    qDebug() << "\n" << n->events->evQueue.value(n->getMId()).size() << "\n";
+    qDebug() << "4";
+    qDebug() << "" << n->events->evQueue.value(n->getMId()).size() << "";
     n->events->evQueue[n->getMId()].enqueue(seedEvent);
 //    n->events->evQueue.find(n->getMId()).value().enqueue(seedEvent);
 
-    qDebug() << "started\n";
+    qDebug() << "started";
     n->beginSimulation();
 
     /*exampleNode* n1 = new exampleNode(10);
