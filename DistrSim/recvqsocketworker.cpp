@@ -70,7 +70,8 @@ void RecvQSocketWorker::process(){
             Event * newEvent = new Event(n, ev, q->nodeList, q->edgeList);
 
             evQueueMutex->lock();
-            q->evQueue.find(m_id).value().enqueue(newEvent);
+            q->evQueue[m_id].enqueue(newEvent);
+//            q->evQueue.find(m_id).value().enqueue(newEvent);
 
             QMap<int,QQueue<Event*> >::iterator it;
             int flag=0;

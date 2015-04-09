@@ -17,10 +17,16 @@ int main(int argc, char *argv[])
 
 
     unsigned long startNode = 10;
+    qDebug() << "1\n";
     NodeAbstract * node = new NodeAbstract(startNode);
-    EventData * evData = new EventData(0,startNode,5,2);
+    qDebug() << "2\n";
+    EventData * evData = new EventData(0,startNode,startNode,2);
+    qDebug() << "3\n";
     Event * seedEvent = new Event(node, evData, n->nodeList, n->edgeList);
-    n->events->evQueue.find(1).value().enqueue(seedEvent);
+    qDebug() << "4\n";
+    qDebug() << "\n" << n->events->evQueue.value(n->getMId()).size() << "\n";
+    n->events->evQueue[n->getMId()].enqueue(seedEvent);
+//    n->events->evQueue.find(n->getMId()).value().enqueue(seedEvent);
 
     qDebug() << "started\n";
     n->beginSimulation();

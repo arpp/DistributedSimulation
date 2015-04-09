@@ -78,7 +78,8 @@ void EventProcessWorker::process(){
                 }
              }
        }
-       event=this->q->evQueue.find(k).value().dequeue();
+//       event=this->q->evQueue.find(k).value().dequeue();
+       event = q->evQueue[k].dequeue();
        this->evQueueMutex->unlock();
 
        qDebug()<< QTime::currentTime().toString()<<" EVENT_PROCESS_WORKER: Event process thread: "<<QThread::currentThreadId()<<"Processed event timestamp: "<<event->getTimestamp()<<"\n";
@@ -103,7 +104,8 @@ void EventProcessWorker::process(){
 
                this->evQueueMutex->lock();
                Event *ev = new Event(nabs,&d,q->nodeList, q->edgeList);
-               this->q->evQueue.find(this->m_id).value().enqueue(ev);
+               q->evQueue[m_id].enqueue((ev));
+//               this->q->evQueue.find(this->m_id).value().enqueue(ev);
                this->evQueueMutex->unlock();
            }
            else{

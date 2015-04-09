@@ -2,6 +2,7 @@
 #include <QPair>
 #include <QDebug>
 #include <QString>
+#include <QHostAddress>
 
 MNode::MNode(QString configFile)
 {
@@ -53,6 +54,14 @@ void MNode::initConnection()
     c.begin();
     this->incomingConnection = c.getReceivers();
     this->outgoingConnection = c.getSenders();
+
+//    QMap<int, QTcpSocket*>::iterator iter;
+//    for(iter=incomingConnection.begin();iter!=incomingConnection.end();++iter)
+//        qDebug()<<iter.key() << ": " << iter.value()->peerAddress().toString();
+
+//    for(iter=outgoingConnection.begin();iter!=outgoingConnection.end();++iter)
+//        qDebug()<<iter.key() << ": " << iter.value()->peerAddress().toString();
+
     this->m_id = c.getOwnID();
 }
 
