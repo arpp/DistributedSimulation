@@ -12,6 +12,7 @@ unsigned long Event::getNodeID(){
 
 QList<EventData> Event::runEvent()
 {
+    int typeOfEvent = eventData->getTypeOfEvent();
 
 }
 

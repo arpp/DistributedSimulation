@@ -84,6 +84,31 @@ void RecvQSocketWorker::process(){
                 }
             }
 
+            QList<int> emptyMNodes;
+            int myFlag = 0;
+            for(it=this->q->evQueue.begin();it!=this->q->evQueue.end();it++){
+                if(it.value().isEmpty()){
+                    if(it.key()==this->m_id)
+                        myFlag = 1;
+                    else
+                        emptyMNodes.append(it.key());
+                }
+            }
+
+            if(myFlag == 1 && (emptyMNodes.size() == q->evQueue.size() - 2))
+            {
+                foreach(int i,emptyMNodes){
+                    //create a DEMAND msg for each i-th mnode and enqueue it in sendQueue
+                    EventData *demand = new EventData(*(this->time),i,i,1);
+
+                    this->sendQueueMutex->lock();
+                    this->q->sendQueue.enqueue(demand);
+                    this->sendQueueNotEmpty->wakeAll();
+                    this->sendQueueMutex->unlock();
+                }
+            }
+
+
             if(flag == 0)
                 evQueueNotEmpty->wakeAll();
             evQueueMutex->unlock();
