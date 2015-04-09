@@ -1,10 +1,10 @@
 #include "eventdata.h"
 
-EventData::EventData(unsigned long ts, unsigned long srcNodeId, unsigned long destNodeId, int type)
+EventData::EventData(unsigned long ts, unsigned long srcNodeId, unsigned long nodeId, int type)
 {
     this->timestamp = ts;
     this->srcNodeId = srcNodeId;
-    this->destNodeId = destNodeId;
+    this->NodeId = nodeId;
     this->type = type;
 }
 
@@ -13,9 +13,9 @@ unsigned long EventData::getSrcNodeId()
     return this->srcNodeId;
 }
 
-unsigned long EventData::getDestNodeId()
+unsigned long EventData::getNodeId()
 {
-    return this->destNodeId;
+    return this->NodeId;
 }
 
 unsigned long EventData::getTimestamp()
@@ -34,15 +34,15 @@ void EventData::setTimestamp(unsigned long ts)
 
 QDataStream& operator<<(QDataStream& out, EventData &eventData)
 {
-    out << (quint64)(eventData.getTimestamp()) << (quint64)(eventData.getSrcNodeId()) << (quint64)(eventData.getDestNodeId()) << eventData.getType();
+    out << (quint64)(eventData.getTimestamp()) << (quint64)(eventData.getSrcNodeId()) << (quint64)(eventData.getNodeId()) << eventData.getType();
     return out;
 }
 
 QDataStream& operator>>(QDataStream& in, EventData & eventData)
 {
-    quint64 ts, srcNodeId, destNodeId;
+    quint64 ts, srcNodeId, nodeId;
     int type;
-    in >> ts >> srcNodeId >> destNodeId >> type;
-    eventData = EventData((unsigned long)ts, (unsigned long)srcNodeId, (unsigned long)  destNodeId, type);
+    in >> ts >> srcNodeId >> nodeId >> type;
+    eventData = EventData((unsigned long)ts, (unsigned long)srcNodeId, (unsigned long) nodeId, type);
     return in;
 }

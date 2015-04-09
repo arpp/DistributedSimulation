@@ -82,7 +82,7 @@ void EventProcessWorker::process(){
            NodeAbstract *nabs;
            EventData d = genEvents[i];
            for(int j=0;j<this->q->nodeList.size();j++){
-               if(this->q->nodeList[j]->getNodeId()==d.getDestNodeId()){
+               if(this->q->nodeList[j]->getNodeId()==d.getNodeId()){
                    nabs=this->q->nodeList[j];
                    lfl=1;
                    break;
@@ -90,11 +90,12 @@ void EventProcessWorker::process(){
            }
            if(lfl==1){
                //add locally
-               Event *ev = new Event(nabs,&d);
                this->evQueueMutex->lock();
                this->timeStampMutex->lock();
                (*(this->time))++;
+               d.setTimestamp(*time);
                this->timeStampMutex->unlock();
+               Event *ev = new Event(nabs,&d);
                this->q->evQueue.find(this->m_id).value().enqueue(ev);
                this->evQueueMutex->unlock();
            }

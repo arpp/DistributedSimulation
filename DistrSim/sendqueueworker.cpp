@@ -17,7 +17,7 @@ SendQueueWorker::SendQueueWorker(EventQueues *q, unsigned long *t, QMap<int,QTcp
     this->sendQueueNotEmpty=sendQueueNotEmpty;
 }
 
-int SendQueueWorker::findDestMId(unsigned long srcNodeId, unsigned long destNodeId)
+int SendQueueWorker::findDestMId(unsigned long srcNodeId, unsigned long nodeId)
 {
     QList<NodeAbstract*> nodeList = q->nodeList;
 
@@ -29,7 +29,7 @@ int SendQueueWorker::findDestMId(unsigned long srcNodeId, unsigned long destNode
             QList<QPair<NodeAbstract*,int> > edges = (q->edgeList).at(i);
             for(int j = 0; j < edges.size(); ++j)
             {
-                if(edges.at(j).first->getNodeId() == destNodeId)
+                if(edges.at(j).first->getNodeId() == nodeId)
                     return edges.at(j).second;
             }
         }
@@ -56,14 +56,19 @@ void SendQueueWorker::process(){
         if(currentEvent->getType() == 0 || currentEvent->getType() == 1)//NULL or DEMAND Message
         {
             //Here destNodeId is the destMId
-            socket = outSoc[currentEvent->getDestNodeId()];
+            socket = outSoc[currentEvent->getNodeId()];
         }
         else//General Message
         {
             unsigned long srcNodeId = currentEvent->getSrcNodeId();
-            unsigned long destNodeId = currentEvent->getDestNodeId();
-            int destMId = findDestMId(srcNodeId, destNodeId);
+            unsigned long nodeId = currentEvent->getNodeId();
+            int destMId = findDestMId(srcNodeId, nodeId);
             socket = outSoc[destMId];
+
+            timeStampMutex->lock();
+            (*time)++;
+            currentEvent->setTimestamp(*time);
+            timeStampMutex->unlock();
         }
 
         QDataStream st(socket);
