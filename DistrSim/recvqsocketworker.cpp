@@ -25,9 +25,6 @@ void RecvQSocketWorker::process(){
     while(true){
         this->socket->waitForReadyRead(-1);
         //New event received
-        timeStampMutex->lock();
-        (*time)++;
-        timeStampMutex->unlock();
 
         EventData *ev = new EventData(0,0,0,0);
         QDataStream st(this->socket);
@@ -37,6 +34,7 @@ void RecvQSocketWorker::process(){
         if(type==0){
             //Null message
             unsigned long timeStampOtherMachine = ev->getTimestamp();
+            q->safeTime.find(ev->getSrcNodeId()).value() = timeStampOtherMachine;
         }
         else if(type==1){
             //Demand message
@@ -51,6 +49,11 @@ void RecvQSocketWorker::process(){
         else{
             //Write code to create EventData and Event and add Event to eventQueue at value m_id
 
+            timeStampMutex->lock();
+            (*time)++;
+            ev->setTimestamp(*time);
+            timeStampMutex->unlock();
+
             NodeAbstract* n = 0;
             for(int i=0;i<q->nodeList.size();++i)
             {
@@ -58,7 +61,6 @@ void RecvQSocketWorker::process(){
                     n = q->nodeList.at(i);
             }
             //Update timestamp of event
-            ev->setTimestamp(*time);
             Event * newEvent = new Event(n, ev);
 
             evQueueMutex->lock();
