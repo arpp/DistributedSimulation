@@ -12,7 +12,7 @@ class RecvQSocketWorker : public QObject
     Q_OBJECT
 public:
     explicit RecvQSocketWorker(EventQueues *q, unsigned long *t, QTcpSocket* incSoc, int m_id,
-                               QMutex *evQueueMutex, QMutex *timeStampMutex, QWaitCondition *evQueueNotEmpty, QObject *parent = 0);
+                               QMutex *evQueueMutex, QMutex *timeStampMutex, QWaitCondition *evQueueNotEmpty, QMutex *sendQueueMutex, QWaitCondition *sendQueueNotEmpty, QObject *parent = 0);
 
 signals:
 
@@ -30,6 +30,8 @@ private:
     QWaitCondition *evQueueNotEmpty;
     QMutex *evQueueMutex;
     QMutex *timeStampMutex;
+    QMutex *sendQueueMutex;
+    QWaitCondition *sendQueueNotEmpty;
 };
 
 #endif // RECVQSOCKETWORKER_H

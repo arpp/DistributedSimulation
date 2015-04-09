@@ -11,6 +11,7 @@ public:
     unsigned long getSrcNodeId();
     unsigned long getDestNodeId();
     int getType();
+    void setTimestamp(unsigned long ts);
 
     friend QDataStream& operator<<(QDataStream& out, EventData &eventData);
     friend QDataStream& operator>>(QDataStream& in, EventData & eventData);

@@ -27,6 +27,11 @@ int EventData::getType(){
     return this->type;
 }
 
+void EventData::setTimestamp(unsigned long ts)
+{
+    this->timestamp = ts;
+}
+
 QDataStream& operator<<(QDataStream& out, EventData &eventData)
 {
     out << (quint64)(eventData.getTimestamp()) << (quint64)(eventData.getSrcNodeId()) << (quint64)(eventData.getDestNodeId()) << eventData.getType();

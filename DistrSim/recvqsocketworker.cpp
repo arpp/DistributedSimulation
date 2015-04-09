@@ -4,7 +4,7 @@
 #include <QThread>
 
 RecvQSocketWorker::RecvQSocketWorker(EventQueues *q, unsigned long *t, QTcpSocket* incSoc, int m_id,
-                                     QMutex *evQueueMutex, QMutex *timeStampMutex, QWaitCondition *evQueueNotEmpty, QObject *parent) :
+                                     QMutex *evQueueMutex, QMutex *timeStampMutex, QWaitCondition *evQueueNotEmpty, QMutex *sendQueueMutex, QWaitCondition *sendQueueNotEmpty, QObject *parent) :
     QObject(parent)
 {
     this->q = q;
@@ -14,6 +14,8 @@ RecvQSocketWorker::RecvQSocketWorker(EventQueues *q, unsigned long *t, QTcpSocke
     this->evQueueMutex=evQueueMutex;
     this->timeStampMutex=timeStampMutex;
     this->evQueueNotEmpty=evQueueNotEmpty;
+    this->sendQueueMutex = sendQueueMutex;
+    this->sendQueueNotEmpty = sendQueueNotEmpty;
 }
 
 void RecvQSocketWorker::process(){
@@ -39,7 +41,12 @@ void RecvQSocketWorker::process(){
         else if(type==1){
             //Demand message
             //TODO:Do we increment timestamp for demand message??
-            unsigned long timeStampToSend = *time;
+            //Create NULL Message. Add to send queue.
+            EventData *nullMessage = new EventData(*time, m_id, ev->getSrcNodeId(), 0);
+            sendQueueMutex->lock();
+            q->sendQueue.enqueue(nullMessage);
+            sendQueueNotEmpty->wakeAll();
+            sendQueueMutex->unlock();
         }
         else{
             //Write code to create EventData and Event and add Event to eventQueue at value m_id
@@ -50,6 +57,8 @@ void RecvQSocketWorker::process(){
                 if(q->nodeList.at(i)->getNodeId() == ev->getDestNodeId())
                     n = q->nodeList.at(i);
             }
+            //Update timestamp of event
+            ev->setTimestamp(*time);
             Event * newEvent = new Event(n, ev);
 
             evQueueMutex->lock();
