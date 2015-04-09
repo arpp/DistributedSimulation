@@ -11,6 +11,7 @@ int main(int argc, char *argv[])
     MNode *n = new MNode("../DistributedSimulation/connections.config");
     n->initTransfer();
     readGraph rg(n);
+    qDebug() << "hello\n";
     n->print();
     //n->beginSimulation();
 

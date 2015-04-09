@@ -15,6 +15,7 @@ void FileShare::sync(QString filename, int ownID, int masterID, QMap<int, QTcpSo
         QMap<int, QTcpSocket*>::iterator siter;
         for(siter = senders.begin(); siter != senders.end(); siter++) {
             QFile inputFile(filename + QString::number(siter.key()));
+            qDebug() << "Sending " << filename + QString::number(siter.key()) << "\n";
             if(inputFile.open(QIODevice::ReadOnly)) {
 
                     QByteArray rawFile = inputFile.readAll();
