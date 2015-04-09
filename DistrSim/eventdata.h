@@ -6,11 +6,12 @@
 class EventData
 {
 public:
-    EventData(unsigned long ts, unsigned long srcNodeId, unsigned long destNodeId, int type);
+    EventData(unsigned long ts, unsigned long srcNodeId, unsigned long NodeId, int type);
     unsigned long getTimestamp();
     unsigned long getSrcNodeId();
-    unsigned long getDestNodeId();
+    unsigned long getNodeId();
     int getType();
+    void setTimestamp(unsigned long ts);
 
     friend QDataStream& operator<<(QDataStream& out, EventData &eventData);
     friend QDataStream& operator>>(QDataStream& in, EventData & eventData);
@@ -18,7 +19,7 @@ public:
 private:
     unsigned long timestamp;
     unsigned long srcNodeId;
-    unsigned long destNodeId;
+    unsigned long NodeId;
     int type;
 };
 

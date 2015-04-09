@@ -3,7 +3,7 @@
 #include <QDebug>
 #include <QThread>
 
-RecvQueueWorker::RecvQueueWorker(EventQueues *q, unsigned long *t, QMap<int,QTcpSocket*> incSoc, int m_id, QMutex *evQueueMutex, QMutex *timeStampMutex, QWaitCondition *evQueueNotEmpty, QObject *parent) :
+RecvQueueWorker::RecvQueueWorker(EventQueues *q, unsigned long *t, QMap<int,QTcpSocket*> incSoc, int m_id, QMutex *evQueueMutex, QMutex *timeStampMutex, QWaitCondition *evQueueNotEmpty, QMutex *sendQueueMutex, QWaitCondition *sendQueueNotEmpty, QObject *parent) :
     QObject(parent)
 {
     this->q = q;
@@ -13,6 +13,8 @@ RecvQueueWorker::RecvQueueWorker(EventQueues *q, unsigned long *t, QMap<int,QTcp
     this->evQueueNotEmpty=evQueueNotEmpty;
     this->evQueueMutex=evQueueMutex;
     this->timeStampMutex=timeStampMutex;
+    this->sendQueueMutex = sendQueueMutex;
+    this->sendQueueNotEmpty = sendQueueNotEmpty;
 }
 
 void RecvQueueWorker::process(){
@@ -27,7 +29,7 @@ void RecvQueueWorker::process(){
 
     for(int i=0;i<size;i++){
         th[i] = new QThread();
-        workers[i] = new RecvQSocketWorker(q,time,0,0,this->evQueueMutex,this->timeStampMutex,this->evQueueNotEmpty);      //new RecvQSocketWorker(q,t,incSoc.at(i),);
+        workers[i] = new RecvQSocketWorker(q,time,0,0,this->evQueueMutex,this->timeStampMutex,this->evQueueNotEmpty, this->sendQueueMutex, this->sendQueueNotEmpty);      //new RecvQSocketWorker(q,t,incSoc.at(i),);
         QObject::connect(th[i],SIGNAL(started()),workers[i],SLOT(process()));
         workers[i]->moveToThread(th[i]);
         th[i]->start();

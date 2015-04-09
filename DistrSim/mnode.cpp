@@ -95,7 +95,7 @@ void MNode::initProcessQueueThread(){
 }
 
 void MNode::initRecvThread(){
-    this->recWork = new RecvQueueWorker(this->events,&(this->TIME),this->incomingConnection, this->m_id,this->evQueueMutex,this->timeStampMutex,this->evQueueNotEmpty);
+    this->recWork = new RecvQueueWorker(this->events,&(this->TIME),this->incomingConnection, this->m_id,this->evQueueMutex,this->timeStampMutex,this->evQueueNotEmpty, this->sendQueueMutex, this->sendQueueNotEmpty);
     this->recWorkThread = new QThread();
 
     QObject::connect(recWorkThread,SIGNAL(started()),recWork,SLOT(process()));
