@@ -80,6 +80,9 @@ void EventProcessWorker::process(){
        }
 //       event=this->q->evQueue.find(k).value().dequeue();
        event = q->evQueue[k].dequeue();
+       if(q->evQueue[k].isEmpty()){
+           q->safeTime[k]=event->getTimestamp()+1;
+       }
        this->evQueueMutex->unlock();
 
        qDebug()<< QTime::currentTime().toString()<<" EVENT_PROCESS_WORKER: Event process thread: "<<QThread::currentThreadId()<<"Processed event timestamp: "<<event->getTimestamp()<<"";
