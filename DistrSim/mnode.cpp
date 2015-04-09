@@ -18,6 +18,7 @@ int MNode::getMId(){
 
 void MNode::addNode(NodeAbstract* node){
     this->nodeList.append(node);
+
     this->nodeIdToIndex[node->getNodeId()] = this->nodeList.count()-1;
 
     QList<QPair<NodeAbstract*,int> > temp;
@@ -62,6 +63,7 @@ void MNode::initConnection()
 //    for(iter=outgoingConnection.begin();iter!=outgoingConnection.end();++iter)
 //        qDebug()<<iter.key() << ": " << iter.value()->peerAddress().toString();
 
+    qDebug() << "yooy" << c.getOwnID();
     this->m_id = c.getOwnID();
 }
 

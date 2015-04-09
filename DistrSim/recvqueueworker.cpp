@@ -40,7 +40,7 @@ void RecvQueueWorker::process(){
     while(j.hasNext()){
         j.next();
         th[i] = new QThread();
-        workers[i] = new RecvQSocketWorker(q,time,j.value(),j.key(),this->evQueueMutex,this->timeStampMutex,this->evQueueNotEmpty, this->sendQueueMutex, this->sendQueueNotEmpty);      //new RecvQSocketWorker(q,t,incSoc.at(i),);
+        workers[i] = new RecvQSocketWorker(q,time,j.value(),m_id,this->evQueueMutex,this->timeStampMutex,this->evQueueNotEmpty, this->sendQueueMutex, this->sendQueueNotEmpty);      //new RecvQSocketWorker(q,t,incSoc.at(i),);
         QObject::connect(th[i],SIGNAL(started()),workers[i],SLOT(process()));
         workers[i]->moveToThread(th[i]);
         th[i]->start();

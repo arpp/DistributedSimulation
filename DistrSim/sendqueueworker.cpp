@@ -32,7 +32,7 @@ int SendQueueWorker::findDestMId(unsigned long srcNodeId, unsigned long nodeId)
             QList<QPair<NodeAbstract*,int> > edges = (q->edgeList).at(i);
             for(int j = 0; j < edges.size(); ++j)
             {
-                qDebug() << edges.at(j).first->getNodeId() << " " << edges.at(j).second;
+//                qDebug() << edges.at(j).first->getNodeId() << " " << edges.at(j).second;
                 if(edges.at(j).first->getNodeId() == nodeId)                    
                     return edges.at(j).second;
             }

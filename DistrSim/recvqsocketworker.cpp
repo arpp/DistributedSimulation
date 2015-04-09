@@ -32,11 +32,6 @@ void RecvQSocketWorker::process(){
 
         BlockReader(this->socket).stream()>>(*ev);
 
-        timeStampMutex->lock();
-        (*time)++;
-        *time = (*time)>(ev->getTimestamp() + 1)?(*time):(ev->getTimestamp() + 1);
-        qDebug()<<"RecvProcessSocketWorker: "<<QThread::currentThreadId()<<" tstamp updated: "<<*time<<"";
-        timeStampMutex->unlock();
 
         int type = ev->getType();
 //        qDebug()<<"RecvProcessSocketWorker: "<<QThread::currentThreadId()<<" tom: "<<type<<"";
@@ -60,6 +55,12 @@ void RecvQSocketWorker::process(){
         else{
             //Write code to create EventData and Event and add Event to eventQueue at value m_id
 
+            timeStampMutex->lock();
+            (*time)++;
+            *time = (*time)>(ev->getTimestamp() + 1)?(*time):(ev->getTimestamp() + 1);
+            qDebug()<<"RecvProcessSocketWorker: "<<QThread::currentThreadId()<<" tstamp updated: "<<*time<<"";
+            timeStampMutex->unlock();
+
             NodeAbstract* n = 0;
             for(int i=0;i<q->nodeList.size();++i)
             {
@@ -74,6 +75,7 @@ void RecvQSocketWorker::process(){
             q->evQueue[m_id].enqueue(newEvent);
 //            q->evQueue.find(m_id).value().enqueue(newEvent);
 
+//            qDebug() << "1";
             QMap<int,QQueue<Event*> >::iterator it;
             int flag=0;
             unsigned long minTS=ULONG_MAX;
@@ -91,17 +93,25 @@ void RecvQSocketWorker::process(){
                 }
             }
 
+            qDebug() << "mid is : " << m_id;
             QList<int> emptyMNodes;
             int myFlag = 0;
             for(it=this->q->evQueue.begin();it!=this->q->evQueue.end();it++){
                 if(it.value().isEmpty()){
                     if(it.key()==this->m_id)
+                    {
+                        qDebug() << "mehbfuej";
                         myFlag = 1;
+                    }
                     else
+                    {
+                        qDebug() << "other";
                         emptyMNodes.append(it.key());
+                    }
                 }
             }
 
+            qDebug() << "em" << emptyMNodes.size();
             if(myFlag == 1 && (emptyMNodes.size() == q->evQueue.size() - 2))
             {
                 foreach(int i,emptyMNodes){
@@ -115,10 +125,16 @@ void RecvQSocketWorker::process(){
                 }
             }
 
-
+            qDebug() << "flag is:" << flag;
             if(flag == 0)
                 evQueueNotEmpty->wakeAll();
             evQueueMutex->unlock();
+//            qDebug() << "5";
+
+            qDebug() << "num 0: " << q->evQueue[0].size();
+            qDebug() << "num 1: " << q->evQueue[1].size();
+
+
         }
     }
 }
