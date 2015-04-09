@@ -23,23 +23,24 @@ QList<EventData> Event::runEvent()
     unsigned long nodeId = node->getNodeId();
     qDebug() << "current nopde is : " << nodeId;
     QList<EventData> toSend;
+    unsigned long destNodeId;
     for(int i=0;i<nodeList.size();++i)
     {
         if(nodeList[i]->getNodeId() == nodeId)
         {
-            for(int k=0;k<edgeList[i].size();++k)
-                qDebug() << edgeList[i][k].first->getNodeId() << " ";
+//            for(int k=0;k<edgeList[i].size();++k)
+//                qDebug() << edgeList[i][k].first->getNodeId() << " ";
 
             //Generate random dest node
             int j = qrand() % edgeList[i].size();
-            unsigned long destNodeId = edgeList[i][j].first->getNodeId();
-            qDebug() << "dest is " << destNodeId;
+            destNodeId = edgeList[i][j].first->getNodeId();
             EventData * newEvent = new EventData(0, nodeId, destNodeId, 2);
             toSend.append(*newEvent);            
         }
     }
 
-    qDebug() << "Event ran ";
+    qDebug() << "Event ran timstamp is :" << eventData->getTimestamp() ;
+    qDebug() << "dest is " << destNodeId;
     return toSend;
 }
 

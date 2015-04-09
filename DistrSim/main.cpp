@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
     n->print();
 
 
-    unsigned long startNode = 8;
+    unsigned long startNode = 10;
     qDebug() << "1";
     NodeAbstract * node = new NodeAbstract(startNode);
     qDebug() << "2";
