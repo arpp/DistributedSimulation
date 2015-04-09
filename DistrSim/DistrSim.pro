@@ -35,7 +35,9 @@ SOURCES += main.cpp \
     createNetwork/connecttoall.cpp \
     createNetwork/fileshare.cpp \
     createNetwork/server.cpp \
-    readgraph.cpp
+    readgraph.cpp \
+    createNetwork/blockwriter.cpp \
+    createNetwork/blockreader.cpp
 
 HEADERS += \
     edgeabstract.h \
@@ -56,4 +58,6 @@ HEADERS += \
     createNetwork/connecttoall.h \
     createNetwork/fileshare.h \
     createNetwork/server.h \
-    readgraph.h
+    readgraph.h \
+    createNetwork/blockwriter.h \
+    createNetwork/blockreader.h
