@@ -6,8 +6,6 @@
 class EventData
 {
 public:
-    static int SEND = 0;
-    static int RECEIVE = 1;
     EventData(unsigned long ts, unsigned long srcNodeId, unsigned long NodeId, int type);
     unsigned long getTimestamp();
     unsigned long getSrcNodeId();
