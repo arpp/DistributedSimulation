@@ -17,8 +17,8 @@ unsigned long Event::getNodeID(){
 QList<EventData*> Event::runEvent()
 {
 //    int typeOfEvent = eventData->getTypeOfEvent();
-    QTime time = QTime::currentTime();
-    qsrand((uint)time.msec());
+//    QTime time = QTime::currentTime();
+//    qsrand((uint)time.msec());
 
     unsigned long nodeId = node->getNodeId();
     qDebug() << "current nopde is : " << nodeId;

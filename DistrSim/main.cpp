@@ -16,16 +16,16 @@ int main(int argc, char *argv[])
     n->print();
 
 
-    unsigned long startNode = 10;
-    qDebug() << "1";
-    NodeAbstract * node = new NodeAbstract(startNode);
-    qDebug() << "2";
-    EventData * evData = new EventData(0,startNode,startNode,2);
-    qDebug() << "3";
-    Event * seedEvent = new Event(node, evData, n->nodeList, n->edgeList);
-    qDebug() << "4";
-    qDebug() << "" << n->events->evQueue.value(n->getMId()).size() << "";
-    n->events->evQueue[n->getMId()].enqueue(seedEvent);
+//    unsigned long startNode = 10;
+//    qDebug() << "1";
+//    NodeAbstract * node = new NodeAbstract(startNode);
+//    qDebug() << "2";
+//    EventData * evData = new EventData(0,startNode,startNode,2);
+//    qDebug() << "3";
+//    Event * seedEvent = new Event(node, evData, n->nodeList, n->edgeList);
+//    qDebug() << "4";
+//    qDebug() << "" << n->events->evQueue.value(n->getMId()).size() << "";
+//    n->events->evQueue[n->getMId()].enqueue(seedEvent);
 //    n->events->evQueue.find(n->getMId()).value().enqueue(seedEvent);
 
     qDebug() << "started";
