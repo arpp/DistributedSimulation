@@ -5,7 +5,7 @@
 #include <QTime>
 #include "createNetwork/blockreader.h"
 
-RecvQSocketWorker::RecvQSocketWorker(EventQueues *q, unsigned long *t, QTcpSocket* incSoc, int m_id,
+RecvQSocketWorker::RecvQSocketWorker(EventQueues *q, unsigned long *t, QTcpSocket* incSoc, int m_id, int s_id,
                                      QMutex *evQueueMutex, QMutex *timeStampMutex, QWaitCondition *evQueueNotEmpty, QMutex *sendQueueMutex, QWaitCondition *sendQueueNotEmpty, QObject *parent) :
     QObject(parent)
 {
@@ -13,6 +13,7 @@ RecvQSocketWorker::RecvQSocketWorker(EventQueues *q, unsigned long *t, QTcpSocke
     this->time = t;
     this->socket = incSoc;
     this->m_id = m_id;
+    this->s_id = s_id;
     this->evQueueMutex=evQueueMutex;
     this->timeStampMutex=timeStampMutex;
     this->evQueueNotEmpty=evQueueNotEmpty;
@@ -42,6 +43,7 @@ void RecvQSocketWorker::process(){
             unsigned long timeStampOtherMachine = ev->getTimestamp();
             q->safeTime[ev->getSrcNodeId()]=timeStampOtherMachine;
 
+            QMap<int,QQueue<Event*> >::iterator it;
             int flag=0;
             unsigned long minTS=ULONG_MAX;
             this->evQueueMutex->lock();
@@ -67,7 +69,10 @@ void RecvQSocketWorker::process(){
         else if(type==1){
             //Demand message
             //Create NULL Message. Add to send queue.
-            EventData *nullMessage = new EventData(*time+10, m_id, ev->getSrcNodeId(), 0);
+            EventData *nullMessage = new EventData(*time+5, m_id, ev->getSrcNodeId(), 0);
+            timeStampMutex->lock();
+            (*time)+=5;
+            timeStampMutex->unlock();
             qDebug()<<"RecvProcessSocketWorker: "<<QThread::currentThreadId()<<" dmdmsg, tmeup: "<<*time<<"";
             sendQueueMutex->lock();
             q->sendQueue.enqueue(nullMessage);
@@ -94,7 +99,7 @@ void RecvQSocketWorker::process(){
             Event * newEvent = new Event(n, ev, q->nodeList, q->edgeList);
             qDebug()<<"RecvProcessSocketWorker: "<<QThread::currentThreadId()<<" nmlmsg, tmeup: "<<*time<<"";
             evQueueMutex->lock();
-            q->evQueue[m_id].enqueue(newEvent);
+            q->evQueue[s_id].enqueue(newEvent);
 //            q->evQueue.find(m_id).value().enqueue(newEvent);
 
 //            qDebug() << "1";
@@ -134,8 +139,9 @@ void RecvQSocketWorker::process(){
             }
 
             qDebug() << "em" << emptyMNodes.size();
-            if(myFlag == 1 && (emptyMNodes.size() == q->evQueue.size() - 2))
+            if(myFlag == 1 && (emptyMNodes.size() == q->evQueue.size() - 1))
             {
+                qDebug() << "empty send demand";
                 foreach(int i,emptyMNodes){
                     //create a DEMAND msg for each i-th mnode and enqueue it in sendQueue
                     EventData *demand = new EventData(*(this->time),m_id,i,1);
