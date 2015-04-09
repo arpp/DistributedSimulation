@@ -56,7 +56,7 @@ void EventProcessWorker::process(){
        else if(flag==1){
             foreach(int i,l){
                 //create a DEMAND msg for each i-th mnode and enqueue it in sendQueue
-                EventData *demand = new EventData(*(this->time),i,i,1);
+                EventData *demand = new EventData(*(this->time),m_id,i,1);
 
                 this->sendQueueMutex->lock();
                 this->q->sendQueue.enqueue(demand);
