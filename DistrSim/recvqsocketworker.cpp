@@ -62,7 +62,7 @@ void RecvQSocketWorker::process(){
             }
             //Update timestamp of event
             ev->setTimestamp(*time);
-            Event * newEvent = new Event(n, ev);
+            Event * newEvent = new Event(n, ev, q->nodeList, q->edgeList);
 
             evQueueMutex->lock();
             q->evQueue.find(m_id).value().enqueue(newEvent);

@@ -101,7 +101,7 @@ void EventProcessWorker::process(){
                this->timeStampMutex->unlock();
 
                this->evQueueMutex->lock();
-               Event *ev = new Event(nabs,&d);
+               Event *ev = new Event(nabs,&d,q->nodeList, q->edgeList);
                this->q->evQueue.find(this->m_id).value().enqueue(ev);
                this->evQueueMutex->unlock();
            }
