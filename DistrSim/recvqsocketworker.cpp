@@ -38,6 +38,11 @@ void RecvQSocketWorker::process(){
 
         if(type==0){
             //Null message
+            timeStampMutex->lock();
+            (*time)++;
+            *time = (*time)>(ev->getTimestamp() + 1)?(*time):(ev->getTimestamp() + 1);
+            qDebug()<<"RecvProcessSocketWorker: "<<QThread::currentThreadId()<<" tstamp updated: "<<*time<<"";
+            timeStampMutex->unlock();
             unsigned long timeStampOtherMachine = ev->getTimestamp();
             q->safeTime[ev->getSrcNodeId()]=timeStampOtherMachine;
             qDebug()<<"RecvProcessSocketWorker: "<<QThread::currentThreadId()<<" nulmsg, tmeup: "<<timeStampOtherMachine<<"";
