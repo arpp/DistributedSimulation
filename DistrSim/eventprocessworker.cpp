@@ -61,19 +61,20 @@ void EventProcessWorker::process(){
             }
             this->evQueueNotEmpty->wait(this->evQueueMutex);
        }
-       else{
-           unsigned long maxts=ULONG_MAX;
-           int k=-1;
-           for(it=this->q->evQueue.begin();it!=this->q->evQueue.end();it++){
-                 if(!it.value().isEmpty()){
-                    if(it.value().front()->getTimestamp()<maxts){
-                        maxts=it.value().front()->getTimestamp();
-                        k=it.key();
-                    }
-                 }
-           }
-           event=this->q->evQueue.find(k).value().dequeue();
+       this->evQueueMutex->unlock();
+
+       this->evQueueMutex->lock();
+       unsigned long maxts=ULONG_MAX;
+       int k=-1;
+       for(it=this->q->evQueue.begin();it!=this->q->evQueue.end();it++){
+             if(!it.value().isEmpty()){
+                if(it.value().front()->getTimestamp()<maxts){
+                    maxts=it.value().front()->getTimestamp();
+                    k=it.key();
+                }
+             }
        }
+       event=this->q->evQueue.find(k).value().dequeue();
        this->evQueueMutex->unlock();
 
        QList<EventData> genEvents = event->runEvent();
