@@ -20,7 +20,6 @@ RecvQSocketWorker::RecvQSocketWorker(EventQueues *q, unsigned long *t, QTcpSocke
 
 void RecvQSocketWorker::process(){
 //The code to listen and add to the queues go here
-    qDebug()<<"recv process thread worker: "<<QThread::currentThreadId()<<"\n";
 
     while(true){
         this->socket->waitForReadyRead(-1);
@@ -30,7 +29,14 @@ void RecvQSocketWorker::process(){
         QDataStream st(this->socket);
         st>>(*ev);
 
+        timeStampMutex->lock();
+        (*time)++;
+        *time = (*time)>(ev->getTimestamp() + 1)?(*time):(ev->getTimestamp() + 1);
+        timeStampMutex->unlock();
+
         int type = ev->getType();
+        qDebug()<<"RecvProcessSocketWorker: socket::thread worker: "<<QThread::currentThreadId()<<" type of message: "<<type<<"\n";
+
         if(type==0){
             //Null message
             unsigned long timeStampOtherMachine = ev->getTimestamp();
@@ -38,7 +44,6 @@ void RecvQSocketWorker::process(){
         }
         else if(type==1){
             //Demand message
-            //TODO:Do we increment timestamp for demand message??
             //Create NULL Message. Add to send queue.
             EventData *nullMessage = new EventData(*time, m_id, ev->getSrcNodeId(), 0);
             sendQueueMutex->lock();
@@ -48,11 +53,6 @@ void RecvQSocketWorker::process(){
         }
         else{
             //Write code to create EventData and Event and add Event to eventQueue at value m_id
-
-            timeStampMutex->lock();
-            (*time)++;
-            ev->setTimestamp(*time);
-            timeStampMutex->unlock();
 
             NodeAbstract* n = 0;
             for(int i=0;i<q->nodeList.size();++i)
@@ -65,7 +65,26 @@ void RecvQSocketWorker::process(){
 
             evQueueMutex->lock();
             q->evQueue.find(m_id).value().enqueue(newEvent);
-            evQueueNotEmpty->wakeAll();
+
+            QMap<int,QQueue<Event*> >::iterator it;
+            int flag=0;
+            unsigned long minTS=ULONG_MAX;
+            for(it=this->q->evQueue.begin();it!=this->q->evQueue.end();it++){
+                if(!it.value().isEmpty()){
+                     if(minTS>it.value().head()->getTimestamp()){
+                         minTS=it.value().head()->getTimestamp();
+                     }
+                }
+                else if(it.key()!=this->m_id){
+                     if(minTS>this->q->safeTime.value(it.key())){
+                         minTS=this->q->safeTime.value(it.key());
+                         flag=1;
+                     }
+                }
+            }
+
+            if(flag == 0)
+                evQueueNotEmpty->wakeAll();
             evQueueMutex->unlock();
         }
     }
