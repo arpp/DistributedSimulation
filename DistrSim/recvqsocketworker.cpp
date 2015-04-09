@@ -40,7 +40,7 @@ void RecvQSocketWorker::process(){
         timeStampMutex->unlock();
 
         int type = ev->getType();
-        qDebug()<<"RecvProcessSocketWorker: socket::thread worker: "<<QThread::currentThreadId()<<" type of message: "<<type<<"\n";
+        qDebug()<<"RecvProcessSocketWorker: socket::thread worker: "<<QThread::currentThreadId()<<" type of message: "<<type<<"";
 
         if(type==0){
             //Null message

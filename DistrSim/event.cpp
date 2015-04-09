@@ -27,10 +27,11 @@ QList<EventData> Event::runEvent()
             unsigned long destNodeId = edgeList[i][j].first->getNodeId();
             qDebug() << "dest is " << destNodeId;
             EventData * newEvent = new EventData(0, nodeId, destNodeId, 2);
-            toSend.append(*newEvent);
+            toSend.append(*newEvent);            
         }
     }
 
+    qDebug() << "Event ran ";
     return toSend;
 }
 

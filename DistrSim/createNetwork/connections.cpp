@@ -19,7 +19,7 @@ Connections::Connections(Connections &c): QObject(0){
 Connections::Connections(QString filename): QObject(0) {
     QFile file(filename);
     if(!file.open(QIODevice::ReadOnly)) {
-        std::cout << "Error reading file\n";
+        std::cout << "Error reading file";
     }
     QTextStream fin(&file);
     int c=0;
@@ -33,7 +33,7 @@ Connections::Connections(QString filename): QObject(0) {
         ip2id[fields[0]] = c;
         c++;
     }
-    QTextStream(stdout) << "connection details read from " << filename << "\n";
+    QTextStream(stdout) << "connection details read from " << filename << "";
     file.close();
 }
 
@@ -72,9 +72,9 @@ unsigned int Connections::length() {
 }
 
 void Connections::printConnections() {
-    QTextStream(stdout) << "IP_ADDR\t\tPORT\n";
+    QTextStream(stdout) << "IP_ADDR\t\tPORT";
     for (int i=0; i<ip_adds.size(); i++) {
-        QTextStream(stdout) << ip_adds[i] << "\t" << ports[i] << "\n";
+        QTextStream(stdout) << ip_adds[i] << "\t" << ports[i] << "";
     }
 }
 
