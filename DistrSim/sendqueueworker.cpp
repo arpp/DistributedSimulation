@@ -34,6 +34,7 @@ int SendQueueWorker::findDestMId(unsigned long srcNodeId, unsigned long destNode
             }
         }
     }
+    return this->m_id;//Just to be safe
 }
 
 void SendQueueWorker::process(){

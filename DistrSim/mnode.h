@@ -62,7 +62,7 @@ private:
 
     QWaitCondition *evQueueNotEmpty;
     QWaitCondition *sendQueueNotEmpty;
-    QMutex *evQueueMutex;
+    QMutex *evQueueMutex;//TODO:Keep n mutexes, 1 for each event queue
     QMutex *sendQueueMutex;
     QMutex *timeStampMutex;
 };
