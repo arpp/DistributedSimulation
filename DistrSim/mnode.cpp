@@ -39,7 +39,7 @@ void MNode::print(){
     for(int i=0; i<this->edgeList.count(); i++)
     {
         QDebug debug = qDebug();
-        debug<<i<<":";
+        debug<<nodeList[i]->getNodeId()<<":";
         for(int j=0; j<this->edgeList[i].count(); j++)
         {
             debug<<" "<<this->edgeList[i][j].first->getNodeId();

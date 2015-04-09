@@ -7,7 +7,7 @@
 readGraph::readGraph(MNode *n)
 {
     QString filename="nodepartition";
-    if(n->getMID() == 0) {
+    if(n->getMId() == 0) {
         filename="nodepartition0";
     }
     QFile fn(filename);
@@ -33,7 +33,7 @@ readGraph::readGraph(MNode *n)
     }
 
     filename = "edgepartition";
-    if(n->getMID() == 0) {
+    if(n->getMId() == 0) {
         filename="edgepartition0";
     }
 
