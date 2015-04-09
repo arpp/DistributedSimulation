@@ -20,10 +20,9 @@ EventProcessWorker::EventProcessWorker(EventQueues *q, unsigned long *t, int m_i
 
 void EventProcessWorker::process(){
 //    (*(this->time))++;
-    qDebug()<< QTime::currentTime().toString()<<" EVENT_PROCESS_WORKER: Event process thread: "<<QThread::currentThreadId()<<"\n";
 
     while(true){
-        //search whether any queue is empty then we will
+       //search whether any queue is empty then we will
        QMap<int,QQueue<Event*> >::iterator it;
        Event *event;
        QList<int> l;
@@ -45,8 +44,12 @@ void EventProcessWorker::process(){
                 count++;
                 l.append(it.key());
            }
+           else if(it.key() == this->m_id)
+           {
+               count++;
+           }
        }
-       if(count==this->q->evQueue.size()-1){
+       if(count==this->q->evQueue.size()){
             this->evQueueNotEmpty->wait(this->evQueueMutex);
        }
        else if(flag==1){
@@ -77,6 +80,7 @@ void EventProcessWorker::process(){
        event=this->q->evQueue.find(k).value().dequeue();
        this->evQueueMutex->unlock();
 
+       qDebug()<< QTime::currentTime().toString()<<" EVENT_PROCESS_WORKER: Event process thread: "<<QThread::currentThreadId()<<"Processed event timestamp: "<<event->getTimestamp()<<"\n";
        QList<EventData> genEvents = event->runEvent();
        for(int i=0;i<genEvents.size();i++){
            int lfl=0;
@@ -91,11 +95,12 @@ void EventProcessWorker::process(){
            }
            if(lfl==1){
                //add locally
-               this->evQueueMutex->lock();
                this->timeStampMutex->lock();
                (*(this->time))++;
                d.setTimestamp(*time);
                this->timeStampMutex->unlock();
+
+               this->evQueueMutex->lock();
                Event *ev = new Event(nabs,&d);
                this->q->evQueue.find(this->m_id).value().enqueue(ev);
                this->evQueueMutex->unlock();
