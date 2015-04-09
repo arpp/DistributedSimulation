@@ -84,13 +84,13 @@ void EventProcessWorker::process(){
 
        qDebug()<< QTime::currentTime().toString()<<" EVENT_PROCESS_WORKER: Event process thread: "<<QThread::currentThreadId()<<"Processed event timestamp: "<<event->getTimestamp()<<"";
 
-       QList<EventData> genEvents = event->runEvent();
+       QList<EventData*> genEvents = event->runEvent();
        for(int i=0;i<genEvents.size();i++){
            int lfl=0;
            NodeAbstract *nabs;
-           EventData d = genEvents[i];
+           EventData* d = genEvents[i];
            for(int j=0;j<this->q->nodeList.size();j++){
-               if(this->q->nodeList[j]->getNodeId()==d.getNodeId()){
+               if(this->q->nodeList[j]->getNodeId()==d->getNodeId()){
                    nabs=this->q->nodeList[j];
                    lfl=1;
                    break;
@@ -100,11 +100,12 @@ void EventProcessWorker::process(){
                //add locally
                this->timeStampMutex->lock();
                (*(this->time))++;
-               d.setTimestamp(*time);
+               qDebug() << "local timestamp is : " << *time;
+               d->setTimestamp(*time);
                this->timeStampMutex->unlock();
 
                this->evQueueMutex->lock();
-               Event *ev = new Event(nabs,&d,q->nodeList, q->edgeList);
+               Event *ev = new Event(nabs,d,q->nodeList, q->edgeList);
                q->evQueue[m_id].enqueue((ev));
 //               this->q->evQueue.find(this->m_id).value().enqueue(ev);
                this->evQueueMutex->unlock();
@@ -112,7 +113,7 @@ void EventProcessWorker::process(){
            else{
                //add to send queue
                this->sendQueueMutex->lock();
-               this->q->sendQueue.enqueue(&d);
+               this->q->sendQueue.enqueue(d);
                this->sendQueueNotEmpty->wakeAll();
                this->sendQueueMutex->unlock();
            }

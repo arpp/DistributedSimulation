@@ -14,7 +14,7 @@ unsigned long Event::getNodeID(){
     return this->node->getNodeId();
 }
 
-QList<EventData> Event::runEvent()
+QList<EventData*> Event::runEvent()
 {
 //    int typeOfEvent = eventData->getTypeOfEvent();
     QTime time = QTime::currentTime();
@@ -22,7 +22,7 @@ QList<EventData> Event::runEvent()
 
     unsigned long nodeId = node->getNodeId();
     qDebug() << "current nopde is : " << nodeId;
-    QList<EventData> toSend;
+    QList<EventData*> toSend;
     unsigned long destNodeId;
     for(int i=0;i<nodeList.size();++i)
     {
@@ -35,7 +35,7 @@ QList<EventData> Event::runEvent()
             int j = qrand() % edgeList[i].size();
             destNodeId = edgeList[i][j].first->getNodeId();
             EventData * newEvent = new EventData(0, nodeId, destNodeId, 2);
-            toSend.append(*newEvent);            
+            toSend.append(newEvent);
         }
     }
 

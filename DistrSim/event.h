@@ -10,7 +10,7 @@ class Event
 {
 public:
     Event(NodeAbstract *n, EventData *ev, QList<NodeAbstract*> nodeList, QList<QList<QPair<NodeAbstract*,int> > > edgeList);
-    QList<EventData> runEvent();
+    QList<EventData*> runEvent();
     unsigned long getNodeID();
     unsigned long getTimestamp();
 
