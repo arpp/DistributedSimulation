@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QTime>
 #include "createNetwork/blockwriter.h"
+#include <QHostAddress>
 
 SendQueueWorker::SendQueueWorker(EventQueues *q, unsigned long *t, QMap<int,QTcpSocket*> outSoc, int m_id,
                                  QMutex *sendQueueMutex, QMutex *timeStampMutex, QWaitCondition *sendQueueNotEmpty, QObject *parent) :
@@ -27,10 +28,12 @@ int SendQueueWorker::findDestMId(unsigned long srcNodeId, unsigned long nodeId)
         //Find srcNode in nodeList
         if(nodeList.at(i)->getNodeId() == srcNodeId)
         {
+            qDebug() << "node is : " << srcNodeId << "\n";
             QList<QPair<NodeAbstract*,int> > edges = (q->edgeList).at(i);
             for(int j = 0; j < edges.size(); ++j)
             {
-                if(edges.at(j).first->getNodeId() == nodeId)
+                qDebug() << edges.at(j).first->getNodeId() << " " << edges.at(j).second;
+                if(edges.at(j).first->getNodeId() == nodeId)                    
                     return edges.at(j).second;
             }
         }
@@ -73,6 +76,7 @@ void SendQueueWorker::process(){
             timeStampMutex->unlock();
         }
 
+        qDebug() << "socket peer : " << socket->peerAddress().toString()<<"\n";
         BlockWriter(socket).stream()<<(*currentEvent);
         socket->waitForBytesWritten(-1);
 //        QDataStream st(socket);

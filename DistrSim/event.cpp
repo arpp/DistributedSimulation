@@ -1,4 +1,5 @@
 #include "event.h"
+#include <QDebug>
 
 Event::Event(NodeAbstract *n, EventData *ev, QList<NodeAbstract*> nodeList, QList<QList<QPair<NodeAbstract*,int> > > edgeList)
 {
@@ -24,6 +25,7 @@ QList<EventData> Event::runEvent()
             //Generate random dest node
             int j = qrand() % edgeList[i].size();
             unsigned long destNodeId = edgeList[i][j].first->getNodeId();
+            qDebug() << "dest is " << destNodeId;
             EventData * newEvent = new EventData(0, nodeId, destNodeId, 2);
             toSend.append(*newEvent);
         }
