@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
     //TODO:Path from build
-    MNode *n = new MNode("connections.config");
+    MNode *n = new MNode("../DistributedSimulation/connections.config");
     n->initTransfer();
     readGraph rg(n);
     n->print();

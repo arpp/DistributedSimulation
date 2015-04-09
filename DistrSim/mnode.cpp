@@ -11,7 +11,7 @@ MNode::MNode(QString configFile)
     this-> edgeList = QList<QList<QPair<NodeAbstract*,int> > >();
 }
 
-void MNode::getMId(){
+int MNode::getMId(){
     return this->m_id;
 }
 

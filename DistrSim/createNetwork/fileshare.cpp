@@ -39,20 +39,27 @@ void FileShare::sync(QString filename, int ownID, int masterID, QMap<int, QTcpSo
     }
 
     else {
-        if(receivers[masterID]->waitForReadyRead()) {
+        QTextStream(stdout) << "Waiting\n";
+        QDataStream in(receivers[masterID]);
+        if(true) {
+            receivers[masterID]->waitForReadyRead();
             char buffer[1024] = {0};
-            receivers[masterID]->read(buffer, receivers[masterID]->bytesAvailable());
-            //QTextStream(stdout) << "File size is: " << buffer << "\n";
-            QString si(buffer);
-            int size = si.toInt();
+            int size;
+            in >> size;
+//            receivers[masterID]->read(buffer, receivers[masterID]->bytesAvailable());
+            QTextStream(stdout) << "File size is: " << size << "\n";
+//            QString si(buffer);
+//            int size = si.toInt();
             int s = 0;
             QFile newFile(filename);
             if(newFile.open(QIODevice::WriteOnly)) {
                 while(s<size){
                     if(receivers[masterID]->waitForReadyRead()) {
-                        char buffer[32768] = {0};
-                        receivers[masterID]->read(buffer, receivers[masterID]->bytesAvailable());
-                        s+=strlen(buffer);
+//                        char buffer[32768] = {0};
+//                        receivers[masterID]->read(buffer, size-s);
+                        QByteArray buffer;
+                        in >> buffer;
+                        s+=buffer.size();
                         newFile.write(buffer);
                     }
                 }
@@ -60,5 +67,6 @@ void FileShare::sync(QString filename, int ownID, int masterID, QMap<int, QTcpSo
                 newFile.close();
             }
         }
+        QTextStream(stdout) << "Waiting1\n";
     }
 }
