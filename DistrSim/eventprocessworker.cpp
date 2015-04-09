@@ -28,16 +28,28 @@ void EventProcessWorker::process(){
        Event *event;
        QList<int> l;
        int flag=0;
+       int count=0;
+       unsigned long minTS=ULONG_MAX;
        this->evQueueMutex->lock();
        for(it=this->q->evQueue.begin();it!=this->q->evQueue.end();it++){
-           if(it.value().isEmpty()){
-               if(it.key()!=this->m_id){
-                    l.append(it.key());
+           if(!it.value().isEmpty()){
+                if(minTS>it.value().head()->getTimestamp()){
+                    minTS=it.value().head()->getTimestamp();
+                }
+           }
+           else if(it.key()!=this->m_id){
+                if(minTS>this->q->safeTime.value(it.key())){
+                    minTS=this->q->safeTime.value(it.key());
                     flag=1;
-               }
+                }
+                count++;
+                l.append(it.key());
            }
        }
-       if(flag==1){
+       if(count==this->q->evQueue.size()-1){
+            this->evQueueNotEmpty->wait(this->evQueueMutex);
+       }
+       else if(flag==1){
             foreach(int i,l){
                 //create a DEMAND msg for each i-th mnode and enqueue it in sendQueue
                 EventData *demand = new EventData(*(this->time),i,i,1);
