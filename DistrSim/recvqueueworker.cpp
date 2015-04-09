@@ -19,7 +19,7 @@ RecvQueueWorker::RecvQueueWorker(EventQueues *q, unsigned long *t, QMap<int,QTcp
 
 void RecvQueueWorker::process(){
 //    (*(this->time))++;
-    qDebug()<<"recv process thread: "<<QThread::currentThreadId()<<""<<*(this->time)<<"";
+//    qDebug()<<"recv process thread: "<<QThread::currentThreadId()<<""<<*(this->time)<<"";
 
     //find size of incSoc and create multiple threads in a loop here i have done till three and passed null socket to each complete when done with sockets
     int size = incSoc.size();

@@ -25,8 +25,6 @@ void RecvQSocketWorker::process(){
     qDebug()<< QTime::currentTime().toString()<<" RecvQSocketWorker: Receive process thread: "<<QThread::currentThreadId();
 
     while(true){
-
-//        this->socket->waitForReadyRead(-1);
         //New event received
 
         EventData *ev = new EventData(0,0,0,0);
@@ -37,20 +35,23 @@ void RecvQSocketWorker::process(){
         timeStampMutex->lock();
         (*time)++;
         *time = (*time)>(ev->getTimestamp() + 1)?(*time):(ev->getTimestamp() + 1);
+        qDebug()<<"RecvProcessSocketWorker: "<<QThread::currentThreadId()<<" tstamp updated: "<<*time<<"";
         timeStampMutex->unlock();
 
         int type = ev->getType();
-        qDebug()<<"RecvProcessSocketWorker: socket::thread worker: "<<QThread::currentThreadId()<<" type of message: "<<type<<"";
+//        qDebug()<<"RecvProcessSocketWorker: "<<QThread::currentThreadId()<<" tom: "<<type<<"";
 
         if(type==0){
             //Null message
             unsigned long timeStampOtherMachine = ev->getTimestamp();
-            q->safeTime.find(ev->getSrcNodeId()).value() = timeStampOtherMachine;
+            q->safeTime[ev->getSrcNodeId()]=timeStampOtherMachine;
+            qDebug()<<"RecvProcessSocketWorker: "<<QThread::currentThreadId()<<" nulmsg, tmeup: "<<timeStampOtherMachine<<"";
         }
         else if(type==1){
             //Demand message
             //Create NULL Message. Add to send queue.
             EventData *nullMessage = new EventData(*time, m_id, ev->getSrcNodeId(), 0);
+            qDebug()<<"RecvProcessSocketWorker: "<<QThread::currentThreadId()<<" dmdmsg, tmeup: "<<*time<<"";
             sendQueueMutex->lock();
             q->sendQueue.enqueue(nullMessage);
             sendQueueNotEmpty->wakeAll();
@@ -63,12 +64,12 @@ void RecvQSocketWorker::process(){
             for(int i=0;i<q->nodeList.size();++i)
             {
                 if(q->nodeList.at(i)->getNodeId() == ev->getNodeId())
-                    n = q->nodeList.at(i);
+                    n = q->nodeList[i];
             }
             //Update timestamp of event
             ev->setTimestamp(*time);
             Event * newEvent = new Event(n, ev, q->nodeList, q->edgeList);
-
+            qDebug()<<"RecvProcessSocketWorker: "<<QThread::currentThreadId()<<" nmlmsg, tmeup: "<<*time<<"";
             evQueueMutex->lock();
             q->evQueue[m_id].enqueue(newEvent);
 //            q->evQueue.find(m_id).value().enqueue(newEvent);
