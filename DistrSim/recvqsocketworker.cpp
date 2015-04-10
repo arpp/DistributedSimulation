@@ -149,7 +149,7 @@ void RecvQSocketWorker::process(){
             }
 
             qDebug() << "em" << emptyMNodes.size();
-            if(myFlag == 1 && (emptyMNodes.size() == q->evQueue.size() - 1))
+            if(myFlag == 1 && (emptyMNodes.size() == q->evQueue.size() - 2))
             {
                 qDebug() << "empty send demand";
                 foreach(int i,emptyMNodes){

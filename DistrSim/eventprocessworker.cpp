@@ -80,6 +80,17 @@ void EventProcessWorker::process(){
              }
        }
 //       event=this->q->evQueue.find(k).value().dequeue();
+       if(k==-1)
+       {
+           evQueueMutex->unlock();
+           continue;
+       }
+       if(q->evQueue[k].isEmpty())
+       {
+           evQueueMutex->unlock();
+           continue;
+       }
+
        event = q->evQueue[k].dequeue();
        if(q->evQueue[k].isEmpty()){
            q->safeTime[k]=event->getTimestamp()+1;
