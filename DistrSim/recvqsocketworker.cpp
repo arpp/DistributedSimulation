@@ -143,6 +143,16 @@ void RecvQSocketWorker::process(){
                      }
                 }
             }
+            for(it=this->q->evQueue.begin();it!=this->q->evQueue.end();it++){
+                if(!it.value().isEmpty()){
+                }
+                else if(it.key()!=this->m_id){
+                     if(minTS>this->q->safeTime.value(it.key())){
+                         minTS=this->q->safeTime.value(it.key());
+                         flag=1;
+                     }
+                }
+            }
 
             qDebug() << "mid is : " << m_id;
             QList<int> emptyMNodes;
