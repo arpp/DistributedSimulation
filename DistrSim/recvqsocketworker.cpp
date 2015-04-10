@@ -66,10 +66,10 @@ void RecvQSocketWorker::process(){
                      }
                 }
             }
-            this->evQueueMutex->unlock();
             qDebug()<<flag;
             if(flag==0)
                 this->evQueueNotEmpty->wakeAll();
+            this->evQueueMutex->unlock();
             qDebug()<<"RecvProcessSocketWorker: "<<QThread::currentThreadId()<<" nulmsg, tmeup: "<<timeStampOtherMachine<<"";
         }
         else if(type==1){

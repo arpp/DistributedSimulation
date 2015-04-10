@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
     qDebug() << "starting mid : " << n->getMId();
 
 
-    unsigned long startNode = 5;
+    unsigned long startNode = 11;
     qDebug() << "1";
     NodeAbstract * node = new NodeAbstract(startNode);
     qDebug() << "2";
