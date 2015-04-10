@@ -17,15 +17,15 @@ int main(int argc, char *argv[])
 
     qDebug() << "starting mid : " << n->getMId();
 
-    for(int i=0;i<n->nodeList.size();++i)
+    for(int i=0;i<2;++i)
     {
-        if((qrand() % 1000) < 50)
-        {
+//        if((qrand() % 1000) < 50)
+//        {
             unsigned long startNode = n->nodeList[i]->getNodeId();
             EventData * evData = new EventData(0,startNode,startNode,2);
             Event * seedEvent = new Event(n->nodeList[i], evData, n->nodeList, n->edgeList);
             n->events->evQueue[n->getMId()].enqueue(seedEvent);
-        }
+//        }
     }
 
     qDebug() << "seed size is : " << n->events->evQueue[n->getMId()].size();

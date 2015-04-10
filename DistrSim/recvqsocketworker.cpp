@@ -136,12 +136,6 @@ void RecvQSocketWorker::process(){
                          mt=it.value().head()->getTimestamp();
                      }
                 }
-                else if(it.key()!=this->m_id){
-                     if(minTS>this->q->safeTime.value(it.key())){
-                         minTS=this->q->safeTime.value(it.key());
-                         flag=1;
-                     }
-                }
             }
             for(it=this->q->evQueue.begin();it!=this->q->evQueue.end();it++){
                 if(!it.value().isEmpty()){
