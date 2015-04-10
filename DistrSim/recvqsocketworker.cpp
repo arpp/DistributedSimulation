@@ -126,17 +126,15 @@ void RecvQSocketWorker::process(){
             QMap<int,QQueue<Event*> >::iterator it;
             int flag=0;
             unsigned long minTS=(*time);//ULONG_MAX;
-            unsigned long mt=(*time);
+            unsigned long mt;
             for(it=this->q->evQueue.begin();it!=this->q->evQueue.end();it++){
                 if(!it.value().isEmpty()){
                      if(minTS>it.value().head()->getTimestamp()){
                          minTS=it.value().head()->getTimestamp();
                      }
-                     if(mt>it.value().head()->getTimestamp()){
-                         mt=it.value().head()->getTimestamp();
-                     }
                 }
             }
+            mt=minTS;
             for(it=this->q->evQueue.begin();it!=this->q->evQueue.end();it++){
                 if(!it.value().isEmpty()){
                 }
@@ -151,6 +149,7 @@ void RecvQSocketWorker::process(){
             qDebug() << "mid is : " << m_id;
             QList<int> emptyMNodes;
             int myFlag = 0;
+            int count = 0;
             for(it=this->q->evQueue.begin();it!=this->q->evQueue.end();it++){
                 if(it.value().isEmpty()){
                     if(it.key()==this->m_id)
@@ -163,12 +162,13 @@ void RecvQSocketWorker::process(){
                         qDebug() << "other";
                         if(mt>this->q->safeTime.value(it.key()))
                             emptyMNodes.append(it.key());
+                        c++;
                     }
                 }
             }
 
             qDebug() << "em" << emptyMNodes.size();
-            if(myFlag == 1 && (emptyMNodes.size() == q->evQueue.size() - 2))
+            if(myFlag == 1 && (c == q->evQueue.size() - 2))
             {
                 qDebug() << "empty send demand";
                 foreach(int i,emptyMNodes){
