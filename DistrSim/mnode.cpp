@@ -41,7 +41,7 @@ void MNode::print(){
     for(int i=0; i<this->edgeList.count(); i++)
     {
         QDebug debug = qDebug();
-        debug<<nodeList[i]->getNodeId()<<":";
+        debug<<nodeList.at(i)->getNodeId()<<":";
         for(int j=0; j<this->edgeList[i].count(); j++)
         {
             debug<<" "<<this->edgeList[i][j].first->getNodeId();
@@ -56,12 +56,12 @@ void MNode::initConnection()
     this->incomingConnection = c.getReceivers();
     this->outgoingConnection = c.getSenders();
 
-//    QMap<int, QTcpSocket*>::iterator iter;
-//    for(iter=incomingConnection.begin();iter!=incomingConnection.end();++iter)
-//        qDebug()<<iter.key() << ": " << iter.value()->peerAddress().toString();
+    QMap<int, QTcpSocket*>::iterator iter;
+    for(iter=incomingConnection.begin();iter!=incomingConnection.end();++iter)
+        qDebug()<<iter.key() << ": " << iter.value()->peerAddress().toString();
 
-//    for(iter=outgoingConnection.begin();iter!=outgoingConnection.end();++iter)
-//        qDebug()<<iter.key() << ": " << iter.value()->peerAddress().toString();
+    for(iter=outgoingConnection.begin();iter!=outgoingConnection.end();++iter)
+        qDebug()<<iter.key() << ": " << iter.value()->peerAddress().toString();
 
     qDebug() << "yooy" << c.getOwnID();
     this->m_id = c.getOwnID();
@@ -69,9 +69,12 @@ void MNode::initConnection()
 
 void MNode::transferFiles()
 {
-    FileShare fs;
-    fs.sync("nodepartition", this->m_id, 0, this->incomingConnection, this->outgoingConnection);
-    fs.sync("edgepartition", this->m_id, 0, this->incomingConnection, this->outgoingConnection);
+    if(incomingConnection.size() > 0 && outgoingConnection.size() > 0)
+    {
+        FileShare fs;
+        fs.sync("nodepartition", this->m_id, 0, this->incomingConnection, this->outgoingConnection);
+        fs.sync("edgepartition", this->m_id, 0, this->incomingConnection, this->outgoingConnection);
+    }
 }
 
 void MNode::initTransfer()

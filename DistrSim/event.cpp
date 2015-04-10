@@ -30,7 +30,8 @@ QList<EventData*> Event::runEvent()
     unsigned long destNodeId;
     for(int i=0;i<nodeList.size();++i)
     {
-        if(nodeList[i]->getNodeId() == nodeId)
+        qDebug() << "event i is " << i;
+        if(nodeList.at(i)->getNodeId() == nodeId)
         {
 //            for(int k=0;k<edgeList[i].size();++k)
 //                qDebug() << edgeList[i][k].first->getNodeId() << " ";

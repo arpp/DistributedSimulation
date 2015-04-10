@@ -47,11 +47,10 @@ readGraph::readGraph(MNode *n)
             QString str(line);
             QStringList strList = str.split(" ");
 
-            exampleNode *sn = new exampleNode(strList[0].toLong());
+            exampleNode *sn = new exampleNode(strList[0].toLong());            
             exampleNode *dn = new exampleNode(strList[1].toLong());
 
             exampleEdge *ee = new exampleEdge(sn, dn);
-
             n->addEdge(ee, strList[2].toLong());
         }
         fe.close();

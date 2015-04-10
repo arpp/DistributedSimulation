@@ -126,7 +126,7 @@ void RecvQSocketWorker::process(){
             for(int i=0;i<q->nodeList.size();++i)
             {
                 if(q->nodeList.at(i)->getNodeId() == ev->getNodeId())
-                    n = q->nodeList[i];
+                    n = q->nodeList.at(i);
             }
             //Update timestamp of event
             ev->setTimestamp(*time);

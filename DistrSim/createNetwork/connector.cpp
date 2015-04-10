@@ -22,6 +22,8 @@ void connector::begin() {
              ownIP = address.toString();
     }
 
+    if(c->length() ==1)return;
+
     ConnectToAll *cta = new ConnectToAll(c, ownIP);
     c->printConnections();
     QThread *cthread = new QThread();

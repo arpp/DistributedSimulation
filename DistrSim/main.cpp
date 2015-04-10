@@ -12,7 +12,6 @@ int main(int argc, char *argv[])
     n->initTransfer();
     readGraph rg(n);
     n->initQueues();
-    qDebug() << "hello";
     n->print();
 
     qDebug() << "starting mid : " << n->getMId();
@@ -21,9 +20,9 @@ int main(int argc, char *argv[])
     {
 //        if((qrand() % 1000) < 50)
 //        {
-            unsigned long startNode = n->nodeList[i]->getNodeId();
+            unsigned long startNode = n->nodeList.at(i)->getNodeId();
             EventData * evData = new EventData(0,startNode,startNode,2);
-            Event * seedEvent = new Event(n->nodeList[i], evData, n->nodeList, n->edgeList);
+            Event * seedEvent = new Event(n->nodeList.at(i), evData, n->nodeList, n->edgeList);
             n->events->evQueue[n->getMId()].enqueue(seedEvent);
 //        }
     }

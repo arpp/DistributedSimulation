@@ -111,8 +111,8 @@ void EventProcessWorker::process(){
            NodeAbstract *nabs;
            EventData* d = genEvents[i];
            for(int j=0;j<this->q->nodeList.size();j++){
-               if(this->q->nodeList[j]->getNodeId()==d->getNodeId()){
-                   nabs=this->q->nodeList[j];
+               if(this->q->nodeList.at(j)->getNodeId()==d->getNodeId()){
+                   nabs=this->q->nodeList.at(j);
                    lfl=1;
                    break;
                }
