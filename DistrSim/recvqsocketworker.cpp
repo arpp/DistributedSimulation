@@ -78,11 +78,13 @@ void RecvQSocketWorker::process(){
             (*time)++;
             *time = (*time)>(ev->getTimestamp() + 1)?(*time):(ev->getTimestamp() + 1);
             timeStampMutex->unlock();
+
             //Create NULL Message. Add to send queue.
             EventData *nullMessage = new EventData(*time+5, m_id, ev->getSrcNodeId(), 0);
             timeStampMutex->lock();
             (*time)+=5;
             timeStampMutex->unlock();
+
             qDebug()<<"RecvProcessSocketWorker: "<<QThread::currentThreadId()<<" dmdmsg, tmeup: "<<*time<<"";
             sendQueueMutex->lock();
             q->sendQueue.enqueue(nullMessage);

@@ -20,6 +20,7 @@ QList<EventData*> Event::runEvent()
 //    QTime time = QTime::currentTime();
 //    qsrand((uint)time.msec());
 
+
     unsigned long nodeId = node->getNodeId();
     qDebug() << "current nopde is : " << nodeId;
     QList<EventData*> toSend;

@@ -74,6 +74,7 @@ void SendQueueWorker::process(){
             (*time)++;
             currentEvent->setTimestamp(*time);
             timeStampMutex->unlock();
+
         }
         qDebug() << "SendQueueWorker: Send process thread: "<<QThread::currentThreadId()<<" type = "<<currentEvent->getType()<<" timestamp = "<<currentEvent->getTimestamp();
         qDebug() << "socket peer : " << socket->peerAddress().toString();

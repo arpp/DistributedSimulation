@@ -14,6 +14,7 @@ public:
     unsigned long getNodeID();
     unsigned long getTimestamp();
 
+
     QList<NodeAbstract*> nodeList;
     QList<QList<QPair<NodeAbstract*,int> > > edgeList;
 

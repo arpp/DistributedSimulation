@@ -15,6 +15,7 @@ public:
     void setTimestamp(unsigned long ts);
     void setTypeOfEvent(int tp);
 
+
     friend QDataStream& operator<<(QDataStream& out, EventData &eventData);
     friend QDataStream& operator>>(QDataStream& in, EventData & eventData);
 

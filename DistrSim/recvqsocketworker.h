@@ -33,6 +33,7 @@ private:
     QMutex *timeStampMutex;
     QMutex *sendQueueMutex;
     QWaitCondition *sendQueueNotEmpty;
+
 };
 
 #endif // RECVQSOCKETWORKER_H

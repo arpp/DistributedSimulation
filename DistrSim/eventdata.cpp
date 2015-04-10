@@ -56,3 +56,4 @@ QDataStream& operator>>(QDataStream& in, EventData & eventData)
     eventData = EventData((unsigned long)ts, (unsigned long)srcNodeId, (unsigned long) nodeId, type);
     return in;
 }
+
