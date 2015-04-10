@@ -17,18 +17,18 @@ int main(int argc, char *argv[])
 
     qDebug() << "starting mid : " << n->getMId();
 
+    for(int i=0;i<n->nodeList.size();++i)
+    {
+        if((qrand() % 1000) < 50)
+        {
+            unsigned long startNode = n->nodeList[i]->getNodeId();
+            EventData * evData = new EventData(0,startNode,startNode,2);
+            Event * seedEvent = new Event(n->nodeList[i], evData, n->nodeList, n->edgeList);
+            n->events->evQueue[n->getMId()].enqueue(seedEvent);
+        }
+    }
 
-//    unsigned long startNode = 11;
-//    qDebug() << "1";
-//    NodeAbstract * node = new NodeAbstract(startNode);
-//    qDebug() << "2";
-//    EventData * evData = new EventData(0,startNode,startNode,2);
-//    qDebug() << "3";
-//    Event * seedEvent = new Event(node, evData, n->nodeList, n->edgeList);
-//    qDebug() << "4";
-//    qDebug() << "" << n->events->evQueue.value(n->getMId()).size() << "";
-//    n->events->evQueue[n->getMId()].enqueue(seedEvent);
-
+    qDebug() << "seed size is : " << n->events->evQueue[n->getMId()].size();
     qDebug() << "started";
     n->beginSimulation();
 
