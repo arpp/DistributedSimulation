@@ -162,13 +162,13 @@ void RecvQSocketWorker::process(){
                         qDebug() << "other";
                         if(mt>this->q->safeTime.value(it.key()))
                             emptyMNodes.append(it.key());
-                        c++;
+                        count++;
                     }
                 }
             }
 
             qDebug() << "em" << emptyMNodes.size();
-            if(myFlag == 1 && (c == q->evQueue.size() - 2))
+            if(myFlag == 1 && (count == q->evQueue.size() - 2))
             {
                 qDebug() << "empty send demand";
                 foreach(int i,emptyMNodes){
