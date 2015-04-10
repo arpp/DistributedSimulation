@@ -37,19 +37,24 @@ void EventProcessWorker::process(){
                     minTS=it.value().head()->getTimestamp();
                 }
            }
+       }
+       for(it=this->q->evQueue.begin();it!=this->q->evQueue.end();it++){
+           if(!it.value().isEmpty()){
+
+           }
            else if(it.key()!=this->m_id){
                 if(minTS>this->q->safeTime.value(it.key())){
-                    minTS=this->q->safeTime.value(it.key());
+                    l.append(it.key());
                     flag=1;
                 }
                 count++;
-                l.append(it.key());
            }
            else if(it.key() == this->m_id)
            {
                count++;
            }
        }
+
        if(count==this->q->evQueue.size()){
             this->evQueueNotEmpty->wait(this->evQueueMutex);
 //           continue;
@@ -85,7 +90,7 @@ void EventProcessWorker::process(){
            evQueueMutex->unlock();
            continue;
        }
-       if(q->evQueue[k].isEmpty())
+       else if(q->evQueue[k].isEmpty())
        {
            evQueueMutex->unlock();
            continue;
@@ -93,13 +98,14 @@ void EventProcessWorker::process(){
 
        event = q->evQueue[k].dequeue();
        if(q->evQueue[k].isEmpty()){
-           q->safeTime[k]=event->getTimestamp()+1;
+           q->safeTime[k]=(q->safeTime[k]>event->getTimestamp()+1)?q->safeTime[k]:event->getTimestamp()+1;
        }
        this->evQueueMutex->unlock();
 
        qDebug()<< QTime::currentTime().toString()<<" EVENT_PROCESS_WORKER: Event process thread: "<<QThread::currentThreadId()<<"Processed event timestamp: "<<event->getTimestamp()<<"";
 
        QList<EventData*> genEvents = event->runEvent();
+
        for(int i=0;i<genEvents.size();i++){
            int lfl=0;
            NodeAbstract *nabs;

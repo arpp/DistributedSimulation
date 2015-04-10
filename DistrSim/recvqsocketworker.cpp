@@ -118,10 +118,14 @@ void RecvQSocketWorker::process(){
             QMap<int,QQueue<Event*> >::iterator it;
             int flag=0;
             unsigned long minTS=(*time);//ULONG_MAX;
+            unsigned long mt=(*time);
             for(it=this->q->evQueue.begin();it!=this->q->evQueue.end();it++){
                 if(!it.value().isEmpty()){
                      if(minTS>it.value().head()->getTimestamp()){
                          minTS=it.value().head()->getTimestamp();
+                     }
+                     if(mt>it.value().head()->getTimestamp()){
+                         mt=it.value().head()->getTimestamp();
                      }
                 }
                 else if(it.key()!=this->m_id){
@@ -145,7 +149,8 @@ void RecvQSocketWorker::process(){
                     else
                     {
                         qDebug() << "other";
-                        emptyMNodes.append(it.key());
+                        if(mt>this->q->safeTime.value(it.key()))
+                            emptyMNodes.append(it.key());
                     }
                 }
             }
