@@ -1,4 +1,5 @@
 #include "event.h"
+#include "examplenode.h"
 #include <QDebug>
 #include <QTime>
 
@@ -20,7 +21,8 @@ QList<EventData*> Event::runEvent()
 //    QTime time = QTime::currentTime();
 //    qsrand((uint)time.msec());
 
-
+    exampleNode* enode = dynamic_cast<exampleNode*>(node);
+    enode->visit();
     unsigned long nodeId = node->getNodeId();
     qDebug() << "current nopde is : " << nodeId;
     QList<EventData*> toSend;

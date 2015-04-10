@@ -18,16 +18,16 @@ int main(int argc, char *argv[])
     qDebug() << "starting mid : " << n->getMId();
 
 
-    unsigned long startNode = 11;
-    qDebug() << "1";
-    NodeAbstract * node = new NodeAbstract(startNode);
-    qDebug() << "2";
-    EventData * evData = new EventData(0,startNode,startNode,2);
-    qDebug() << "3";
-    Event * seedEvent = new Event(node, evData, n->nodeList, n->edgeList);
-    qDebug() << "4";
-    qDebug() << "" << n->events->evQueue.value(n->getMId()).size() << "";
-    n->events->evQueue[n->getMId()].enqueue(seedEvent);
+//    unsigned long startNode = 11;
+//    qDebug() << "1";
+//    NodeAbstract * node = new NodeAbstract(startNode);
+//    qDebug() << "2";
+//    EventData * evData = new EventData(0,startNode,startNode,2);
+//    qDebug() << "3";
+//    Event * seedEvent = new Event(node, evData, n->nodeList, n->edgeList);
+//    qDebug() << "4";
+//    qDebug() << "" << n->events->evQueue.value(n->getMId()).size() << "";
+//    n->events->evQueue[n->getMId()].enqueue(seedEvent);
 
     qDebug() << "started";
     n->beginSimulation();

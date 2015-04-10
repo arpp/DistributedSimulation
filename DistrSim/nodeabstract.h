@@ -5,7 +5,7 @@ class NodeAbstract
 {
 public:
     NodeAbstract(unsigned long vid);
-    unsigned long getNodeId();
+    virtual unsigned long getNodeId();
 
 private:
     unsigned long vertexId;
