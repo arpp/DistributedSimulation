@@ -23,6 +23,7 @@ QList<EventData*> Event::runEvent()
 
     exampleNode* enode = dynamic_cast<exampleNode*>(node);
     enode->visit();
+    qDebug() << "visited count for " << node->getNodeId() << " is " << enode->getVisitCount();
     unsigned long nodeId = node->getNodeId();
     qDebug() << "current nopde is : " << nodeId;
     QList<EventData*> toSend;

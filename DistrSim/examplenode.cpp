@@ -8,3 +8,9 @@ exampleNode::exampleNode(unsigned long vid): NodeAbstract(vid)
 void exampleNode::visit() {
     visitCount++;
 }
+
+int exampleNode::getVisitCount() {
+    return visitCount;
+}
+
+
