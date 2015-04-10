@@ -31,7 +31,7 @@ void connector::begin() {
     QObject::connect(cthread, SIGNAL(started()), cta, SLOT(startConnecting()));
     cthread->start();
 
-    QTextStream(stdout) << "IP of this system is " << ownIP << " " << c->getPort(ownIP);
+    QTextStream(stderr) << "IP of this system is " << ownIP << " " << c->getPort(ownIP);
 
     Server *server = new Server(0, c, ownIP);
   //  emit server->startServer();
@@ -52,7 +52,7 @@ void connector::begin() {
         QTcpSocket* qts = sockets[i];
         receivers[c->getID((qts->peerAddress()).toString())] = qts;
     }
-    QTextStream(stdout) << "Done dona done";
+    QTextStream(stderr) << "Done dona done";
 }
 
 QMap<int, QTcpSocket*> connector::getSenders() {

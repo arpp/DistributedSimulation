@@ -12,6 +12,7 @@ public:
     unsigned long getNodeId();
     int getTypeOfEvent();
     int getType();
+    void setType(int type);
     void setTimestamp(unsigned long ts);
     void setTypeOfEvent(int tp);
 

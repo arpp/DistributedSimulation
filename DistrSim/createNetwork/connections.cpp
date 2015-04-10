@@ -33,7 +33,7 @@ Connections::Connections(QString filename): QObject(0) {
         ip2id[fields[0]] = c;
         c++;
     }
-    QTextStream(stdout) << "connection details read from " << filename << "";
+    QTextStream(stderr) << "connection details read from " << filename << "";
     file.close();
 }
 
@@ -72,9 +72,9 @@ unsigned int Connections::length() {
 }
 
 void Connections::printConnections() {
-    QTextStream(stdout) << "IP_ADDR\t\tPORT";
+    QTextStream(stderr) << "IP_ADDR\t\tPORT";
     for (int i=0; i<ip_adds.size(); i++) {
-        QTextStream(stdout) << ip_adds[i] << "\t" << ports[i] << "";
+        QTextStream(stderr) << ip_adds[i] << "\t" << ports[i] << "";
     }
 }
 

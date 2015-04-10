@@ -23,6 +23,11 @@ int EventData::getTypeOfEvent()
     return typeOfEvent;
 }
 
+
+void EventData::setType(int type){
+    this->type=type;
+}
+
 unsigned long EventData::getTimestamp()
 {
     return this->timestamp;

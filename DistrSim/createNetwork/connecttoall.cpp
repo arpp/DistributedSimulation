@@ -19,7 +19,7 @@ ConnectToAll::ConnectToAll(Connections *c, QString ownIP, QObject* parent): QObj
 }
 
 void ConnectToAll::startConnecting() {
-    QTextStream(stdout) << "Client thread is running";
+    QTextStream(stderr) << "Client thread is running";
     if(c == NULL) {
 
         Client *cl = new Client("10.138.39.52", 1234, 0);
@@ -28,12 +28,12 @@ void ConnectToAll::startConnecting() {
 
     }
     else {
-        QTextStream(stdout) <<"#yolo";
+        QTextStream(stderr) <<"#yolo";
         Client *cl;
         for (int i = 0; i < c->length(); ++i) {
-//            QTextStream(stdout) <<"#yolosdf";
+//            QTextStream(stderr) <<"#yolosdf";
             if(ownIP.compare(c->getIP(i)) != 0) {
-                QTextStream(stdout) << "Connecting to " << c->getIP(i) << " on " << c->getPort(i) << "";
+                QTextStream(stderr) << "Connecting to " << c->getIP(i) << " on " << c->getPort(i) << "";
                 cl = new Client(c->getIP(i), c->getPort(i), c->getID(i));
                 clients.push_back(cl);
                 QObject::connect(cl, SIGNAL(clientConnectedOK()), this, SLOT(clientConnectedPeace()));
@@ -48,7 +48,7 @@ void ConnectToAll::clientConnectedPeace() {
     if(count == c->length()-1) {
         QThread::currentThread()->exit();
         //exit thread
-        QTextStream(stdout) << "This thread was supposed to exit";
+        QTextStream(stderr) << "This thread was supposed to exit";
     }
 }
 

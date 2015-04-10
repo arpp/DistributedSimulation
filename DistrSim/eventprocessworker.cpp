@@ -1,8 +1,11 @@
 #include "eventprocessworker.h"
 
 #include<QThread>
+#include<QDataStream>
 #include<QTime>
 #include<QDebug>
+#include<QCoreApplication>
+#include "examplenode.h"
 #include "limits.h"
 
 EventProcessWorker::EventProcessWorker(EventQueues *q, unsigned long *t, int m_id, QMutex *evQueueMutex, QMutex *sendQueueMutex, QMutex *timeStampMutex, QWaitCondition *evQueueNotEmpty, QWaitCondition *sendQueueNotEmpty, QObject *parent) :
@@ -106,10 +109,15 @@ void EventProcessWorker::process(){
 
        QList<EventData*> genEvents = event->runEvent();
 
+       int closeFlag=0;
        for(int i=0;i<genEvents.size();i++){
            int lfl=0;
            NodeAbstract *nabs;
            EventData* d = genEvents[i];
+           if(d->getType()==-1){
+                closeFlag=1;
+                break;
+           }
            for(int j=0;j<this->q->nodeList.size();j++){
                if(this->q->nodeList.at(j)->getNodeId()==d->getNodeId()){
                    nabs=this->q->nodeList.at(j);
@@ -142,6 +150,14 @@ void EventProcessWorker::process(){
                this->sendQueueMutex->unlock();
            }
        }
+       if(closeFlag==1)
+           break;
     }
 
+    QTextStream(stdout)<<"---------------------------------------------------------------------------------------------\n";
+    for(int i=0;i<this->q->nodeList.size();i++){
+        exampleNode* enode = dynamic_cast<exampleNode*>(q->nodeList.at(i));
+        QTextStream(stdout)<< q->nodeList.at(i)->getNodeId() <<" "<< enode->getVisitCount();
+    }
+    QCoreApplication::quit();
 }

@@ -37,13 +37,13 @@ void Server::acceptConnection()
 {
   QTcpSocket* cl = server.nextPendingConnection();
   client.push_back(cl);
-  QTextStream(stdout) << (cl->peerAddress()).toString() <<" has connected";
+  QTextStream(stderr) << (cl->peerAddress()).toString() <<" has connected";
   if(client.size()+1 == c->length()) {
-      QTextStream(stdout) << "All connections have been made";
+      QTextStream(stderr) << "All connections have been made";
       server.pauseAccepting();
       //exit thread
       QThread::currentThread()->exit();
-      QTextStream(stdout) << "Server hasn't exited";
+      QTextStream(stderr) << "Server hasn't exited";
 
   }
 
@@ -51,16 +51,16 @@ void Server::acceptConnection()
 
 void Server::startRead(QTcpSocket* cl)
 {
-    QTextStream(stdout) << "waiting for write by " << cl->peerAddress().toString()<<  "";
+    QTextStream(stderr) << "waiting for write by " << cl->peerAddress().toString()<<  "";
     bool x = cl->waitForReadyRead();
     if(x) {
 
     char buffer[1024] = {0};
     cl->read(buffer, cl->bytesAvailable());
-    QTextStream(stdout) << buffer << "sdfds";
+    QTextStream(stderr) << buffer << "sdfds";
     }
     else {
-        QTextStream(stdout) << "holy fuck";
+        QTextStream(stderr) << "holy fuck";
     }
 //  std::cout << buffer << std::endl;
 //  cl->close();

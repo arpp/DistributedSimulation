@@ -1,6 +1,7 @@
 #include "event.h"
 #include "examplenode.h"
 #include <QDebug>
+#include <QTextStream>
 #include <QTime>
 
 Event::Event(NodeAbstract *n, EventData *ev, QList<NodeAbstract*> nodeList, QList<QList<QPair<NodeAbstract*,int> > > edgeList)
@@ -17,35 +18,33 @@ unsigned long Event::getNodeID(){
 
 QList<EventData*> Event::runEvent()
 {
-//    int typeOfEvent = eventData->getTypeOfEvent();
-//    QTime time = QTime::currentTime();
-//    qsrand((uint)time.msec());
 
     exampleNode* enode = dynamic_cast<exampleNode*>(node);
     enode->visit();
     qDebug() << "visited count for " << node->getNodeId() << " is " << enode->getVisitCount();
+    QTextStream(stdout)<<node->getNodeId()<<" visited\n";
     unsigned long nodeId = node->getNodeId();
     qDebug() << "current nopde is : " << nodeId;
     QList<EventData*> toSend;
     unsigned long destNodeId;
     for(int i=0;i<nodeList.size();++i)
     {
-        qDebug() << "event i is " << i;
         if(nodeList.at(i)->getNodeId() == nodeId)
         {
-//            for(int k=0;k<edgeList[i].size();++k)
-//                qDebug() << edgeList[i][k].first->getNodeId() << " ";
-
             //Generate random dest node
             int j = qrand() % edgeList[i].size();
             destNodeId = edgeList[i][j].first->getNodeId();
             EventData * newEvent = new EventData(0, nodeId, destNodeId, 2);
+            if(enode->getVisitCount()==250){
+                newEvent->setType(-1);
+            }
             toSend.append(newEvent);
         }
     }
 
     qDebug() << "Event ran timstamp is :" << eventData->getTimestamp() ;
     qDebug() << "dest is " << destNodeId;
+
     return toSend;
 }
 

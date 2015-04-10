@@ -11,7 +11,7 @@ FileShare::FileShare()
 void FileShare::sync(QString filename, int ownID, int masterID, QMap<int, QTcpSocket*> senders, QMap<int, QTcpSocket*> receivers) {
     if(masterID == ownID) {
 
-        QTextStream(stdout) << "beginning transfer" << "";
+        QTextStream(stderr) << "beginning transfer" << "";
         QMap<int, QTcpSocket*>::iterator siter;
         for(siter = senders.begin(); siter != senders.end(); siter++) {
             QFile inputFile(filename + QString::number(siter.key()));
@@ -25,10 +25,10 @@ void FileShare::sync(QString filename, int ownID, int masterID, QMap<int, QTcpSo
 
                     BlockWriter(siter.value()).stream() << buffer;
                     bool sent = (siter.value())->waitForBytesWritten();
-                    QTextStream(stdout) << "Size sent: " << rawFile.size() << "";
+                    QTextStream(stderr) << "Size sent: " << rawFile.size() << "";
 //                }
 
-                QTextStream(stdout) << "File has been sent";
+                QTextStream(stderr) << "File has been sent";
                 inputFile.close();
             }
         }
