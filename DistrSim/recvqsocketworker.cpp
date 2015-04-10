@@ -51,11 +51,19 @@ void RecvQSocketWorker::process(){
 
             this->evQueueMutex->lock();
 
+            for(it=this->q->evQueue.begin();it!=this->q->evQueue.end();it++)
+                qDebug()<<"st: "<<this->q->safeTime.value(it.key());
+
             for(it=this->q->evQueue.begin();it!=this->q->evQueue.end();it++){
                 if(!it.value().isEmpty()){
                      if(minTS>it.value().head()->getTimestamp()){
+                         qDebug()<<"evTs: "<<it.value().head()->getTimestamp();
                          minTS=it.value().head()->getTimestamp();
                      }
+                }
+            }
+            for(it=this->q->evQueue.begin();it!=this->q->evQueue.end();it++){
+                if(!it.value().isEmpty()){
                 }
                 else if(it.key()!=this->m_id){
 //                     qDebug()<<"itkey"<<it.key();
