@@ -62,6 +62,7 @@ void RecvQSocketWorker::process(){
                      }
                 }
             }
+            QList<int> tosend;
             for(it=this->q->evQueue.begin();it!=this->q->evQueue.end();it++){
                 if(!it.value().isEmpty()){
                 }
@@ -69,11 +70,24 @@ void RecvQSocketWorker::process(){
 //                     qDebug()<<"itkey"<<it.key();
                      if(minTS>this->q->safeTime.value(it.key())){
                          qDebug()<<minTS<<" "<<this->q->safeTime.value(it.key());
-                         minTS=this->q->safeTime.value(it.key());
+//                         minTS=this->q->safeTime.value(it.key());
+                         tosend.append(it.key());
                          flag=1;
                      }
                 }
             }
+
+            foreach(int i,tosend){
+                //create a DEMAND msg for each i-th mnode and enqueue it in sendQueue
+                EventData *demand = new EventData(*(this->time),m_id,i,1);
+
+                this->sendQueueMutex->lock();
+                this->q->sendQueue.enqueue(demand);
+                this->sendQueueNotEmpty->wakeAll();
+                this->sendQueueMutex->unlock();
+            }
+
+
             qDebug()<<flag;
             if(flag==0)
                 this->evQueueNotEmpty->wakeAll();
@@ -123,10 +137,11 @@ void RecvQSocketWorker::process(){
 //            q->evQueue.find(m_id).value().enqueue(newEvent);
 
 //            qDebug() << "1";
+            QList<int> tosend;
             QMap<int,QQueue<Event*> >::iterator it;
             int flag=0;
             unsigned long minTS=(*time);//ULONG_MAX;
-            unsigned long mt;
+//            unsigned long mt;
             for(it=this->q->evQueue.begin();it!=this->q->evQueue.end();it++){
                 if(!it.value().isEmpty()){
                      if(minTS>it.value().head()->getTimestamp()){
@@ -134,53 +149,63 @@ void RecvQSocketWorker::process(){
                      }
                 }
             }
-            mt=minTS;
+//            mt=minTS;
             for(it=this->q->evQueue.begin();it!=this->q->evQueue.end();it++){
                 if(!it.value().isEmpty()){
                 }
                 else if(it.key()!=this->m_id){
                      if(minTS>this->q->safeTime.value(it.key())){
-                         minTS=this->q->safeTime.value(it.key());
+//                         minTS=this->q->safeTime.value(it.key());
                          flag=1;
+                         tosend.append(it.key());
                      }
                 }
             }
+            foreach(int i,tosend){
+                //create a DEMAND msg for each i-th mnode and enqueue it in sendQueue
+                EventData *demand = new EventData(*(this->time),m_id,i,1);
 
-            qDebug() << "mid is : " << m_id;
-            QList<int> emptyMNodes;
-            int myFlag = 0;
-            int count = 0;
-            for(it=this->q->evQueue.begin();it!=this->q->evQueue.end();it++){
-                if(it.value().isEmpty()){
-                    if(it.key()==this->m_id)
-                    {
-                        qDebug() << "mehbfuej";
-                        myFlag = 1;
-                    }
-                    else
-                    {
-                        qDebug() << "other";
-                        if(mt>this->q->safeTime.value(it.key()))
-                            emptyMNodes.append(it.key());
-                        count++;
-                    }
-                }
+                this->sendQueueMutex->lock();
+                this->q->sendQueue.enqueue(demand);
+                this->sendQueueNotEmpty->wakeAll();
+                this->sendQueueMutex->unlock();
             }
 
-            qDebug() << "em" << emptyMNodes.size();
-            if(myFlag == 1 && (count == q->evQueue.size() - 2))
-            {
-                qDebug() << "empty send demand";
-                foreach(int i,emptyMNodes){
-                    //create a DEMAND msg for each i-th mnode and enqueue it in sendQueue
-                    EventData *demand = new EventData(*(this->time),m_id,i,1);
+//            qDebug() << "mid is : " << m_id;
+//            QList<int> emptyMNodes;
+//            int myFlag = 0;
+//            int count = 0;
+//            for(it=this->q->evQueue.begin();it!=this->q->evQueue.end();it++){
+//                if(it.value().isEmpty()){
+//                    if(it.key()==this->m_id)
+//                    {
+//                        qDebug() << "mehbfuej";
+//                        myFlag = 1;
+//                    }
+//                    else
+//                    {
+//                        qDebug() << "other";
+//                        if(mt>this->q->safeTime.value(it.key()))
+//                            emptyMNodes.append(it.key());
+//                        count++;
+//                    }
+//                }
+//            }
 
-                    this->sendQueueMutex->lock();
-                    this->q->sendQueue.enqueue(demand);
-                    this->sendQueueNotEmpty->wakeAll();
-                    this->sendQueueMutex->unlock();
-                }
-            }
+//            qDebug() << "em" << emptyMNodes.size();
+//            if(myFlag == 1 && (count == q->evQueue.size() - 2))
+//            {
+//                qDebug() << "empty send demand";
+//                foreach(int i,emptyMNodes){
+//                    //create a DEMAND msg for each i-th mnode and enqueue it in sendQueue
+//                    EventData *demand = new EventData(*(this->time),m_id,i,1);
+
+//                    this->sendQueueMutex->lock();
+//                    this->q->sendQueue.enqueue(demand);
+//                    this->sendQueueNotEmpty->wakeAll();
+//                    this->sendQueueMutex->unlock();
+//                }
+//            }
 
             qDebug() << "flag is:" << flag;
             if(flag == 0)
