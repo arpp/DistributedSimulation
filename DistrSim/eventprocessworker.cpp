@@ -117,6 +117,7 @@ void EventProcessWorker::process(){
                    break;
                }
            }
+           qDebug()<<"lfl="<<lfl;
            if(lfl==1){
                //add locally
                this->timeStampMutex->lock();
@@ -126,7 +127,9 @@ void EventProcessWorker::process(){
                this->timeStampMutex->unlock();
 
                this->evQueueMutex->lock();
+               qDebug()<<"to build event";
                Event *ev = new Event(nabs,d,q->nodeList, q->edgeList);
+               qDebug()<<"event built";
                q->evQueue[m_id].enqueue((ev));
 //               this->q->evQueue.find(this->m_id).value().enqueue(ev);
                this->evQueueMutex->unlock();
