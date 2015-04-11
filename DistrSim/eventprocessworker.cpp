@@ -115,6 +115,10 @@ void EventProcessWorker::process(){
            NodeAbstract *nabs;
            EventData* d = genEvents[i];
            if(d->getType()==-1){
+                this->sendQueueMutex->lock();
+                this->q->sendQueue.enqueue(d);
+                this->sendQueueNotEmpty->wakeAll();
+                this->sendQueueMutex->unlock();
                 closeFlag=1;
                 break;
            }
@@ -157,7 +161,8 @@ void EventProcessWorker::process(){
     QTextStream(stdout)<<"---------------------------------------------------------------------------------------------\n";
     for(int i=0;i<this->q->nodeList.size();i++){
         exampleNode* enode = dynamic_cast<exampleNode*>(q->nodeList.at(i));
-        QTextStream(stdout)<< q->nodeList.at(i)->getNodeId() <<" "<< enode->getVisitCount();
+        QTextStream(stdout)<< q->nodeList.at(i)->getNodeId() <<" "<< enode->getVisitCount()<<"\n";
     }
+    QThread::sleep(10);
     QCoreApplication::quit();
 }

@@ -3,7 +3,10 @@
 #include "eventdata.h"
 #include <QThread>
 #include <QTime>
+#include <QCoreApplication>
 #include "createNetwork/blockreader.h"
+
+#include "examplenode.h"
 
 RecvQSocketWorker::RecvQSocketWorker(EventQueues *q, unsigned long *t, QTcpSocket* incSoc, int m_id, int s_id,
                                      QMutex *evQueueMutex, QMutex *timeStampMutex, QWaitCondition *evQueueNotEmpty, QMutex *sendQueueMutex, QWaitCondition *sendQueueNotEmpty, QObject *parent) :
@@ -29,13 +32,14 @@ void RecvQSocketWorker::process(){
         //New event received
 
         EventData *ev = new EventData(0,0,0,0);
-//        QDataStream st(this->socket);
 
         BlockReader(this->socket).stream()>>(*ev);
 
 
         int type = ev->getType();
-//        qDebug()<<"RecvProcessSocketWorker: "<<QThread::currentThreadId()<<" tom: "<<type<<"";
+        if(type==-1){
+            break;
+        }
 
 
         if(type==0){
@@ -219,4 +223,10 @@ void RecvQSocketWorker::process(){
 
         }
     }
+    QTextStream(stdout)<<"---------------------------------------------------------------------------------------------\n";
+    for(int i=0;i<this->q->nodeList.size();i++){
+        exampleNode* enode = dynamic_cast<exampleNode*>(q->nodeList.at(i));
+        QTextStream(stdout)<< q->nodeList.at(i)->getNodeId() <<" "<< enode->getVisitCount()<<"\n";
+    }
+    QCoreApplication::quit();
 }

@@ -57,6 +57,17 @@ void SendQueueWorker::process(){
         EventData* currentEvent = (q->sendQueue).dequeue();//Consume event
         sendQueueMutex->unlock();
 
+        if(currentEvent->getType()==-1){
+            QMap<int,QTcpSocket*>::iterator iter;
+            for(iter=this->outSoc.begin();iter!=this->outSoc.end();++iter){
+                BlockWriter(iter.value()).stream()<<(*currentEvent);
+                (iter.value())->waitForBytesWritten(-1);
+            }
+            break;
+        }
+
+
+
 //        qDebug() << "SendQueueWorker: Send process thread: "<<QThread::currentThreadId()<<" Type: "<<currentEvent->getType()<<"\n";
         QTcpSocket* socket;
         if(currentEvent->getType() == 0 || currentEvent->getType() == 1)//NULL or DEMAND Message
