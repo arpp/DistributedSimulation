@@ -23,11 +23,6 @@ int EventData::getTypeOfEvent()
     return typeOfEvent;
 }
 
-
-void EventData::setType(int type){
-    this->type=type;
-}
-
 unsigned long EventData::getTimestamp()
 {
     return this->timestamp;
@@ -47,6 +42,10 @@ void EventData::setTypeOfEvent(int tp)
     typeOfEvent = tp;
 }
 
+void EventData::setDay(int day) {
+    this->day = day;
+}
+
 QDataStream& operator<<(QDataStream& out, EventData &eventData)
 {
     out << (quint64)(eventData.getTimestamp()) << (quint64)(eventData.getSrcNodeId()) << (quint64)(eventData.getNodeId()) << eventData.getType();
@@ -62,3 +61,6 @@ QDataStream& operator>>(QDataStream& in, EventData & eventData)
     return in;
 }
 
+int EventData::getDay() {
+    return day;
+}

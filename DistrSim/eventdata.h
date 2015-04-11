@@ -12,10 +12,10 @@ public:
     unsigned long getNodeId();
     int getTypeOfEvent();
     int getType();
-    void setType(int type);
     void setTimestamp(unsigned long ts);
     void setTypeOfEvent(int tp);
-
+    void setDay(int day);
+    int getDay();
 
     friend QDataStream& operator<<(QDataStream& out, EventData &eventData);
     friend QDataStream& operator>>(QDataStream& in, EventData & eventData);
@@ -26,6 +26,7 @@ private:
     unsigned long NodeId;
     int type;
     int typeOfEvent;//send/receive
+    int day;
 };
 
 #endif // EVENTDATA_H

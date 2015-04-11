@@ -9,3 +9,13 @@ unsigned long NodeAbstract::getNodeId()
 {
     return this->vertexId;
 }
+
+unsigned long NodeAbstract::getIndex()
+{
+    return this->index;
+}
+
+void NodeAbstract::setIndex(int i)
+{
+    this->index = i;
+}

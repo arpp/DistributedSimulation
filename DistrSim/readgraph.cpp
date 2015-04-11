@@ -1,7 +1,7 @@
 #include "readgraph.h"
 #include "mnode.h"
-#include "examplenode.h"
-#include "exampleedge.h"
+#include "personnode.h"
+#include "contactedge.h"
 #include <QFile>
 
 readGraph::readGraph(MNode *n)
@@ -17,13 +17,16 @@ readGraph::readGraph(MNode *n)
         {
             char line[1000];
             fn.readLine(line, 1000);
-            int id = atoi(line);
+            QString str(line);
+            QStringList strList = str.split(" ");
 
-            exampleNode *en = new exampleNode(id);
+            //id, infection period, incubation period
+            PersonNode *en = new PersonNode(strList[0].toLong(), strList[1].toInt(), strList[2].toInt());
 
             n->addNode(en);
         }
 
+     //   qDebug()<< "all people read";
 
         fn.close();
     }
@@ -39,20 +42,28 @@ readGraph::readGraph(MNode *n)
 
     QFile fe(filename);
     if(fe.open(QIODevice::ReadOnly)) {
+
         while(!fe.atEnd())
         {
             char line[1000];
             fe.readLine(line, 1000);
 
-            QString str(line);
+            QString str(line);  //line = srcid destid weight sysid
             QStringList strList = str.split(" ");
 
-            exampleNode *sn = new exampleNode(strList[0].toLong());            
-            exampleNode *dn = new exampleNode(strList[1].toLong());
+        //    qDebug()<<line;
 
-            exampleEdge *ee = new exampleEdge(sn, dn);
-            n->addEdge(ee, strList[2].toLong());
+            PersonNode *p = new PersonNode(strList[1].toLong(), 0, 0, 0);
+      //      qDebug()<<line;
+            PersonNode *np = new PersonNode(p->getNodeId(), p, strList[2].toInt());
+
+     //       qDebug()<<line;
+
+            //srcid, dest*, sysid
+            n->addEdge(strList[0].toLong(), np, strList[3].toLong());
+     //       qDebug()<<line;
         }
+
         fe.close();
     }
     else {

@@ -17,22 +17,29 @@ int MNode::getMId(){
 }
 
 void MNode::addNode(NodeAbstract* node){
+    this->nodeIdToIndex[node->getNodeId()] = this->nodeList.count();
+    node->setIndex(nodeIdToIndex[node->getNodeId()]);
     this->nodeList.append(node);
-
-    this->nodeIdToIndex[node->getNodeId()] = this->nodeList.count()-1;
-
     QList<QPair<NodeAbstract*,int> > temp;
     this->edgeList.append(temp);
 }
 
-void MNode::addEdge(EdgeAbstract* edge, unsigned long sysId){
-    NodeAbstract *src = edge->getSrc();
-    unsigned long index = this->nodeIdToIndex[src->getNodeId()];
+void MNode::addEdge(unsigned long srcId, NodeAbstract* dest, unsigned long sysId){
+    unsigned long srcIndex = this->nodeIdToIndex[srcId];
+    qDebug() << srcIndex;
     QPair<NodeAbstract*, unsigned long> nodeSysPair;
-    nodeSysPair.first = edge->getDst();
+    nodeSysPair.first = dest;
     nodeSysPair.second = sysId;
 
-    (this->edgeList[index]).append(nodeSysPair);
+    (this->edgeList[srcIndex]).append(nodeSysPair);
+}
+
+NodeAbstract* MNode::getNodeFromNodeId(unsigned long nodeId)
+{
+    unsigned long srcIndex = this->nodeIdToIndex[nodeId];
+
+//    qDebug() << "yo: "<<this->nodeList[srcIndex]->getIndex();
+    return this->nodeList[srcIndex];
 }
 
 void MNode::print(){
@@ -41,7 +48,7 @@ void MNode::print(){
     for(int i=0; i<this->edgeList.count(); i++)
     {
         QDebug debug = qDebug();
-        debug<<nodeList.at(i)->getNodeId()<<":";
+        debug<<nodeList[i]->getNodeId()<<":";
         for(int j=0; j<this->edgeList[i].count(); j++)
         {
             debug<<" "<<this->edgeList[i][j].first->getNodeId();
@@ -69,12 +76,9 @@ void MNode::initConnection()
 
 void MNode::transferFiles()
 {
-    if(incomingConnection.size() > 0 && outgoingConnection.size() > 0)
-    {
-        FileShare fs;
-        fs.sync("nodepartition", this->m_id, 0, this->incomingConnection, this->outgoingConnection);
-        fs.sync("edgepartition", this->m_id, 0, this->incomingConnection, this->outgoingConnection);
-    }
+    FileShare fs;
+    fs.sync("nodepartition", this->m_id, 0, this->incomingConnection, this->outgoingConnection);
+    fs.sync("edgepartition", this->m_id, 0, this->incomingConnection, this->outgoingConnection);
 }
 
 void MNode::initTransfer()

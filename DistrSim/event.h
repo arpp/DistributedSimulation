@@ -13,7 +13,8 @@ public:
     QList<EventData*> runEvent();
     unsigned long getNodeID();
     unsigned long getTimestamp();
-
+    int getType();
+    unsigned long meraFunctionObfuscated();
 
     QList<NodeAbstract*> nodeList;
     QList<QList<QPair<NodeAbstract*,int> > > edgeList;

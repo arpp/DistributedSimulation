@@ -29,7 +29,8 @@ public:
     MNode(QString configFile);
     int getMId();
     void addNode(NodeAbstract* node);
-    void addEdge(EdgeAbstract* edge, unsigned long sysId);
+    void addEdge(unsigned long srcId, NodeAbstract* dest, unsigned long sysId);
+    NodeAbstract* getNodeFromNodeId(unsigned long nodeId);
     void print();
     void initTransfer();
     void initQueues();
@@ -39,7 +40,6 @@ public:
 
     QList<NodeAbstract*> nodeList;
     QList<QList<QPair<NodeAbstract*,int> > > edgeList;
-
 
 private:
     int m_id;
