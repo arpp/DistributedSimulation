@@ -1,0 +1,150 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{graphics}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{alltt}
+\usepackage{multicol}
+\usepackage{paralist}
+\usepackage{indentfirst}
+\usepackage{hyperref}
+\usepackage[hmarginratio=1:1,top=32mm,columnsep=20pt]{geometry}
+\usepackage{listings}
+\usepackage[toc,page]{appendix}
+\usepackage{pgfplotstable}
+\usepackage{caption}
+\usepackage{enumitem}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{longtable}
+
+\usepackage{array}
+\usepackage{csvsimple}
+\usepackage{subcaption}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+
+
+
+
+
+\makeatletter
+\def\BState{\State\hskip-\ALG@thistlm}
+\makeatother
+
+\usepackage{hyperref}
+\hypersetup{
+     colorlinks   = true,
+     citecolor    = blue
+}
+
+
+\lstset{frame=tb,
+  language=Java,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  numbers=none,
+  breaklines=true,
+  breakatwhitespace=true
+  tabsize=3
+}
+
+\begin{document}
+%\maketitle
+%\thispagestyle{empty}
+%\pagestyle{empty}
+
+
+\begin{titlepage}
+\begin{center}
+
+% Upper part of the page. The '~' is needed because \\
+% only works if a paragraph has started.
+
+
+\textsc{\Large Distributed Systems Project Report }\\[0.5cm]
+
+% Title
+\HRule \\[0.4cm]
+{ \huge \bfseries Distributed Simulation \\[0.4cm] }
+
+\HRule \\[1.5cm]
+
+% Author and supervisor
+\begin{minipage}{0.4\textwidth}
+\begin{flushleft} \large
+\emph{Members:}\\
+Arpit Kumar\\
+Sachin Kumar\\
+Siddharth Rakesh\\
+Manav Sethi\\
+\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.4\textwidth}
+\begin{flushright} \large
+\emph{Supervisor:} \\
+Prof. Aurobindo Gupta
+\end{flushright}
+\end{minipage}
+
+\vfill
+
+% Bottom of the page
+{\large \today}
+
+\end{center}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\section{Introduction}
+	Distributed simulation involves the execution of a single simulation program on a collection of loosely coupled processors (e.g., PCs interconnected by a LAN or WAN). Distributed simulation is used for a variety of reasons, including:
+	\begin{itemize}
+		\item Enabling the execution of time consuming simulations, that could not otherwise be performed (e.g., simulation of the Internet), which helps in reducing the model execution time (proportional to the number of processors) and provides the ability to run larger models (with more memory).
+		\item Enabling the simulation to be used as a forecasting tool in time critical decision making processes (e.g., air traffic control), wherein the simulation can be initialized to the current system state, and faster than real-time execution can be achieved for what-if experimentation, as the simulation results may be needed in seconds.
+		\item Creating distributed virtual environments, possibly including users at distant geographical locations (e.g., training, entertainment), providing real-time execution capability, scalable performance for many users and simulated entities.
+	\end{itemize}
+
+
+\section{Objectives}
+	The objective of this project is to develop a distributed simulation framework for simulating problems such as epidemics in a population. We aim at ..
+
+\section{Dataset}
+	\begin{itemize}[nolistsep]
+		\item abcd
+	\end{itemize}
+
+\section{Approach}
+
+\section{Interface Description}
+	 
+\section{Results Obtained}
+
+\begin{thebibliography}{99}
+\bibitem[1]{Fujimoto}Parallel and Distributed Discrete Event Simulation: Algorithms And Applications by Richard M. Fujimoto, Proceedings of the 1993 Winter Simulation Conference
+\\ \url{http://dl.acm.org/citation.cfm?id=256596}
+\bibitem[2]{Misra}Distributed Discrete-Event Simulation by Jayadev Misra
+\\ \url{http://dl.acm.org/citation.cfm?id=6485}
+\bibitem[3]{Riley}Integrated Fluid and Packet Network Simulations by George F. Riley, Talal M. Jaafar and Richard M. Fujimoto
+\\ \url{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=1167114}
+\bibitem[4]{Telecomm}Parallel Simulation of Telecommunication Networks \url{http://titania.ctie.monash.edu.au/pnetsim.html}
+\bibitem[5]{Norm}Introduction to Discrete-Event Simulation and the SimPy Language by Norm Matloff
+\\ \url{http://heather.cs.ucdavis.edu/~matloff/156/PLN/DESimIntro.pdf}
+\bibitem[6]{Omnet}The OMNET++ Discrete Event Simulation System by András Varga
+\\ \url{http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.331.1728&rep=rep1&type=pdf}
+\bibitem[7]{Barrett}EpiSimdemics: an Efficient Algorithm for Simulating the Spread of Infectious Disease over Large Realistic Social Networks by Christopher L. Barrett, Keith R. Bisset, Stephen G. Eubank, Xizhou Feng, Madhav V. Marathe, Network Dynamics and Simulation Science Laboratory, Virginia Tech, Blacksburg
+\\ \url{http://ieeexplore.ieee.org/xpls/abs_all.jsp?arnumber=5214892}
+\end{thebibliography}
+
+\section{Feedback}
+
+\end{document}
+
+
+
+
+
+
