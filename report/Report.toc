@@ -7,4 +7,5 @@
 \contentsline {subsection}{\numberline {4.3}Developing the message handling and processing framework}{4}{subsection.4.3}
 \contentsline {subsection}{\numberline {4.4}Designing system assessment methods}{4}{subsection.4.4}
 \contentsline {section}{\numberline {5}Results Obtained}{4}{section.5}
-\contentsline {section}{\numberline {6}Feedback}{5}{section.6}
+\contentsline {section}{\numberline {6}Conclusion}{4}{section.6}
+\contentsline {section}{\numberline {7}Feedback}{5}{section.7}
