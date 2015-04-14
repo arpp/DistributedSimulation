@@ -191,6 +191,22 @@ is a lower bound on the time stamp of any subsequent message that will later be 
 	Because messages in each FIFO queue are sorted by time stamp, the LP can guarantee adherence to the local causality constraint by repeatedly processing the message containing the smallest time stamp, so long as each queue contains at least one message If one of the FIFO queues becomes empty, the LP must wait until a new message is added to this queue because a message could later arrive that contains a time stamp as small as the message it just removed and processed from that queue. This will never break causality constraint but may lead to deadlock as some process may keep on waiting for each other forever to send a message but neither will send any message.
 	
 	We can either avoid the deadlock or may have a separate routine which detects the deadlock and breaks it. A deadlock avoidance method will require additional messages called null messages. It is required that an LP indicates to other LPs a lower bound on the time stamp of messages it will send that LP in the future. Null messages can be used for this purpose. Null messages are used only for synchronization, and do not correspond to any activity in the physical system.
+
+	\begin{algorithm}
+	\label{lst:HAC_PseudoCode}
+	\caption{Conservative Null Message Deadlock Avoidance Pseudo Code}
+	\begin{algorithmic}[1]
+	\Procedure{SimulateSystem}{d1, . . . , dN}
+	\BState   \emph{\textbf{while} simulation is not over }
+	\State 	\emph{wait until each FIFO contains atleast one message}
+	\State \emph{remove smallest time stamped message M from its FIFO Queue}
+	\State \emph{clock $\leftarrow$ time stamp of M}
+	\State \emph{process M}
+	\State \emph{send NULL message to all LPs with time stamp equal to lower bound on time stamp of future messages (current time stamp + look-ahead)}
+	\EndProcedure
+	\end{algorithmic}
+	\end{algorithm}
+	\paragraph{}	
 	
 	An alternative approach to sending a null message after processing each event is a demand-driven approach. Whenever a process is about to become blocked because the incoming link with the smallest link clock value has no messages waiting to be processed, it requests the next message (null or otherwise) from the process on the sending side of the link. The process resumes execution when the response to this request is received. (\textbf{We have implemented this method in our framework for simulating a network as described in later sections}, where it is described in more detail)
 	
@@ -198,7 +214,7 @@ is a lower bound on the time stamp of any subsequent message that will later be 
 	
 	Conservative synchronization algorithms avoid violating the local causality constraint, whereas optimistic algorithms allow violations to occur but provide a mechanism to recover. The term optimistic execution refers to the fact that logical processes process events, "optimistically" assuming there are no causality errors.
 	
-	
+	These algorithms also have the same priliminaries
 \section{Dataset}
 	\begin{itemize}[nolistsep]
 		\item A small synthetic dataset
