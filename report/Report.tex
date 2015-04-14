@@ -144,9 +144,13 @@ Thus, we obtain a fully connected topology wherein each node has a bidirectional
 	\subsection{Developing the message handling and processing framework}
 
 	\subsection{Designing system assessment methods}
-\section{Interface Description}
+To test the system and its capabilities, we have simulated the random walk problem. A random walk is a mathematical formalization of a path that consists of a succession of random steps. For example, the path traced by a molecule as it travels in a liquid or a gas, the search path of a foraging animal, the price of a fluctuating stock and the financial status of a gambler can all be modelled as random walks, although they may not be truly random in reality.
+
+For testing our system, we began by seeding approximately 10 percent of the nodes with random walkers. If any node achieves 250 visits, we terminated the system. At the end, we computed the steady state probability that a node is visited in a random walk using the number of times it was actually visited during the walk.
 	 
 \section{Results Obtained}
+Based on the tests performed, we computed the Normalized Root-Mean-Square error between the observed and theoretical steady state probabilities. The error obtained is 13.18 percent.
+
 
 \begin{thebibliography}{99}
 \bibitem[1]{Fujimoto}Parallel and Distributed Discrete Event Simulation: Algorithms And Applications by Richard M. Fujimoto, Proceedings of the 1993 Winter Simulation Conference
