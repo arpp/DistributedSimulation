@@ -128,26 +128,52 @@ Prof. Arobinda Gupta
 
 \section{Approach}
 	\subsection{Distributing the graph}
+Algorithms that find a good partitioning of highly unstructured graphs are critical for developing efficient solutions for a wide range of problems in many application areas on both serial and parallel computers.
+
+For example, large-scale numerical simulations on parallel computers, such as those based on finite element methods, require the distribution of the finite element mesh to the processors. This distribution must be done so that the number of elements assigned to each processor is the same, and the number of adjacent elements assigned to different processors is minimized.
+
+The goal of the first condition is to balance the computations among the processors. The goal of the second condition is to minimize the communication resulting from the placement of adjacent elements to different processors. Graph partitioning can be used to successfully satisfy these conditions by first modelling the finite element mesh by a graph, and then partitioning it into equal parts.
+
+We have used gpmetis, an open source application which uses multilevel k-way partitioning algorithms to compute a partitioning solution in which each partition is contiguous. The partitioning and ordering routines compute multiple different solutions and select the best as the final solution. Our objective function is Edge-cut minimization. The command-line programs provide full access to the entire set of capabilities provided by gpmetis' API.
 	\subsection{Establishing communication between the nodes}
+Our framework requires reliable communication because receiving messages correctly is imperative for the proper functioning of the system. FIFO channels are required because each processor maintains a set of event queues for every other machine and a local queue, and we assume that a new message in an event queue has a time stamp, not smaller than the last event.
+
+In order to ensure such reliable, FIFO communication, we use TCP connections between the nodes. Each node in the system acts as a server and client. While acting as the client, it sends connection requests to all other nodes, using their IP addresses stored in a configuration file before the application begins execution. Simultaneously, it acts as a server and accepts connections from the other nodes, which try to connect to it.
+
+Thus, we obtain a fully connected topology wherein each node has a bidirectional connection to every other node via TCP connections.
 	\subsection{Developing the message handling and processing framework}
+
 	\subsection{Designing system assessment methods}
-\section{Interface Description}
+To test the system and its capabilities, we have simulated the random walk problem. A random walk is a mathematical formalization of a path that consists of a succession of random steps. For example, the path traced by a molecule as it travels in a liquid or a gas, the search path of a foraging animal, the price of a fluctuating stock and the financial status of a gambler can all be modelled as random walks, although they may not be truly random in reality.
+
+For testing our system, we began by seeding approximately 10 percent of the nodes with random walkers. If any node achieves 1000 visits, we terminated the system. At the end, we computed the steady state probability that a node is visited in a random walk using the number of times it was actually visited during the walk.
 	 
 \section{Results Obtained}
+Based on the tests performed, we computed the Normalized Root-Mean-Square error between the observed and theoretical steady state probabilities. The error obtained is 8.18 percent.
+
+The simulation lasted for approximately 5 minutes. No deadlocks were observed during the entire simulation.
+
+Although we have restricted the number of iterations, we observe that the actual results closely match the theoretical steady state probabilities. This is a clear indicator of the correctness of the entire distributed framework.
+
+\section{Conclusion}
 
 \begin{thebibliography}{99}
 \bibitem[1]{Fujimoto}Parallel and Distributed Discrete Event Simulation: Algorithms And Applications by Richard M. Fujimoto, Proceedings of the 1993 Winter Simulation Conference
 \\ \url{http://dl.acm.org/citation.cfm?id=256596}
 \bibitem[2]{Misra}Distributed Discrete-Event Simulation by Jayadev Misra
 \\ \url{http://dl.acm.org/citation.cfm?id=6485}
-\bibitem[3]{Riley}Integrated Fluid and Packet Network Simulations by George F. Riley, Talal M. Jaafar and Richard M. Fujimoto
+\bibitem[3]{Chandy}Distributed simulation of networks by K. M. Chandy, Victor Holmes and Jayadev Misra
+\\ \url{http://www.cs.utexas.edu/users/misra/scannedPdf.dir/DistributedSimulationNetworks.pdf}
+\bibitem[4]{gpmetis}A fast and high quality multilevel scheme for partitioning irregular graphs by G. Karypis and V. Kumar, SIAM J. Sci. Comput., 20:359–392, December 1998.
+\\ \url{http://libra.msra.cn/Publication/1318048/a-fast-and-high-quality-multilevel-scheme-for-partitioning-irregulargraphs}
+\bibitem[5]{Riley}Integrated Fluid and Packet Network Simulations by George F. Riley, Talal M. Jaafar and Richard M. Fujimoto
 \\ \url{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=1167114}
-\bibitem[4]{Telecomm}Parallel Simulation of Telecommunication Networks \url{http://titania.ctie.monash.edu.au/pnetsim.html}
-\bibitem[5]{Norm}Introduction to Discrete-Event Simulation and the SimPy Language by Norm Matloff
+\bibitem[6]{Telecomm}Parallel Simulation of Telecommunication Networks \url{http://titania.ctie.monash.edu.au/pnetsim.html}
+\bibitem[7]{Norm}Introduction to Discrete-Event Simulation and the SimPy Language by Norm Matloff
 \\ \url{http://heather.cs.ucdavis.edu/~matloff/156/PLN/DESimIntro.pdf}
-\bibitem[6]{Omnet}The OMNET++ Discrete Event Simulation System by András Varga
+\bibitem[8]{Omnet}The OMNET++ Discrete Event Simulation System by András Varga
 \\ \url{http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.331.1728&rep=rep1&type=pdf}
-\bibitem[7]{Barrett}EpiSimdemics: an Efficient Algorithm for Simulating the Spread of Infectious Disease over Large Realistic Social Networks by Christopher L. Barrett, Keith R. Bisset, Stephen G. Eubank, Xizhou Feng, Madhav V. Marathe, Network Dynamics and Simulation Science Laboratory, Virginia Tech, Blacksburg
+\bibitem[9]{Barrett}EpiSimdemics: an Efficient Algorithm for Simulating the Spread of Infectious Disease over Large Realistic Social Networks by Christopher L. Barrett, Keith R. Bisset, Stephen G. Eubank, Xizhou Feng, Madhav V. Marathe, Network Dynamics and Simulation Science Laboratory, Virginia Tech, Blacksburg
 \\ \url{http://ieeexplore.ieee.org/xpls/abs_all.jsp?arnumber=5214892}
 \end{thebibliography}
 
