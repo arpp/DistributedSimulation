@@ -1,11 +1,17 @@
 \BOOKMARK [1][-]{section.1}{Introduction}{}% 1
 \BOOKMARK [1][-]{section.2}{Objectives}{}% 2
-\BOOKMARK [1][-]{section.3}{Dataset}{}% 3
-\BOOKMARK [1][-]{section.4}{Approach}{}% 4
-\BOOKMARK [2][-]{subsection.4.1}{Distributing the graph}{section.4}% 5
-\BOOKMARK [2][-]{subsection.4.2}{Establishing communication between the nodes}{section.4}% 6
-\BOOKMARK [2][-]{subsection.4.3}{Developing the message handling and processing framework}{section.4}% 7
-\BOOKMARK [2][-]{subsection.4.4}{Designing system assessment methods}{section.4}% 8
-\BOOKMARK [1][-]{section.5}{Results Obtained}{}% 9
-\BOOKMARK [1][-]{section.6}{Conclusion}{}% 10
-\BOOKMARK [1][-]{section.7}{Feedback}{}% 11
+\BOOKMARK [1][-]{section.3}{Literature survey}{}% 3
+\BOOKMARK [2][-]{subsection.3.1}{Parallel/Distributed Simulations}{section.3}% 4
+\BOOKMARK [2][-]{subsection.3.2}{Underlying technologies}{section.3}% 5
+\BOOKMARK [2][-]{subsection.3.3}{Notions of time in simulation}{section.3}% 6
+\BOOKMARK [2][-]{subsection.3.4}{Conservative Synchronization Algorithms}{section.3}% 7
+\BOOKMARK [2][-]{subsection.3.5}{A Deadlock Avoidance Conservative algorithm}{section.3}% 8
+\BOOKMARK [2][-]{subsection.3.6}{Optimistic Synchronization Algorithms}{section.3}% 9
+\BOOKMARK [1][-]{section.4}{Dataset}{}% 10
+\BOOKMARK [1][-]{section.5}{Approach}{}% 11
+\BOOKMARK [2][-]{subsection.5.1}{Distributing the graph}{section.5}% 12
+\BOOKMARK [2][-]{subsection.5.2}{Establishing communication between the nodes}{section.5}% 13
+\BOOKMARK [2][-]{subsection.5.3}{Developing the message handling and processing framework}{section.5}% 14
+\BOOKMARK [2][-]{subsection.5.4}{Designing system assessment methods}{section.5}% 15
+\BOOKMARK [1][-]{section.6}{Results Obtained}{}% 16
+\BOOKMARK [1][-]{section.7}{Conclusion and Future work}{}% 17
