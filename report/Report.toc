@@ -2,6 +2,10 @@
 \contentsline {section}{\numberline {2}Objectives}{2}{section.2}
 \contentsline {section}{\numberline {3}Dataset}{2}{section.3}
 \contentsline {section}{\numberline {4}Approach}{3}{section.4}
-\contentsline {section}{\numberline {5}Interface Description}{3}{section.5}
-\contentsline {section}{\numberline {6}Results Obtained}{3}{section.6}
-\contentsline {section}{\numberline {7}Feedback}{3}{section.7}
+\contentsline {subsection}{\numberline {4.1}Distributing the graph}{3}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Establishing communication between the nodes}{3}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.3}Developing the message handling and processing framework}{4}{subsection.4.3}
+\contentsline {subsection}{\numberline {4.4}Designing system assessment methods}{4}{subsection.4.4}
+\contentsline {section}{\numberline {5}Interface Description}{4}{section.5}
+\contentsline {section}{\numberline {6}Results Obtained}{4}{section.6}
+\contentsline {section}{\numberline {7}Feedback}{4}{section.7}

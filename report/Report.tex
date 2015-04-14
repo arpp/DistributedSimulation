@@ -128,8 +128,21 @@ Prof. Arobinda Gupta
 
 \section{Approach}
 	\subsection{Distributing the graph}
+Algorithms that find a good partitioning of highly unstructured graphs are critical for developing efficient solutions for a wide range of problems in many application areas on both serial and parallel computers.
+
+For example, large-scale numerical simulations on parallel computers, such as those based on finite element methods, require the distribution of the finite element mesh to the processors. This distribution must be done so that the number of elements assigned to each processor is the same, and the number of adjacent elements assigned to different processors is minimized.
+
+The goal of the first condition is to balance the computations among the processors. The goal of the second condition is to minimize the communication resulting from the placement of adjacent elements to different processors. Graph partitioning can be used to successfully satisfy these conditions by first modelling the finite element mesh by a graph, and then partitioning it into equal parts.
+
+We have used gpmetis, an open source application which uses multilevel k-way partitioning algorithms to compute a partitioning solution in which each partition is contiguous. The partitioning and ordering routines compute multiple different solutions and select the best as the final solution. Our objective function is Edge-cut minimization. The command-line programs provide full access to the entire set of capabilities provided by gpmetis' API.
 	\subsection{Establishing communication between the nodes}
+Our framework requires reliable communication because receiving messages correctly is imperative for the proper functioning of the system. FIFO channels are required because each processor maintains a set of event queues for every other machine and a local queue, and we assume that a new message in an event queue has a time stamp, not smaller than the last event.
+
+In order to ensure such reliable, FIFO communication, we use TCP connections between the nodes. Each node in the system acts as a server and client. While acting as the client, it sends connection requests to all other nodes, using their IP addresses stored in a configuration file before the application begins execution. Simultaneously, it acts as a server and accepts connections from the other nodes, which try to connect to it.
+
+Thus, we obtain a fully connected topology wherein each node has a bidirectional connection to every other node via TCP connections.
 	\subsection{Developing the message handling and processing framework}
+
 	\subsection{Designing system assessment methods}
 \section{Interface Description}
 	 
