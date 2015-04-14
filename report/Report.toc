@@ -8,11 +8,11 @@
 \contentsline {subsection}{\numberline {3.5}A Deadlock Avoidance Conservative algorithm}{6}{subsection.3.5}
 \contentsline {paragraph}{}{7}{section*.2}
 \contentsline {subsection}{\numberline {3.6}Optimistic Synchronization Algorithms}{7}{subsection.3.6}
-\contentsline {section}{\numberline {4}Dataset}{7}{section.4}
+\contentsline {section}{\numberline {4}Dataset}{8}{section.4}
 \contentsline {section}{\numberline {5}Approach}{8}{section.5}
 \contentsline {subsection}{\numberline {5.1}Distributing the graph}{8}{subsection.5.1}
-\contentsline {subsection}{\numberline {5.2}Establishing communication between the nodes}{8}{subsection.5.2}
-\contentsline {subsection}{\numberline {5.3}Developing the message handling and processing framework}{8}{subsection.5.3}
-\contentsline {subsection}{\numberline {5.4}Designing system assessment methods}{9}{subsection.5.4}
+\contentsline {subsection}{\numberline {5.2}Establishing communication between the nodes}{9}{subsection.5.2}
+\contentsline {subsection}{\numberline {5.3}Developing the message handling and processing framework}{9}{subsection.5.3}
+\contentsline {subsection}{\numberline {5.4}Designing system assessment methods}{10}{subsection.5.4}
 \contentsline {section}{\numberline {6}Results Obtained}{10}{section.6}
-\contentsline {section}{\numberline {7}Conclusion and Future work}{10}{section.7}
+\contentsline {section}{\numberline {7}Conclusion and Future work}{11}{section.7}

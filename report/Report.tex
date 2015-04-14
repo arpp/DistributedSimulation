@@ -228,7 +228,13 @@ is a lower bound on the time stamp of any subsequent message that will later be 
 	
 	\subsection{Optimistic Synchronization Algorithms}
 	
-	Conservative synchronization algorithms avoid violating the local causality constraint, whereas optimistic algorithms allow violations to occur but provide a mechanism to recover. The term optimistic execution refers to the fact that logical processes process events, "optimistically" assuming there are no causality errors.
+Conservative synchronization algorithms avoid violating the local causality constraint, whereas optimistic algorithms allow violations to occur but provide a mechanism to recover. The term optimistic execution refers to the fact that logical processes process events, "optimistically" assuming there are no causality errors.
+
+Optimistic execution has long been used in computing applications, in some cases prior to it being proposed for simulation. In Distributed database systems, when several clients of a database system simultaneously initiate transactions on the database (for example, to update an inventory of spare parts), a concurrency control algorithm is required to ensure that the final result is the same as if the transactions were performed in some serial order. One approach to accomplishing this is to have transactions optimistically proceed as if no conflicts (read and write accesses to the same record) occur.
+
+If a conflict is later detected, one of the transactions is aborted, and restarted later. Database concurrency control is in many ways similar to synchronization of parallel simulations, with the important distinction that any ordering of transactions in database systems is usually acceptable. These systems need only to ensure that transactions appear to be atomic, namely that the result after concurrently processing the transactions is the same as if each were completed in sequence, one after the other.
+
+In parallel simulations causal relationships in the physical system dictate the order in which events must be completed, so it is definitely not the case that any order will do.
 
 \section{Dataset}
 	\begin{itemize}[nolistsep]
